@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balanlàedenuges</title>
+    <link rel='stylesheet' type='text/css' href='/assets/css/main.css'>
+    <script src='/node_modules/jquery/dist/jquery.js'></script>
+    <script src='/assets/js/diccionario.js'></script>
+    <script src='/assets/js/app.js'></script>
+</head>
+<body>
+    <header>
+        <img id='flag' src='./assets/media/images/flag.png' alt='flag'>
+        <div id='title-div'>
+            <h1 id='page-title'>Balanlàedenuges ljngeg</h1>
+            <h3 id='page-subtitle'>'Tör waej rjnlug, waej wjljnaj.'</h3>
+        </div>
+        <img id='coat' src='./assets/media/images/coat.png' alt='coat'>
+    </header>
+    <main>
+        <nav>
+            <div id='options-tab'>
+                <label id='word-count'></label>
+            </div>
+            <ul id='nav-links'>
+                <ul class='nav-section' label='Diccionario'>
+                    <li class='nav-link' id='nav-search'>Búsqueda de palabra</li>
+                    <li class='nav-link' id='nav-listing'>Listado de palabras</li>
+                </ul>
+                <ul class='nav-section' label='Gramática'>
+                    <li class='nav-link' id='nav-nouns'>Sustantivos</li>
+                    <li class='nav-link' id='nav-verbs'>Verbos</li>
+                    <li class='nav-link' id='nav-adjectives'>Adjetivos</li>
+                    <li class='nav-link' id='nav-adverbs'>Adverbios</li>
+                    <li class='nav-link' id='nav-articles'>Pronombres y artículos</li>
+                    <li class='nav-link' id='nav-adpositions'>Adposiciones</li>
+                    <li class='nav-link' id='nav-compounds'>Composiciones y ampliaciones</li>
+                    <li class='nav-link' id='nav-syntaxis'>Sintaxis y ortografía</li>
+                </ul>
+                <ul class='nav-section' label='Fonética'>
+                    <li class='nav-link' id='nav-phonetics'>General</li>
+                </ul>
+                <ul class='nav-section' label='Miscelánea'>
+                    <li class='nav-link' id='nav-ethymology'>Etimología</li>
+                    <li class='nav-link' id='nav-idiosyncrasy'>Idiosincrasia</li>
+                </ul>
+            </ul>
+        </nav>
+
+        <!-- Búsqueda de palabra -->
+        <section id='search-screen'>
+            <div id='search-box'>
+                <div id='special-characters'>
+                    <label style='margin-left: 5px;' class='special-character'>à</label>
+                    <label class='special-character'>è</label>
+                    <label class='special-character'>ĵ</label>
+                    <label class='special-character'>ò</label>
+                    <label class='special-character'>ù</label>
+                    <label class='special-character'>ä</label>
+                    <label class='special-character'>ë</label>
+                    <label class='special-character'>ö</label>
+                    <label class='special-character'>ü</label>
+                    <label class='special-character'>ø</label>
+                    <div id='language-selection'>
+                        <input id='language-bal' class='language' name='language' type='radio' checked>
+                        <label class='language-option' for='language-bal'>
+                            <img src='./assets/media/images/flag.png' alt='BAL' width='32' draggable="false">
+                        </label>
+                        <input id='language-esp' class='language' name='language' type='radio'>
+                        <label class='language-option' for='language-esp'>
+                            <img src='./assets/media/images/flag2.png' alt='ESP' width='32' draggable="false">
+                        </label>
+                    </div>
+                </div>
+                <input id='word-search' type='text' placeholder="Buscar una palabra...">
+                <button id='search-button'>Buscar</button>
+            </div>
+            <div id='search-result'>
+                
+            </div>
+        </section>
+
+        <!-- Listado de palabras -->
+        <section id='listing-screen'>
+            <div id='letters-box'>
+                <label class='letter-listing'>A</label>
+                <label class='letter-listing'>B</label>
+                <label class='letter-listing'>D</label>
+                <label class='letter-listing'>E</label>
+                <label class='letter-listing'>F</label>
+                <label class='letter-listing'>G</label>
+                <label class='letter-listing'>J</label>
+                <label class='letter-listing'>K</label>
+                <label class='letter-listing'>L</label>
+                <label class='letter-listing'>O</label>
+                <label class='letter-listing'>R</label>
+                <label class='letter-listing'>S</label>
+                <label class='letter-listing'>T</label>
+                <label class='letter-listing'>U</label>
+                <label class='letter-listing'>W</label>
+            </div>
+            <div class='info-listing' id='word-listing'>
+                
+            </div>
+            <div class='info-listing' id='listing-stats'>
+            
+            </div>
+            <div id='listing-lowbar'>
+                <div id='stats-bar'>
+                    <div id='tab-btns'>
+                        <button class='tab-btn'>Listado</button>
+                        <button class='tab-btn'>Estadísticas</button>
+                    </div>
+                </div>
+                <div id='listing-view'>
+                    <p style='margin: 0;font-weight: bold;'>
+                        Vista:
+                    </p>
+                    <label class='listing-view-option'>
+                        <input class='listing-view' type='radio' name='listing-view' value='list'>
+                        Lista
+                    </label>
+                    <label class='listing-view-option'>
+                        <input class='listing-view' type='radio' name='listing-view' value='tree'>
+                        Árbol
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sustantivos -->
+        <section id='nouns-screen'>
+            <h1 class='section-title'>Sustantivos</h1>
+            <div class='section-example'>
+                <div class='word-segmentation'>
+                    <fieldset class='word-segment'><h3>Kefj</h3><legend>1</legend></fieldset>
+                    <fieldset class='word-segment'><h3>eg</h3><legend>2</legend></fieldset>
+                    <fieldset class='word-segment'><h3>etur</h3><legend>3</legend></fieldset>
+                    <fieldset class='word-segment'><h3>en</h3><legend>4</legend></fieldset>
+                </div>
+                <ol class='segment-description'>
+                    <li>Raíz significante.</li>
+                    <li>Sufijo de género.</li>
+                    <li>Sufijos modificadores.</li>
+                    <li>Sufijo de número.</li>
+                </ol>
+            </div>
+            <p class='section-content'>
+                El sustantivo es el eje sintagmático dentro de la oración o la suboración del idioma libraterrense, 
+                representando elementos del universo e implementándolos sobre el texto. Se conforma con una raíz significante primitiva
+                asociada a dicho concepto y que lleva al léxico, e incluso se puede formar más de un sustantivo por cada raíz.
+                Lleva consigo además la <u>responsabilidad de volcar la información de género y número hacia las demás
+                palabras</u> sintácticamente relacionadas. A diferencia de muchos otros idiomas, principalmente los latinos, 
+                en el <i>balanlàedenuges</i> los artículos y los pronombres no presagian esos datos indispensables
+                para lograr la coherencia del enunciado. Por el contrario, una oración se puede comprender completamente
+                una vez que la lectura alcanza al sustantivo. De esta manera, a través de estos vocablos <u>se pueden apreciar
+                los tres géneros (masculino, femenino y neutro, más el pseudogénero extranjerismo), y los tres números (cero o nulo, 
+                singular y plural)</u> de la lengua libraterrense. De esta palabra central también se desprenden los adjetivos,
+                los cuales no son más que sustantivos con un sufijo especial.
+            </p>
+            <h2 class='section-subtitle'>Sufijación reglamentaria</h2>
+            <p class='section-content'>
+                Los sustantivos no tienen regla de prefijación alguna, aunque sí poseen una configuración de sufijos obligatorios
+                según su género, número y hasta origen. Es por medio de estos pequeños grafemas que se posibilita el rápido 
+                reconocimiento de dicha información. <u>El sufijo de género va inmediatamente luego de la raíz significante</u>,
+                mientras que <u>el sufijo de número se coloca al final del sustantivo</u>, después de los sufijos modificadores (si
+                no los hubiere, va tras el sufijo de género). Existen excepciones a estas directrices, principalmente en sustantivos de
+                uso muy habitual, pero por fuera de eso la imposición es absoluta. En la tabla a continuación se pueden apreciar dichas normativas:
+            </p>
+            <table class='section-table'>
+                <tr>
+                    <th>Número/Género</th>
+                    <th>Masculino<br><label style='font-weight: normal;'>('ug')</label></th>
+                    <th>Femenino<br><label style='font-weight: normal;'>('aj')</label></th>
+                    <th>Neutro<br><label style='font-weight: normal;'>('eg')</label></th>
+                    <th>Extranjerismo<br><label style='font-weight: normal;'>(sin regla)</label></th>
+                </tr>
+                <tr>
+                    <th>Cero o nulo<br><label style='font-weight: normal;'>(+ 'ed' o 'd')</label></th>
+                    <td><i>Laeden<b>uged</b></i><br>"Ningún país"</td>
+                    <td><i>Awal<b>ajd</b></i><br>"Ninguna luna"</td>
+                    <td><i>Kjg<b>eged</b></i><br>"Ningún lugar"</td>
+                    <td><i>Konpjùter<b>d</b></i><br>"Ninguna computadora"</td>
+                </tr>
+                <tr>
+                    <th>Singular<br><label style='font-weight: normal;'>(sin adición)</label></th>
+                    <td><i>Laeden<b>ug</b></i><br>"(Un) país"</td>
+                    <td><i>Awal<b>aj</b></i><br>"(Una) luna"</td>
+                    <td><i>Kjg<b>eg</b></i><br>"(Un) lugar"</td>
+                    <td><i>Konpjùter</i><br>"(Una) computadora"</td>
+                </tr>
+                <tr>
+                    <th>Plural<br><label style='font-weight: normal;'>(+ 'en' o 'n')</label></th>
+                    <td><i>Laeden<b>ugen</b></i><br>"(Muchos) países"</td>
+                    <td><i>Awal<b>ajn</b></i><br>"(Muchas) lunas"</td>
+                    <td><i>Kjg<b>egen</b></i><br>"(Muchos) lugares"</td>
+                    <td><i>Konpjùter<b>n</b></i><br>"(Muchas) computadoras"</td>
+                </tr>
+            </table>
+            <h2 class='section-subtitle'>Sufijación modificadora</h2>
+            <p class='section-content'>
+                Adicionalmente, existe la capacidad de agregar otros sufijos opcionales que tienen la intención de 
+                modificar el significado del sustantivo. Se trata de los sufijos <u>aumentativizante, diminutivizante,
+                colectivizante y anulador</u>, encargados de "agrandar", "achicar", "multiplicar" e "invertir" el 
+                concepto, respectivamente. No solo su aplicación en sí lleva a una palabra diferente, sino también el orden
+                en que se adjuntan al sufijo obligatorio o raíz (en caso de sustantivos exceptuados). Hay libertad para <u>emplearlos y encadenarlos de
+                cualquier manera, no obstante, la única imposibilidad consta de no poder repetir ninguno</u> de ellos en
+                la misma palabra. Cabe mencionar que los sustantivos modificados no deben recibir nuevamente el 
+                sufijo de género, ya que este está embebido entre la raíz significante y los modificadores. En la 
+                siguiente tabla se aprecia la utilidad e incidencia de estos sufijos:
+            </p>
+            <table class='section-table'>
+                <tr>
+                    <th>Común</th>
+                    <th>Aumentativizado<br><label style='font-weight: normal;'>(+ 'on')</label></th>
+                    <th>Diminutivizado<br><label style='font-weight: normal;'>(+ 'et')</label></th>
+                    <th>Colectivizado<br><label style='font-weight: normal;'>(+ 'ur')</label></th>
+                    <th>Anulado<br><label style='font-weight: normal;'>(+ 'af')</label></th>
+                </tr>
+                <tr>
+                    <td><i>Kefjeg</i><br>"Persona"</td>
+                    <td><i>Kefjeg<b>on</b></i><br>"Anciano, anciana"</td>
+                    <td><i>Kefjeg<b>et</b></i><br>"Niño, niña"</td>
+                    <td><i>Kefjeg<b>ur</b></i><br>"Sociedad, comunidad"</td>
+                    <td style='background-color: wheat;'>Inexistente</td>
+                </tr>
+                <tr>
+                    <td><i>Fejfeg</i><br>"Palabra"</td>
+                    <td><i>Fejfeg<b>on</b></i><br>"Oración"</td>
+                    <td><i>Fejfeg<b>et</b></i><br>"Letra"</td>
+                    <td><i>Fejfeg<b>ur</b></i><br>"Párrafo"</td>
+                    <td style='background-color: wheat;'>Inexistente</td>
+                </tr>
+                <tr>
+                    <td><i>Lujkaj </i>y<i> Lujkeg</i><br>"Dinero" y "Riqueza"</td>
+                    <td><i>Lujkaj<b>on</b></i><br>"Tesoro"</td>
+                    <td style='background-color: wheat;'>Inexistente</td>
+                    <td><i>Lujkaj<b>ur</b></i><br>"Divisa, moneda"</td>
+                    <td><i>Lujkeg<b>af</b></i><br>"Pobreza"</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Verbos -->
+        <section id='verbs-screen'>
+            <h1 class='section-title'>Verbos</h1>
+            <div class='section-example'>
+                <div class='word-segmentation'>
+                    <fieldset class='word-segment'><h3>Gölj</h3><legend>1</legend></fieldset>
+                    <fieldset class='word-segment'><h3>kàj</h3><legend>2</legend></fieldset>
+                    <fieldset class='word-segment'><h3>-ökjlugafer</h3><legend>3</legend></fieldset>
+                    <fieldset class='word-segment'><h3>es</h3><legend>4</legend></fieldset>
+                </div>
+                <ol class='segment-description'>
+                    <li>Prefijo adverbial o sustantivo conjugador.</li>
+                    <li>Raíz significante (incluye sufijo infinitivo salvo exceptuados).</li>
+                    <li>Adjunción verbal complementaria.</li>
+                    <li>Sufijo de participio.</li>
+                </ol>
+            </div>
+            <p class='section-content'>
+                El verbo es la palabra encargada de plasmar una acción relacionada al sustantivo y, la mayor parte 
+                de las veces, concatenarla con una consecuencia o un destino. Este tipo de vocablo <u>se erige por medio 
+                de la unión de una raíz signficante con un sufijo de infinitivo</u>, elementalmente. A eso puede agregársele,
+                además, <u>un prefijo adverbial para conjugarlo</u> y sacarlo del infinitivo, o <u>una adjunción verbal para crear
+                un equivalente a la frase verbal</u> en español. Los verbos carecen de carga de número y género, y dependen
+                del sustantivo y de los pronombres para encontrar e incorporar implícitamente esa información. Existen dos sufijos de infinitivo
+                en los verbos, <u>uno más asociado a los sustantivos femeninos y otro más a los sustantivos masculinos y
+                neutros</u>, aunque no se trata de una regla estandarizada.
+            </p>
+            <h2 class='section-subtitle'>Sufijación reglamentaria</h2>
+            <p class='section-content'>
+                En cuanto a los sufijos, los verbos deben <u>poseer obligatoriamente un sufijo de infinitivo que permita
+                detectarlos y distinguirlos de los sustantivos</u>. En esencia, <u>hay dos variantes
+                para implementar esta regla</u>, aunque no suponen ningún tipo de diferencia. El fin de esa diferenciación 
+                es lograr heterogeneidad en el lenguaje y mayores posibilidades léxicas a la hora de construir estas palabras.
+                No existe una categoría oficial, pero los verbos de uso más generalizado suelen estar exceptuados de cumplir
+                con este requisito. En esta tabla se puede ver el empleo más común de estos sufijos:
+            </p>
+            <table class='section-table'>
+                <tr>
+                    <th>Raíz significante</th>
+                    <th>Sustantivo de la raíz</th>
+                    <th>Verbo de la raíz</th>
+                </tr>
+                <tr>
+                    <td><i>Awal</i></td>
+                    <td><i>Awal<b>aj</b></i><br>"Luna"</td>
+                    <td><i>Awal<b>ar</b></i><br>"Dormir"</td>
+                </tr>
+                <tr>
+                    <td><i>Balan</i></td>
+                    <td><i>Balan<b>ug</b></i><br>"Equilibrio"</td>
+                    <td><i>Balan<b>er</b></i><br>"Equilibrar"</td>
+                </tr>
+                <tr>
+                    <td><i>Jagn</i></td>
+                    <td><i>Jagn<b>eg</b></i><br>"Vida, ciclo"</td>
+                    <td><i>Jagn<b>ar</b></i><br>"Vivir"</td>
+                </tr>
+                <tr>
+                    <td><i>Wüjk</i></td>
+                    <td><i>Wüjk<b>ug</b></i><br>"Deseo, aspiración"</td>
+                    <td><i>Wüjk</i><br>"Desear, querer"</td>
+                </tr>
+            </table>
+            <h2 class='section-subtitle'>Conjugación</h2>
+            <p class='section-content'>
+                Muchos idiomas tienen un sistema de sufijos específicos para indicar el tiempo de la conjugación verbal.
+                No es el caso del libraterrense, el cual <u>funciona con prefijos que son literalmente adverbios de tiempo 
+                o sustantivos relacionados con dicho tópico o incluso con modos</u>, antepuestos al verbo de la misma forma que un componente (aunque no se trata de tal). De esta manera, técnicamente podría haber tantos tiempos como adverbios
+                o sustantivos convenientes. No obstante, la convención toma una manojo puntual y los oficializa como conjugadores.
+                Por supuesto que son opcionales, y se aplican para darle movilidad al verbo y sacarlo de la versión infinitiva.
+                Aquí se observa una tabla que explica los tiempos verbales y las conjugaciones:
+            </p>
+            <table class='section-table'>
+                <tr>
+                    <th rowspan='2' style='background-color: lightslategray;'>Tiempos<br>pretéritos</th>
+                    <th>Remoto<br><label style='font-weight: normal;'>(+ <i>Fjügul</i>, "pasado")</label></th>
+                    <th>Imperfecto<br><label style='font-weight: normal;'>(+ <i>Trudaj</i>, "ayer")</label></th>
+                    <th>Perfecto<br><label style='font-weight: normal;'>(+ <i>Trölj</i>, "antes")</label></th>
+                </tr>
+                <tr>
+                    <td><i>Fjügulglàer</i><br>"Amaba"</td>
+                    <td><i>Trudajglàer</i><br>"Amara/Amase"</td>
+                    <td><i>Tröljglàer</i><br>"He amado" o "Amé"</td>
+                </tr>
+                <tr>
+                    <th rowspan='2' style='background-color: lightslategray;'>Tiempos<br>presentes</th>
+                    <th>Continuo<br><label style='font-weight: normal;'>(+ <i>Gägul</i>, "presente")</label></th>
+                    <th>Subjuntivo<br><label style='font-weight: normal;'>(+ <i>Udaj</i>, "hoy")</label></th>
+                    <th>Simple<br><label style='font-weight: normal;'>(+ <i>Gölj</i>, "ahora")</label></th>
+                </tr>
+                <tr>
+                    <td><i>Gägulglàer</i><br>equiv. a "Estoy amando"</td>
+                    <td><i>Udajglàer</i><br>"Ame"</td>
+                    <td><i>Göljglàer</i><br>"Amo"</td>
+                </tr>
+                <tr>
+                    <th rowspan='2' style='background-color: lightslategray;'>Tiempos<br>futuros</th>
+                    <th>Sostenido<br><label style='font-weight: normal;'>(+ <i>Kängul</i>, "futuro")</label></th>
+                    <th>Concreto<br><label style='font-weight: normal;'>(+ <i>Wändaj</i>, "mañana")</label></th>
+                    <th>Imperfecto<br><label style='font-weight: normal;'>(+ <i>Följ</i>, "después")</label></th>
+                </tr>
+                <tr>
+                    <td><i>Kängulglàer</i><br>equiv. a "Seguiré amando"</td>
+                    <td><i>Wändajglàer</i><br>"Habré amado"</td>
+                    <td><i>Följglàer</i><br>"Amaré"</td>
+                </tr>
+                <tr>
+                    <th rowspan='2' style='background-color: lightslategray;'>Otras<br>variantes</th>
+                    <th>Potencial<br><label style='font-weight: normal;'>(+ <i>Kanskë</i>, "quizás")</label></th>
+                    <th>Imperativo<br><label style='font-weight: normal;'>(+ <i>'al</i>)</label></th>
+                    <th>Antecopretérito<br><label style='font-weight: normal;'>(+ <i>Alëred</i>, "Ya, previamente")</label></th>
+                </tr>
+                <tr>
+                    <td><i>Kanskëglàer</i><br>"Amaría"</td>
+                    <td><i>(Kon) glaer'al</i><br>"Ama" o "Amá" (tú, vos)</td>
+                    <td><i>Alëredglàer</i><br>"Había amado"</td>
+                </tr>
+                <tr>
+                    <td colspan='4' style='margin-left: 25px;background-color: white;'>* Traducciones aplicadas sobre la primera persona del singular (<i>Öl</i>) del verbo <i>Glaer</i> (amar).</td>
+                </tr>
+            </table>
+            <h2 class='section-subtitle'>Adjunción verbal</h2>
+            <p class='section-content'>
+                Complementariamente, a algunos verbos <u>se les puede agregar tras su terminación una adjunción verbal</u>, lo que es decir un
+                segundo verbo que concrete una acción más abarcativa y específica. Esto técnicamente no es un sufijo, ni tampoco
+                deriva en una composición, y es por eso que se diferencia de ellos <u>intermediando un guión (-)</u> entre verbo y verbo.
+                El resultado es el equivalente a una frase verbal del español o del inglés. En una buena parte de las veces, la
+                adjunción verbal permanece en infinitivo y acompaña la noción del tiempo en el que el verbo principal está conjugado. Aunque también
+                es posible agregarla como participio (con el verbo en infinitivo más el sufijo 'es' de los adjetivos) para crear un significado distinto.
+                Algunos ejemplos son:
+            </p>
+            <table class='section-table'>
+                <tr>
+                    <th>Verbo conjugado</th>
+                    <th>Adjunción verbal</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td><i>Öl göljwùjk</i><br>"Quiero"</td>
+                    <td><i>-fëjr</i><br>"Saber"</td>
+                    <td><i>Öl göljwùjk-fëjr</i><br>"Quiero saber"</td>
+                </tr>
+                <tr>
+                    <td><i>Kon fjügulsfàej</i><br>"Podías"</td>
+                    <td><i>-alar</i><br>"Hacer"</td>
+                    <td><i>Kon fjügulsfàej-alar</i><br>"Podías hacer"</td>
+                </tr>
+                <tr>
+                    <td><i>Kjaegen wändajfrèt</i><br>"Habrán intentado"</td>
+                    <td><i>-ëgael</i><br>"Ir"</td>
+                    <td><i>Kjaegen wändajfrèt-ëgael</i><br>"Habrán intentado ir"</td>
+                </tr>
+                <tr>
+                    <td><i>Klaej göljkàj</i><br>"Esto es"</td>
+                    <td><i>-talwer<b>es</b></i><br>"Llamado, nombrado"</td>
+                    <td><i>Klaej göljkàj-talweres</i><br>"Esto es llamado"</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Adjetivos -->
+        <section id='adjectives-screen'>
+            <h1 class='section-title'>Adjetivos</h1>
+            <div class='section-example'>
+                <div class='word-segmentation'>
+                    <fieldset class='word-segment'><h3>Ljwkeg</h3><legend>1</legend></fieldset>
+                    <fieldset class='word-segment'><h3>es</h3><legend>2</legend></fieldset>
+                </div>
+                <ol class='segment-description'>
+                    <li>Pieza sustantiva o pronominal.</li>
+                    <li>Sufijo modificador.</li>
+                </ol>
+            </div>
+            <p class='section-content'>
+                Este tipo de palabra es la encargada de describir y modificar las propiedades de los sustantivos.
+                Si bien el adjetivo no existe como tal en el idioma libraterrense, es apropiada su categorización
+                independiente para poder interpretarlos de la misma manera que en otras lenguas, como la española. <u>Los
+                adjetivos nacen a partir de un sustantivo o un pronombre, sobre el cual se adjunta el poderoso sufijo 'es'</u>,
+                una herramienta muy amplia que denota una connotación similar a "hace alusión a". En consecuencia, <u>se puede tomar cualquier 
+                pieza sustantiva en número singular (común o modificada) o pronominal y generar su respectivo adjetivo</u>. 
+                En este sentido, por medio de la nueva finalidad sintáctica que brinda el sufijo que le convierte en adjetivo,
+                esta palabra pierde el eje del número y género sobre el que giran en torno los otros componentes de la oración, y el mismo
+                se sitúa sobre el sustantivo al que apunta el adjetivo. El empleo de esta clase de vocablo
+                es muy conveniente para reducir la cantidad de palabras, omitir preposiciones y recortar longitudes.
+            </p>
+            <h2 class='section-subtitle'>Clasificación</h2>
+            <p class='section-content'>
+                Si bien la construcción promedio de un adjetivo nace de la unión de un sustantivo con el sufijo 'es',
+                este sufijo también puede aplicarse sobre otros tipos de palabras. Al mismo tiempo, esta tampoco es
+                la única posibilidad para llegar a los adjetivos; algunos pronombres no requieren sufijo alguno para
+                actuar como tales, y otras palabras incluso llevan sufijos diferentes para funcionar semánticamente de la
+                misma manera. A continuación se explaya cada ejemplo:
+            </p>
+            <table class='section-table'>
+                <tr>
+                    <th>Calificativos<br><label style='font-weight: normal;'>(sust. comunes + 'es')</label></th>
+                    <th>Relacionales<br><label style='font-weight: normal;'>(sust. comunes + 'es')</label></th>
+                    <th>Posesivos comunes<br><label style='font-weight: normal;'>(pron. personales + 'es')</label></th>
+                    <th>Posesivos propios<br><label style='font-weight: normal;'>(nombres + ''es')</label></th>
+                </tr>
+                <tr>
+                    <td><i>Ljwkeges kefjeg</i><br>"Persona feliz"</td>
+                    <td><i>Täkenajes fejfegon</i><br>"Oración interrogante"</td>
+                    <td><i>Öles wajdàj</i><br>"Mi cumpleaños"</td>
+                    <td><i>Balanlàedenug'es laedenlàejreg</i><br>"Himno de Libraterra"</td>
+                </tr>
+                <tr>
+                    <td><i>Wärteges grüfug</i><br>"Café negro"</td>
+                    <td><i>Towlajuges köloreg</i><br>"Color metálico"</td>
+                    <td><i>Kjaes sjfjànördnug</i><br>"Su reloj"</td>
+                    <td><i>Walèrja'es öndkĵgeg</i><br>"Casa de Valeria"</td>
+                </tr>
+                <tr>
+                    <th>Cardinales<br><label style='font-weight: normal;'>(sust. numerales)</label></th>
+                    <th>Ordinales<br><label style='font-weight: normal;'>(sust. numerales + 'es')</label></th>
+                    <th>Partitivos<br><label style='font-weight: normal;'>(sust. numerales + 'fülweg')</label></th>
+                    <th>Múltiplos<br><label style='font-weight: normal;'>(sust. numerales + 'üskjl')</label></th>
+                </tr>
+                <tr>
+                    <td><i>Ëjwt kefjegen</i><br>"Ocho personas"</td>
+                    <td><i>Tjötrjes grüfug</i><br>"Decimotercer café"</td>
+                    <td><i>Trjfùlweg</i><br>"Tercio"</td>
+                    <td><i>Töùskjl</i><br>"Duplo"</td>
+                </tr>
+                <tr>
+                    <td><i>Trjtjö futajen</i><br>"Treinta herramientas"</td>
+                    <td><i>Fjres glaekèfjeg</i><br>"Cuarto/a novio/a"</td>
+                    <td><i>Tjötöfùlweg</i><br>"Doceavo"</td>
+                    <td><i>Ejwtùskjl</i><br>"Óctuplo"</td>
+                </tr>
+                <tr>
+                    <th>Demostrativos<br><label style='font-weight: normal;'>(pron. demostrativos)</label></th>
+                    <th>Gentilicios<br><label style='font-weight: normal;'>(país + 'es')</label></th>
+                </tr>
+                <tr>
+                    <td><i>Klaej laekug</i><br>"Esta comida"</td>
+                    <td><i>Sølwlàedenuges kefjeget</i><br>"Niño/a argentino/a"</td>
+                </tr>
+                <tr>
+                    <td><i>Traej laejreg</i><br>"Aquella/esa música"</td>
+                    <td><i>Wajsjonlàedenuges wuljgaj</i><br>"Planta japonesa"</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id='compounds-screen'>
+            <h1 class='section-title'>Composiciones</h1>
+            <div class='section-example'>
+                <div class='word-segmentation'>
+                    <fieldset class='word-segment'><h3>Fejfegonur</h3><legend>1</legend></fieldset>
+                    <fieldset class='word-segment'><h3>aur</h3><legend>2</legend></fieldset>
+                    <fieldset class='word-segment'><h3>kĵgeg</h3><legend>3</legend></fieldset>
+                </div>
+                <ol class='segment-description'>
+                    <li>Componente modificado (aquí sustantivo).</li>
+                    <li>Componente común (siempre una raíz).</li>
+                    <li>Componente prevalente (aquí sustantivo).</li>
+                </ol>
+            </div>
+            <p class='section-content'>
+                Un recurso habitual dentro de la lengua <i>balanlàedenuges</i> es la que permite <u>agrupar o asociar
+                dos o más palabras para crear un vocablo compuesto</u>. Esta construcción
+                léxica combina los significados de las palabras implicadas, derivando en un concepto nuevo y diferente. 
+                Para llevar a cabo esto, se toma solamente <u>la raíz significante en caso de tratarse de un sustantivo común o un verbo común,
+                o toda la palabra en el caso de los adverbios, sustantivos modificados y verbos ampliados</u> (para absorber todo su significado), y a continuación
+                se <u>unifica con la totalidad de otro sustantivo o verbo</u> (de cualquier tipo). La jerarquía en la integración de los 
+                conceptos para incidir en el compuesto es de fin a principio (al revés al español y muy similar al inglés). 
+                Es decir, el concepto prevalente será el que quede al final del nuevo elemento. Si bien no es incorrecto hacer uso
+                de los adjetivos dentro de esta metodología, se desalienta totalmente puesto que con utilizar el sustantivo que
+                le da pie ya es suficiente, y además se ahorran valiosos caracteres. Aquí se exponen algunos ejemplos:
+            </p>
+            <table class='section-table'>
+                <tr>
+                    <th>Primer componente</th>
+                    <th>Segundo componente</th>
+                    <th>Tercer componente</th>
+                    <th>Palabra compuesta</th>
+                </tr>
+                <tr>
+                    <td><i>Kefjeg</i><br>"Persona"</td>
+                    <td><i>Fjaler</i><br>"Beber"</td>
+                    <td><i>Blödug</i><br>"Sangre"</td>
+                    <td><i>Blödfjalkèfjeg</i><br>"Vampiro"</td>
+                </tr>
+                <tr>
+                    <td><i>Kjgeg</i><br>"Lugar"</td>
+                    <td><i>Aurag</i><br>"Reunión, congregación"</td>
+                    <td><i>Fejfegonur</i><br>"Textos, libros"</td>
+                    <td><i>Fejfegonuraurkĵgeg</i><br>"Biblioteca"</td>
+                </tr>
+                <tr>
+                    <td><i>Laedejug</i><br>"Tierra, suelo"</td>
+                    <td><i>Dawegeg</i><br>"Altura"</td>
+                    <td style='background-color: wheat;'>-</td>
+                    <td><i>Daweglàedejug</i><br>"Montaña"</td>
+                </tr>
+            </table>
+            <hr>
+            <h1 class='section-title'>Ampliaciones</h1>
+            <div class='section-example'>
+                <div class='word-segmentation'>
+                    <fieldset class='word-segment'><h3>Grägajaf</h3><legend>1</legend></fieldset>
+                    <fieldset class='word-segment'><h3>ar</h3><legend>2</legend></fieldset>
+                </div>
+                <ol class='segment-description'>
+                    <li>Sustantivo modificado.</li>
+                    <li>Sufijo verbal obligatorio (amplía).</li>
+                </ol>
+            </div>
+            <p class='section-content'>
+                Como las palabras compuestas o modificadas generan una idea y significado nuevos, podríamos decir que eso a su vez
+                conlleva a la creación de otra raíz significante nacida a partir de sus predecesoras. Esto implica que, al igual que
+                cualquier otro sustantivo o verbo originado de una raíz, <u>puede ser objeto de sufijos modificadores que
+                afecten su significado</u> (en segunda instancia). Solo en estos casos será posible encontrar más de un ejemplar del
+                mismo sufijo modificador dentro del sustantivo (aunque estarán separados, uno modificando a un componente simple y 
+                el otro al componente prevalente). Si bien puede prestar a la confusión y a la ambigüedad que ese sufijo modificador
+                en realidad esté afectando al componente prevalente y no al compuesto total, de cualquier manera estará haciendo
+                ambas cosas. Sea como fuera, el ejercicio del habla social se encargará de impartir la acepción convencional.
+                Asimismo, es <u>posible ampliar verbalmente el compuesto</u> (aun si fuera un sustantivo sin sufijos modificadores y terminado
+                con un sufijo simple de género) para fundar una acción distinta, agregando el sufijo que correspondiera según la 
+                familia del sustantivo modificado o del compuesto prevalente. Esta lista revela algunos de todos esos casos:
+            </p>
+            <table class='section-table'>
+                <tr>
+                    <th>Palabra compuesta</th>
+                    <th>Composición modificada</th>
+                    <th>Composición ampliada a verbo</th>
+                </tr>
+                <tr>
+                    <td><i>Kojwkèfjeg</i><br>"Dios, diosa"</td>
+                    <td><i>Kojwkèfjeg<b>ur</b></i><br>"Panteón divino"</td>
+                    <td style='background-color: wheat;'>Inexistente</td>
+
+                </tr>
+                <tr>
+                    <td><i>Knawsfàejug</i><br>"Mortalidad"</td>
+                    <td><i>Knawsfàejug<b>af</b></i><br>"Inmortalidad"</td>
+                    <td><i>Knawsfàejug<b>afar</b></i><br>"Inmortalizar"</td>
+                </tr>
+                <tr>
+                    <td><i>Kaenjàgaj</i><br>"Hielo"</td>
+                    <td><i>Kaenjàgaj<b>on</b></i><br>"Glaciar"</td>
+                    <td><i>Kaenjàgaj<b>ar</b></i><br>"Congelar"</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Adverbios -->
+        <section id='adverbs-screen'>
+            
+        </section>
+
+        <!-- Artículos y pronombres -->
+        <section id='articles-screen'>
+            <table class='section-table'>
+                <tr>
+                    <th rowspan='2'>Persona/Número y género</th>
+                    <th>Singular</th>
+                    <th colspan='3'>Plural</th>
+                </tr>
+                <tr>
+                    <th>Genérico</th>
+                    <th>Masculino</th>
+                    <th>Femenino</th>
+                    <th>Neutro</th>
+                </tr>
+                <tr>
+                    <th>Primera</th>
+                    <td><i>Öl</i><br>"Yo"</td>
+                    <td><i>Ölugen</i><br>"Nosotros (hombres)"</td>
+                    <td><i>Ölajn</i><br>"Nosotras"</td>
+                    <td><i>Ölegen</i><br>"Nosotros (mixto)"</td>
+                </tr>
+                <tr>
+                    <th>Segunda</th>
+                    <td><i>Kon</i><br>"Tú/vos" o "Usted"</td>
+                    <td><i>Konugen</i><br>"Ustedes (hombres)"</td>
+                    <td><i>Konajn</i><br>"Ustedes (mujeres)"</td>
+                    <td><i>Konegen</i><br>"Ustedes (mixto)"</td>
+                </tr>
+                <tr>
+                    <th>Tercera</th>
+                    <td><i>Kjae</i><br>"Él" o "Ella"</td>
+                    <td><i>Kjaeugen</i><br>"Ellos (hombres)"</td>
+                    <td><i>Kjaejn</i><br>"Ellas"</td>
+                    <td><i>Kjaegen</i><br>"Ellos (mixto)"</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Adposiciones -->
+        <section id='adpositions-screen'>
+            
+        </section>
+
+        <!-- Sintaxis -->
+        <section id='syntaxis-screen'>
+            
+        </section>
+    </main>
+</body>
+</html>

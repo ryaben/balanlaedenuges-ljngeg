@@ -1,0 +1,20 @@
+{
+  "name": "balanlaedenuges-server",
+  "version": "1.0.0",
+  "description": "Diccionario y manual lingüístico del conlang balanlàedenuges.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "conlang"
+  ],
+  "author": "Ramiro Yaben",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jquery": "^3.6.0",
+    "jsdom": "^18.0.1",
+    "mysql": "^2.18.1"
+  }
+}

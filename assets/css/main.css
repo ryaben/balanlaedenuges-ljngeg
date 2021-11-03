@@ -1,0 +1,539 @@
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 0.95em;
+    height: 100%;
+    overflow: hidden;
+    min-width: 900px;
+}
+
+button, input {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+input {
+    filter: grayscale(1);
+}
+
+nav, section, header {
+    border: 2px solid black;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    height: 22vh;
+    margin: 0.25em;
+    border-radius: 8px;
+}
+
+main {
+    display: flex;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+    min-width: 223px;
+    height: 73vh;
+    margin: 0.25em;
+}
+
+section {
+    width: 75vw;
+    min-width: 650px;
+    margin: 0.25em;
+    height: 73vh;
+}
+
+.nav-section {
+    padding: 0;
+    margin-top: 8px;
+}
+
+.nav-section:before {
+    display: block;
+    content: attr(label);
+    font-size: 1.5em;
+    font-weight: bold;
+    color: darkred;
+    border-bottom: 1px solid darkred;
+}
+
+.nav-link {
+    list-style: none;
+    font-size: 1.2em;
+    margin: 3px auto 3px auto;
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    background-color: indianred;
+    color: white;
+    transition: ease;
+    transition-duration: 100ms;
+}
+
+.nav-selected {
+    background-color: red;
+    color: white;
+}
+
+.special-character {
+    font-size: 1.2em;
+    margin: auto 1.5px auto 1.5px;
+}
+
+.special-character:hover {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+.language-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.language-option img {
+    border-radius: 4px;
+}
+
+.type-name, .subtype-name {
+    margin: 10px 0 5px 0;
+}
+
+.word-meaning {
+    margin: 12px auto 5px auto;
+}
+
+.word-example {
+    margin: 0;
+    font-style: italic;
+    list-style: none;
+}
+
+.searched-word, .empty-search {
+    padding: 1em;
+    border: 1px dashed grey;
+    border-radius: 6px;
+    margin: 8px;
+}
+
+.word-description {
+    margin: 0 auto 1em auto;
+}
+
+.word-type {
+    display: flex;
+    align-items: center;
+    margin: 0.7em auto 0.4em auto;
+}
+
+.word-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0 auto 0 auto;
+}
+
+.word-meanings {
+    margin-bottom: 0;
+}
+
+.letter-listing {
+    text-align: center;
+    cursor: pointer;
+    width: 4%;
+}
+
+.letter-listing:hover {
+    background-color: darkslategray;
+    color: white;
+}
+
+.letter-selected {
+    background-color: black;
+    color: white;
+}
+
+.listed-word {
+    font-size: 1.5em;
+    text-align: start;
+    cursor: pointer;
+}
+
+.listed-word:hover {
+    background-color: red;
+    color: white;
+}
+
+.root-tree {
+    list-style: none;
+    border: 2px darkred solid;
+    border-radius: 4px;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    padding-inline-start: 0;
+    margin: 4px;
+}
+
+.root-tree-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px;
+    min-height: 22px;
+    font-size: 1.2em;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.root-tree-title:hover {
+    background-color: black;
+    color: white;
+    transition: 200ms;
+    cursor: pointer;
+}
+
+.root-tree-title-label:hover {
+    background-color: red;
+    cursor: pointer;
+}
+
+.root-tree-title-label {
+    display: flex;
+    align-items: center;
+}
+
+.root-extra {
+    display: flex;
+}
+
+.root-amount-group {
+    font-style: normal;
+    font-weight: normal;
+}
+
+.unfold-button {
+    margin-left: 6px;
+}
+
+.root-word, .composed-word {
+    padding-inline-start: 0;
+    list-style: none;
+    font-size: 1.3em;
+}
+
+.root-word-title, .child-word, .composed-word {
+    display: none;
+}
+
+.compositions {
+    padding-inline-start: 0px;
+    /* border-top: 2px dashed grey; */
+}
+
+.composed-word {
+    color: darkslategrey;
+}
+
+.root-word-title label:hover, .child-word label:hover, .composed-word label:hover {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+.root-word-title::before, .child-word::before, .composed-word::before {
+    content: "╟ ";
+    text-decoration: none;
+    color: black;
+}
+
+.child-word::before {
+    content: "║ ╟ ";
+}
+
+.listing-header {
+    border-bottom: 2px darkred solid;
+    font-size: 1.1em;
+}
+
+.listing-aspect {
+    /* font-weight: bold; */
+    border-bottom: 1px solid darkgrey;
+    margin-top: 4px;
+}
+
+.stat-to-fill {
+    font-size: 1.3em;
+    color: rgb(216, 13, 13);
+    border-bottom: 1px solid darkgrey;
+}
+
+.tab-btn {
+    display: inline;
+    border: 1px solid black;
+    font-size: 1.1em;
+    background-color: white;
+    width: 125px;
+}
+
+.tab-btn:hover, .tab-selected {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.listing-view-option {
+    display: flex;
+}
+
+.section-content, .section-title, .section-subtitle, .section-table, .word-type-example {
+    margin: 25px;
+}
+
+.section-content {
+    font-size: 1.1em;
+    text-align: justify;
+}
+
+.section-title {
+    font-size: 1.7em;
+    text-decoration: underline;
+}
+
+.section-subtitle {
+    font-size: 1.3em;
+}
+
+.section-example, .word-segmentation {
+    display: flex;
+    align-items: center;
+}
+
+.word-segmentation {
+    margin: 10px 20px 10px 20px;
+}
+
+.word-segment {
+    padding: 1px;
+    box-sizing: border-box;
+    border: 1px solid darkred;
+    border-bottom: none;
+    max-height: 25px;
+}
+
+.word-segment legend {
+    margin: auto;
+    max-height: 13px;
+}
+
+.word-segment h3 {
+    margin: 0;
+}
+
+.segment-description {
+    list-style: none;
+    counter-reset: contador;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+}
+
+.segment-description li {
+    counter-increment: contador;
+}
+
+.segment-description li::before {
+    content: counter(contador) "—> ";
+    color: darkred;
+    font-weight: bold;
+}
+
+.section-table {
+    border-spacing: 0px;
+    width: 75%;
+}
+
+.section-table th {
+    background-color: lightgray;
+    border: 1px solid darkred;
+    padding: 3px;
+}
+
+.section-table td {
+    background-color: antiquewhite;
+    border: 1px solid darkred;
+    text-align: center;
+    padding: 2px;
+}
+
+#nouns-screen, #verbs-screen, #adjectives-screen, #compounds-screen {
+    overflow-y: scroll;
+}
+
+#flag {
+    width: 17vw;
+    min-width: 225px;
+    height: 100%;
+}
+
+#title-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#page-title {
+    margin-bottom: 0;
+}
+
+#page-subtitle {
+    margin-top: 10px;
+    font-style: italic;
+    font-weight: normal;
+}
+
+#coat {
+    height: 100%;
+    width: 10vw;
+    min-width: 120px;
+}
+
+#options-tab {
+    display: flex;
+    background-color: lightgray;
+    border-bottom: 2px solid black;
+    padding: 10px;
+    border-top-left-radius: 5px;
+}
+
+#nav-links {
+    list-style-type: circle;
+    padding: 0 10px 10px 10px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    overflow-y: scroll;
+}
+
+#search-screen {
+    display: flex;
+    flex-direction: column;
+}
+
+#search-box {
+    display: flex;
+    justify-content: space-around;
+    padding: 1em;
+    background-color: lightgrey;
+    border-bottom: 2px solid black;
+    border-top-left-radius: 8px;
+}
+
+#special-characters {
+    display: flex;
+    align-items: center;
+    min-width: 240px;
+    padding: 6px 2px 6px 2px;
+    margin-right: 15px;
+    border: 1px solid darkgrey;
+    background-color: white;
+}
+
+#language-selection {
+    display: flex;
+    align-items: center;
+    border-left: 1px solid grey;
+    margin-left: 5px;
+}
+
+#word-subscreen {
+    display: flex;
+    justify-content: center;
+}
+
+#word-search {
+    width: 48%;
+    font-size: 1.1em;
+}
+
+#search-button {
+    width: 25%;
+    font-size: 1.1em;
+    background-color: darkgrey;
+}
+
+#listing-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#listing-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#letters-box {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3em;
+    padding: 10px 5% 10px 5%;
+    width: 90%;
+    border-bottom: 2px solid black;
+    border-top-left-radius: 8px;
+    background-color: lightgray;
+}
+
+.info-listing, #listing-stats, #search-result {
+    overflow-y: scroll;
+    padding: 5px;
+    height: 100%;
+}
+
+#listing-lowbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: lightgray;
+    border-top: 2px solid black;
+    border-bottom-left-radius: 8px;
+}
+
+#stats-bar {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+#listing-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+#listing-view {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 30%;
+    margin: 10px;
+}
+
+@media only screen and (max-width: 974px) {
+    #word-listing {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 719px) {
+    #word-listing {
+        grid-template-columns: 1fr 1fr;
+    }
+}
