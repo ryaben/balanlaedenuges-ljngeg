@@ -2,7 +2,6 @@ $(function() {
     class Handler {
         initialize() {
             this.eventsListening();
-            this.switchScreen('search');
             $('.listing-view-option:eq(1)').click();
             $('.letter-listing:eq(0)').click();
             $('.tab-btn:eq(0)').click();
@@ -143,7 +142,7 @@ $(function() {
             if (listing == 'list') {
                 matchedWords.forEach(function(word) {
                     $('#word-listing').append(`
-                        <label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("search")' class='listed-word'>${word.palabra}</label>
+                        <label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("diccionario")' class='listed-word'>${word.palabra}</label>
                     `);
                 });
 
@@ -158,7 +157,7 @@ $(function() {
                         if ($(`#root-${word.raiz}`).length === 0) {
                             $('#word-listing').append(`
                                 <ul class='root-tree' id='root-${word.raiz}' root-name='${word.raiz}'>
-                                    <li class='root-tree-title'><label class='root-tree-title-label' onclick='handler.searchWord("${word.raiz}", "BAL", 0); handler.switchScreen("search")'>${word.raiz}</label>
+                                    <li class='root-tree-title'><label class='root-tree-title-label' onclick='handler.searchWord("${word.raiz}", "BAL", 0); handler.switchScreen("diccionario")'>${word.raiz}</label>
                                     <div class='root-extra'>
                                         <div class='root-amount-group'>
                                             <label class='root-amount'>0</label>
@@ -180,7 +179,7 @@ $(function() {
 
                         $(`#root-${word.raiz} .compositions`).before(`
                             <ul class='root-word' id='word-${word.palabra}' word-type='${word.tipo}' word-name='${word.palabra}'>
-                                <li class='root-word-title'><label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("search")'>${word.palabra}</label></li>
+                                <li class='root-word-title'><label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("diccionario")'>${word.palabra}</label></li>
                             </ul>
                         `);
                         $(`#root-${word.raiz}`).find('.root-amount').text(function(i, val) { 
@@ -190,7 +189,7 @@ $(function() {
                     //Sustantivos modificados y verbos ampliados
                     } else if ((word.tipo.includes('Sustantivo') || word.tipo.includes('Verbo') || word.tipo.includes('Adjetivo')) && (!word.subtipo.includes('común') && !word.subtipo.includes('compuesto'))) {
                         $(`#word-${word.raiz}`).append(`
-                            <li style='color: rgb(212, 16, 16);' class='child-word'><label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("search")'>${word.palabra}</label></li>
+                            <li style='color: rgb(212, 16, 16);' class='child-word'><label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("diccionario")'>${word.palabra}</label></li>
                         `);
                         $(`#word-${word.raiz}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
                             return parseInt(val) + 1;
@@ -201,7 +200,7 @@ $(function() {
                         createRootTree();
                         
                         $(`#root-${word.raiz}`).find('.compositions').append(`
-                            <li onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("search")' class='composed-word'><label>${word.palabra}</label></li>
+                            <li onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("diccionario")' class='composed-word'><label>${word.palabra}</label></li>
                         `);
                         $(`#root-${word.raiz}`).find('.root-amount').text(function(i, val) { 
                             return parseInt(val) + 1;
@@ -249,14 +248,18 @@ $(function() {
 
         switchScreen(screenName) {
             //Elimina la clase de selección de todas las opciones de navegación.
-            $('.nav-link').removeClass('nav-selected');
+            // $('.nav-link').removeClass('nav-selected');
             //Selecciona la opción de navegación indicada.
-            $(`#nav-${screenName}`).addClass('nav-selected');
+            // $(`#nav-${screenName}`).addClass('nav-selected');
 
             //Oculta todas las secciones.
-            $('section').hide();
+            // $('section').hide();
             //Revela la sección indicada.
-            $(`#${screenName}-screen`).fadeIn(200);
+            // $(`#${screenName}-screen`).fadeIn(200);
+
+            // window.history.pushState(screenName, 'Title', `/${screenName}`);
+
+            window.location.pathname = screenName;
         }
 
         searchWord(queriedName, language, limit) {
