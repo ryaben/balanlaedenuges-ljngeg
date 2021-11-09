@@ -2,6 +2,7 @@ $(function() {
     class Handler {
         initialize() {
             this.eventsListening();
+            this.setCurrentPage();
             $('.listing-view-option:eq(1)').click();
             $('.letter-listing:eq(0)').click();
             $('.tab-btn:eq(0)').click();
@@ -246,6 +247,7 @@ $(function() {
             });
         }
 
+        //Cambia la ruta hacia otra página.
         switchScreen(screenName) {
             //Elimina la clase de selección de todas las opciones de navegación.
             // $('.nav-link').removeClass('nav-selected');
@@ -258,8 +260,12 @@ $(function() {
             // $(`#${screenName}-screen`).fadeIn(200);
 
             // window.history.pushState(screenName, 'Title', `/${screenName}`);
-
             window.location.pathname = screenName;
+        }
+
+        setCurrentPage() {
+            let currentPage = window.location.pathname.slice(1);
+            $(`#nav-${currentPage}`).addClass('nav-selected');
         }
 
         searchWord(queriedName, language, limit) {
