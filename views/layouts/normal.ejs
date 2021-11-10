@@ -11,9 +11,11 @@
 <body>
     <%- include('../partials/header.ejs') %>
     <main>
-        <%- include('../partials/navbar.ejs') %>
+        <div style="display: flex; flex-direction: column;">
+            <%- include('../partials/navbar.ejs') %>
+            <%- include('../partials/footer.ejs') %>
+        </div>
         <%- body %>
     </main>
-    <%- include('../partials/footer.ejs') %>
 </body>
 </html>
