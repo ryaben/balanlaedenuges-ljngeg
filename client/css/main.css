@@ -14,7 +14,7 @@ input {
     filter: grayscale(1);
 }
 
-nav, section, header {
+nav, section, header, footer {
     border: 2px solid black;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
@@ -39,7 +39,7 @@ nav {
     flex-direction: column;
     width: 25vw;
     min-width: 223px;
-    height: 73vh;
+    height: 66vh;
     margin: 0.25em;
 }
 
@@ -48,6 +48,14 @@ section {
     min-width: 650px;
     margin: 0.25em;
     height: 73vh;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: 5vh;
+    margin: 0.25em;
 }
 
 .nav-section {
@@ -459,6 +467,7 @@ section {
 
 #word-search {
     width: 48%;
+    margin-right: 15px;
     font-size: 1.1em;
 }
 
