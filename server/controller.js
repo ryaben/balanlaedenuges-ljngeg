@@ -1,8 +1,36 @@
-var connection= require('./mysql');
+const connection = require('./mysql');
 
 function loadDictionary(req, res) {
-    var query = `
-    SELECT 
+    let whereSearch;
+    let likeSearch;
+    let view = req.url.split('/')[1];
+
+    switch (view) {
+        case 'diccionario':
+            likeSearch = `%${req.params.search}%`;
+            break;
+        case 'listado':
+            likeSearch = `${req.params.search}%`;
+            break;
+        default:
+            likeSearch = `%${req.params.search}%`;
+            break;
+    }
+
+    switch (req.query.lang) {
+        case 'bal':
+            whereSearch = 'word.word_name';
+            break;
+        case 'esp':
+            whereSearch = 'meaning.word_definition';
+            break;
+        default:
+            whereSearch = 'word.word_name';
+            break;
+    }
+
+    let query = 
+    `SELECT
     word.id,
     word.word_name,
     type.word_type,
@@ -12,17 +40,20 @@ function loadDictionary(req, res) {
     meaning.word_example,
     word.word_root
     FROM
-	dictionary.word
+    dictionary.word
     INNER JOIN dictionary.type ON word.id = type.word_id
-    INNER JOIN dictionary.meaning ON word.id = meaning.word_id;
-    `
+    INNER JOIN dictionary.meaning ON word.id = meaning.word_id
+    WHERE ${whereSearch} LIKE '${likeSearch}'
+    LIMIT 100000;`
 
     connection.query(query, function(error, result) {
         if (error) {
-            return alert("Hubo un error al cargar el diccionario: " + error.message);
+            return console.log("Hubo un error al cargar el diccionario: " + error.message);
         } else {
-            console.log(result);
-            res.send(JSON.stringify(result));
+            res.render(view, {
+                title: `Balanlàedenuges ljngeg - ${view.charAt(0).toUpperCase() + view.slice(1)}`,
+                retrievedResults: JSON.stringify(result)
+            });
         }
     });
 }
