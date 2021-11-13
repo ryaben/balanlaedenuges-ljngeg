@@ -29,3 +29,7 @@
         
     </div>
 </section>
+<script>
+    var rawDictionary = "<%= retrievedResults %>";
+    var dictionary = JSON.parse(rawDictionary.replace(/&#34;/g, String.fromCharCode(34)).replace(/&#39;/g, String.fromCharCode(39)));
+</script>
