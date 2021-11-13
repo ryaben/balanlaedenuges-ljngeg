@@ -3,6 +3,7 @@ $(function() {
         initialize() {
             this.eventsListening();
             this.setCurrentPage();
+            this.loadLangParam();
             $('.listing-view-option:eq(1)').click();
             $('.letter-listing:eq(0)').click();
             $('.tab-btn:eq(0)').click();
@@ -10,6 +11,10 @@ $(function() {
         }
 
         eventsListening() {
+            $('#title-div').on('click', function() {
+                handler.switchScreen('/');
+            });
+
             $('#search-button').on('click', function() {
                 let language;
                 if ($('.language:eq(0)').is(':checked')) { language = 'BAL' }
@@ -75,13 +80,24 @@ $(function() {
             }
         }
 
+        //Busca el query string lang para seleccionar el idioma correspondiente.
+        loadLangParam() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const langParam = urlParams.get('lang');
+                $(`#language-${langParam}`).prop("checked", true);
+            } catch {
+                $(`#language-bal`).prop("checked", true);
+            }
+        }
+
         countGeneralStats() {
             let totalWords = 0;
             let totalRoots = [];
             let totalTypes = {};
 
             //Busca las palabras que empiezan con esa letra.
-            wordDatabase.palabras.forEach(function(word) {
+            dictionary.forEach(function(word) {
                 //Cuenta cada palabra.
                 totalWords++;
 
@@ -89,8 +105,8 @@ $(function() {
                 if (totalRoots.find(root => word.raiz === root) === undefined) { totalRoots.push(word.raiz); }
 
                 //Cuenta cada tipo de palabra.
-                word.tipo.forEach(function(tipo) {
-                    let upperCased = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+                word.forEach(function(tipo) {
+                    let upperCased = tipo.word_type.charAt(0).toUpperCase() + tipo.word_type.slice(1);
 
                     if (upperCased in totalTypes) {
                         totalTypes[upperCased]++;
@@ -107,6 +123,44 @@ $(function() {
             }
         }
 
+        displayDictionary(dictionary) {
+            let wordStack = [];
+
+            dictionary.forEach(function(word) {
+                for (let i = 0; i < wordStack.length; i++) {
+                    console.log(word.word_name);
+                    console.log(wordStack[i].word_name);
+                    if (word.word_name === wordStack[i].word_name) {
+                        const storedType = wordStack[i].word_type
+                        const storedSubtype = wordStack[i].word_subtype
+                        const storedDefinition = wordStack[i].word_definition
+                        const storedExample = wordStack[i].word_example
+
+                        wordStack[i].word_type = [
+                            storedType,
+                            word.word_type
+                        ]
+                        wordStack[i].word_subtype = [
+                            storedSubtype,
+                            word.word_subtype
+                        ]
+                        wordStack[i].word_definition = [
+                            storedDefinition,
+                            word.word_definition
+                        ]
+                        wordStack[i].word_example = [
+                            storedExample,
+                            word.word_example
+                        ]
+                    } else {
+                        wordStack.push(word);
+                    }
+                }
+            });
+
+            return wordStack;
+        }
+
         listWords(letter, listing) {
             //Vacía la lista de palabras.
             $('#word-listing').html("");
@@ -119,7 +173,7 @@ $(function() {
             let totalTypes = this.countGeneralStats().totalTypes;
 
             //Busca las palabras que empiezan con esa letra.
-            wordDatabase.palabras.forEach(function(word) {
+            dictionary.forEach(function(word) {
                 let firstLetter = word.palabra.slice(0, 1).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
                 //Si la primera letra de la palabra coincide con la letra por parámetro, se agrega.
@@ -127,7 +181,7 @@ $(function() {
                     matchedWords.push({
                         palabra: word.palabra,
                         raiz: word.raiz,
-                        tipo: word.tipo,
+                        tipo: word.word_type,
                         subtipo: word.subtipo,
                     });
                 }
@@ -149,7 +203,7 @@ $(function() {
 
             } else if (listing == 'tree') {
                 matchedWords.forEach(function(word) {
-                    word.tipo.forEach(function(tipo) {
+                    word.word_type.forEach(function(tipo) {
                         tipo.charAt(0).toUpperCase();
                     });
 
@@ -175,11 +229,11 @@ $(function() {
                     }
 
                     //Sustantivos y verbos comunes, exceptuados y extranjeros, más cualquier otro tipo principal de palabra
-                    if (word.tipo.includes('Adverbio') || word.tipo.includes('Interjección') || word.tipo.includes('Adposición') || word.tipo.includes('Pronombre') || word.tipo.includes('Artículo') || word.tipo.includes('Conjunción') || word.tipo.includes('Contracción') || word.subtipo.includes('común') || word.subtipo.includes('exceptuado') || word.subtipo.includes('extranjerismo')) {
+                    if (word.word_type.includes('Adverbio') || word.word_type.includes('Interjección') || word.word_type.includes('Adposición') || word.word_type.includes('Pronombre') || word.word_type.includes('Artículo') || word.word_type.includes('Conjunción') || word.word_type.includes('Contracción') || word.subtipo.includes('común') || word.subtipo.includes('exceptuado') || word.subtipo.includes('extranjerismo')) {
                         createRootTree();
 
                         $(`#root-${word.raiz} .compositions`).before(`
-                            <ul class='root-word' id='word-${word.palabra}' word-type='${word.tipo}' word-name='${word.palabra}'>
+                            <ul class='root-word' id='word-${word.palabra}' word-type='${word.word_type}' word-name='${word.palabra}'>
                                 <li class='root-word-title'><label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("diccionario")'>${word.palabra}</label></li>
                             </ul>
                         `);
@@ -188,7 +242,7 @@ $(function() {
                         });
 
                     //Sustantivos modificados y verbos ampliados
-                    } else if ((word.tipo.includes('Sustantivo') || word.tipo.includes('Verbo') || word.tipo.includes('Adjetivo')) && (!word.subtipo.includes('común') && !word.subtipo.includes('compuesto'))) {
+                    } else if ((word.word_type.includes('Sustantivo') || word.word_type.includes('Verbo') || word.word_type.includes('Adjetivo')) && (!word.subtipo.includes('común') && !word.subtipo.includes('compuesto'))) {
                         $(`#word-${word.raiz}`).append(`
                             <li style='color: rgb(212, 16, 16);' class='child-word'><label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("diccionario")'>${word.palabra}</label></li>
                         `);
@@ -234,7 +288,7 @@ $(function() {
                 let typeCount = 0;
 
                 matchedWords.forEach(function(word) {
-                    if (word.tipo.includes(value[0])) {
+                    if (word.word_type.includes(value[0])) {
                         typeCount++;
                     }
                 });
@@ -247,24 +301,19 @@ $(function() {
             });
         }
 
-        //Cambia la ruta hacia otra página.
+        //Cambia la ruta hacia otra página, borrando primero el query lang.
         switchScreen(screenName) {
-            //Elimina la clase de selección de todas las opciones de navegación.
-            // $('.nav-link').removeClass('nav-selected');
-            //Selecciona la opción de navegación indicada.
-            // $(`#nav-${screenName}`).addClass('nav-selected');
+            //FIXME: no anda
+            console.log(window.location.href);
+            const urlParams = new URLSearchParams(window.location.search);
 
-            //Oculta todas las secciones.
-            // $('section').hide();
-            //Revela la sección indicada.
-            // $(`#${screenName}-screen`).fadeIn(200);
-
-            // window.history.pushState(screenName, 'Title', `/${screenName}`);
+            urlParams.delete('lang');
             window.location.pathname = screenName;
         }
 
         setCurrentPage() {
-            let currentPage = window.location.pathname.slice(1);
+            // let currentPage = window.location.pathname.slice(1);
+            let currentPage = window.location.pathname.split('/')[1];
             $(`#nav-${currentPage}`).addClass('nav-selected');
         }
 
@@ -275,7 +324,7 @@ $(function() {
             let wordMatch = [];
 
             if (language == 'BAL') {
-                wordDatabase.palabras.forEach(function(word) {
+                dictionary.forEach(function(word) {
                     if ((limit == 0 || limit == undefined || limit > 1) && word.palabra.toLowerCase().includes(queriedName.toLowerCase())) {
                         return wordMatch.push(word);
                     } else if (limit == 1 && word.palabra.toLowerCase() == queriedName.toLowerCase()) {
@@ -294,7 +343,7 @@ $(function() {
                     ' ' + queriedName.toLowerCase() + ')',
                 ]
 
-                wordDatabase.palabras.forEach(function(word) {
+                dictionary.forEach(function(word) {
                     word.acepciones.forEach(function(acepcion) {
                         if (acepcion.substring(0, queriedName.length).toLowerCase() == queriedName.toLowerCase()) {
                             validMatches.push(queriedName.toLowerCase() + ' ');
