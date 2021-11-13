@@ -15,8 +15,14 @@ app.set('view engine', 'ejs');
 //Rutas
 app.get('/:name', (req, res) => {
     let capitalizedName = req.params.name.charAt(0).toUpperCase() + req.params.name.slice(1);
-    res.render(req.params.name, { title: `Balanlàedenuges ljngeg - ${capitalizedName}`});
+    res.render(req.params.name, {
+        title: `Balanlàedenuges ljngeg - ${capitalizedName}`,
+        retrievedResults: ""
+    });
 });
+app.get('/diccionario/:search', controller.loadDictionary);
+app.get('/listado/:search', controller.loadDictionary);
+
 
 app.listen(port, () => {
     console.log(`Now listening on port ${port}`); 
