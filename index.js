@@ -17,11 +17,11 @@ app.get('/:name', (req, res) => {
     let capitalizedName = req.params.name.charAt(0).toUpperCase() + req.params.name.slice(1);
     res.render(req.params.name, {
         title: `Balanlàedenuges ljngeg - ${capitalizedName}`,
-        retrievedResults: ""
+        retrievedResults: "",
     });
 });
-app.get('/diccionario/:search', controller.loadDictionary);
-app.get('/listado/:search', controller.loadDictionary);
+app.get('/diccionario/:search', controller.loadFilteredDictionary);
+app.get('/listado/:search', controller.loadFilteredDictionary);
 
 
 app.listen(port, () => {

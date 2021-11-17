@@ -117,6 +117,12 @@ footer {
     border-radius: 4px;
 }
 
+.result-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .type-name, .subtype-name {
     margin: 10px 0 5px 0;
 }
@@ -149,9 +155,24 @@ footer {
 }
 
 .word-name {
+    display: flex;
     font-size: 1.5em;
     font-weight: bold;
-    margin: 0 auto 0 auto;
+    margin: 0;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.favorite-icon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.word-root {
+    font-size: 0.8em;
+    margin-top: 3px;
+    margin-bottom: 12px;
 }
 
 .word-meanings {
@@ -473,8 +494,21 @@ footer {
 
 #word-search {
     width: 48%;
-    margin-right: 15px;
     font-size: 1.1em;
+    border: 1px solid darkgray;
+    border-right: none;
+}
+
+#perfect-match-container {
+    display: flex;
+    align-items: center;
+    font-size: 0.7em;
+    text-align: center;
+    background-color: white;
+    border: 1px solid darkgray;
+    border-left: 1px dashed darkgray;
+    margin-right: 15px;
+    padding-right: 5px;
 }
 
 #search-button {
@@ -522,7 +556,7 @@ footer {
 
 #stats-bar {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     margin: 10px;
 }
 
@@ -539,6 +573,12 @@ footer {
     align-items: center;
     width: 30%;
     margin: 10px;
+}
+
+#footer-description {
+    font-size: 0.9em;
+    max-width: 25vw;
+    margin: auto 5px auto 5px;
 }
 
 @media only screen and (max-width: 974px) {

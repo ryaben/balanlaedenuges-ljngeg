@@ -2,25 +2,48 @@ $(function() {
     class Handler {
         initialize() {
             this.eventsListening();
+            this.checkFavorites();
             this.setCurrentPage();
-            this.loadLangParam();
+            this.setSearchDefaults('lang');
+            this.setSearchDefaults('limit');
+            this.displayDictionary(dictionary, this.loadParam('limit'));
             $('.listing-view-option:eq(1)').click();
             $('.letter-listing:eq(0)').click();
             $('.tab-btn:eq(0)').click();
-            $('#word-count').html('<b>Palabras registradas</b>: ' + this.countGeneralStats().totalWords);
+            $('#word-count').html('<b>Palabras registradas</b>: ' + totalWords);
         }
 
         eventsListening() {
             $('#title-div').on('click', function() {
-                handler.switchScreen('/');
+                window.location = '/'
             });
 
             $('#search-button').on('click', function() {
                 let language;
-                if ($('.language:eq(0)').is(':checked')) { language = 'BAL' }
-                else if ($('.language:eq(1)').is(':checked')) { language = 'ESP' }
+                let limit;
 
-                handler.searchWord($('#word-search').val(), language);
+                if ($('.language:eq(0)').is(':checked')) { language = 'bal' }
+                else if ($('.language:eq(1)').is(':checked')) { language = 'esp' }
+
+                if ($('#perfect-match').is(':checked')) { limit = 1 }
+                else { limit = 0 }
+
+                handler.searchWord($('#word-search').val(), language, limit);
+            });
+
+            $('#search-button').on('keypress', function(event) {
+                if (event.which == '13') {
+                    let language;
+                    let limit;
+
+                    if ($('.language:eq(0)').is(':checked')) { language = 'bal' }
+                    else if ($('.language:eq(1)').is(':checked')) { language = 'esp' }
+
+                    if ($('#perfect-match').is(':checked')) { limit = 1 }
+                    else { limit = 0 }
+
+                    handler.searchWord($('#word-search').val(), language, limit);
+                }
             });
             
             $('.special-character').on('click', function() {
@@ -28,7 +51,11 @@ $(function() {
             });
 
             $('.nav-link').on('click', function() {
-                handler.switchScreen($(this).attr('id').slice(4));
+                window.location = `/${$(this).attr('id').slice(4)}`
+            });
+
+            $('#search-result').on('click', '.favorite-icon', function() {
+                handler.toggleFavorite($(this).closest('.searched-word').attr('id').slice(5));
             });
 
             $('.letter-listing').on('click', function() {
@@ -81,84 +108,167 @@ $(function() {
         }
 
         //Busca el query string lang para seleccionar el idioma correspondiente.
-        loadLangParam() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                const langParam = urlParams.get('lang');
-                $(`#language-${langParam}`).prop("checked", true);
-            } catch {
-                $(`#language-bal`).prop("checked", true);
+        loadParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentParam = urlParams.get(param);
+            return currentParam;
+        }
+
+        setSearchDefaults(param) {
+            switch (this.loadParam(param)) {
+                case 'bal':
+                    $(`#language-bal`).prop("checked", true);
+                    break;
+                case 'esp':
+                    $(`#language-esp`).prop("checked", true);
+                    break;
+                case '1':
+                    $('#perfect-match').prop('checked', true);
+                    break;
+                case '0':
+                    $('#perfect-match').prop('checked', false);
+                    break;
+                default:
+                    $(`#language-bal`).prop("checked", true);
+                    $('#perfect-match').prop('checked', false);
+                    break;
+            }
+
+            $('#word-search').val(window.location.pathname.split('/')[2]);
+        }
+
+        //Redirecciona según string de búsqueda.
+        searchWord(searchString, language, limit) {
+            window.location = `/diccionario/${searchString}?lang=${language}&limit=${limit}`;
+        }
+
+        //Busca el storage de favoritos y crea uno vacío si no lo encuentra.
+        checkFavorites() {
+            if (localStorage.getItem('favoritesStorage') == null) {
+                localStorage.setItem('favoritesStorage', '[]');
             }
         }
 
-        countGeneralStats() {
-            let totalWords = 0;
-            let totalRoots = [];
-            let totalTypes = {};
+        //Invierte el estado de favorito de una palabra.
+        toggleFavorite(wordID) {
+            let currentStatus = this.getFavoriteStatus(wordID);
+            let favoritesStorage = JSON.parse(localStorage.getItem('favoritesStorage'));
 
-            //Busca las palabras que empiezan con esa letra.
-            dictionary.forEach(function(word) {
-                //Cuenta cada palabra.
-                totalWords++;
-
-                //Agrega cada raíz diferente para luego contarlas.
-                if (totalRoots.find(root => word.raiz === root) === undefined) { totalRoots.push(word.raiz); }
-
-                //Cuenta cada tipo de palabra.
-                word.forEach(function(tipo) {
-                    let upperCased = tipo.word_type.charAt(0).toUpperCase() + tipo.word_type.slice(1);
-
-                    if (upperCased in totalTypes) {
-                        totalTypes[upperCased]++;
-                    } else {
-                        totalTypes[upperCased] = 1;
-                    }
-                });
-            });
-
-            return {
-                totalWords: totalWords,
-                totalRoots: totalRoots,
-                totalTypes: totalTypes
+            switch (currentStatus) {
+                case false:
+                    favoritesStorage.push(wordID);
+                    $(`#word-${wordID}`).find('.favorite-icon').fadeOut(100, function() {
+                        $(this).attr('src', '/client/img/favorite.png');
+                        $(this).fadeIn(100);
+                    });
+                    break;
+                case true:
+                    let wordIndex = favoritesStorage.indexOf(wordID)
+                    favoritesStorage.splice(wordIndex, 1);
+                    $(`#word-${wordID}`).find('.favorite-icon').fadeOut(100, function() {
+                        $(this).attr('src', '/client/img/non-favorite.png');
+                        $(this).fadeIn(100);
+                    });
+                    break;
+                default:
+                    break;
             }
+
+            localStorage.setItem('favoritesStorage', JSON.stringify(favoritesStorage));
         }
 
-        displayDictionary(dictionary) {
-            let wordStack = [];
+        //Busca en los favoritos del storage la presencia de una palabra según ID.
+        getFavoriteStatus(wordID) {
+            let status = false;
+            let favoritesStorage = JSON.parse(localStorage.getItem('favoritesStorage'));
 
-            dictionary.forEach(function(word) {
-                for (let i = 0; i < wordStack.length; i++) {
-                    console.log(word.word_name);
-                    console.log(wordStack[i].word_name);
-                    if (word.word_name === wordStack[i].word_name) {
-                        const storedType = wordStack[i].word_type
-                        const storedSubtype = wordStack[i].word_subtype
-                        const storedDefinition = wordStack[i].word_definition
-                        const storedExample = wordStack[i].word_example
-
-                        wordStack[i].word_type = [
-                            storedType,
-                            word.word_type
-                        ]
-                        wordStack[i].word_subtype = [
-                            storedSubtype,
-                            word.word_subtype
-                        ]
-                        wordStack[i].word_definition = [
-                            storedDefinition,
-                            word.word_definition
-                        ]
-                        wordStack[i].word_example = [
-                            storedExample,
-                            word.word_example
-                        ]
-                    } else {
-                        wordStack.push(word);
-                    }
+            favoritesStorage.forEach(function(favorite) {
+                if (favorite == wordID) {
+                    status = true;
+                    return;
                 }
             });
 
-            return wordStack;
+            return status;
+        }
+
+        //Renderiza los resultados de la query.
+        displayDictionary(dictionary, limit) {
+            let displayDelay = 50;
+            let fadeDuration = 200;
+            let dictionaryLimit = limit;
+
+            if (limit == 0) {
+                dictionaryLimit = dictionary.length;
+                dictionary.sort((a, b) => (a.word_name > b.word_name) ? 1 : -1);
+            }
+
+            for (let i = 0; i < dictionaryLimit; i++) {
+                const word = dictionary[i];
+                
+                let concatType = '';
+                let concatSubtype = '(';
+                let concatMeaning = '';
+                let favoriteStatus;
+
+                for (let i = 1; i <= 5; i++) {
+                    const currentType = word[`word_type${i}`];
+                    const currentSubtype = word[`word_subtype${i}`];
+                    const currentDefinition = word[`word_definition${i}`];
+                    const currentExample = word[`word_example${i}`];
+
+                    if (currentType != "") {
+                        if (i > 1 ) {
+                            concatType += ',&nbsp;';
+                        }
+                        concatType += currentType;
+                    }
+                    if (currentSubtype != "") {
+                        if (i > 1 ) {
+                            concatSubtype += ',&nbsp;';
+                        }
+                        concatSubtype += currentSubtype;
+                    }
+                    if (currentDefinition != "") {
+                        concatMeaning += `<li class='word-meaning'>${currentDefinition}</li>`;
+                    }
+                    if (currentExample != "") {
+                        concatMeaning += `<ul style='padding: 0;'><li class='word-example'>${currentExample}</li></ul>`;
+                    }
+                }
+
+                concatSubtype += ')';
+
+                switch (handler.getFavoriteStatus(word.id)) {
+                    case true:
+                        favoriteStatus = 'favorite';
+                        break;
+                    case false:
+                        favoriteStatus = 'non-favorite';
+                        break;
+                    default:
+                        favoriteStatus = 'non-favorite';
+                        break;
+                }
+
+                setTimeout(function() {
+                    $(`
+                        <div id="word-${word.id}" class='searched-word' style='display: none;'>
+                            <div class='result-title'>
+                                <h2 class='word-name'>${word.word_name}</h2>
+                                <img class='favorite-icon' src='/client/img/${favoriteStatus}.png' alt='Favorite'>
+                            </div>
+                            <p class='word-root'>(en raíz&nbsp;<i>${word.word_root}</i>)</p>
+                            <p class='word-type'>${concatType}&nbsp;${concatSubtype}</p>
+                            <p class='word-description'>${word.word_description}</p>
+                            <hr style='border-top: 1px solid black;'>
+                            <p style='font-weight: bold;'>Acepciones:</p>
+                            <ol class='word-meanings'>${concatMeaning}</ol>
+                        </div>
+                    `).appendTo('#search-result').fadeIn(fadeDuration);
+                }, displayDelay);
+                displayDelay += fadeDuration;
+            }
         }
 
         listWords(letter, listing) {
@@ -301,137 +411,10 @@ $(function() {
             });
         }
 
-        //Cambia la ruta hacia otra página, borrando primero el query lang.
-        switchScreen(screenName) {
-            //FIXME: no anda
-            console.log(window.location.href);
-            const urlParams = new URLSearchParams(window.location.search);
-
-            urlParams.delete('lang');
-            window.location.pathname = screenName;
-        }
-
         setCurrentPage() {
             // let currentPage = window.location.pathname.slice(1);
             let currentPage = window.location.pathname.split('/')[1];
             $(`#nav-${currentPage}`).addClass('nav-selected');
-        }
-
-        searchWord(queriedName, language, limit) {
-            //Borra el contenido actual perteneciente a la búsqueda anterior.
-            $('#search-result').html("");
-
-            let wordMatch = [];
-
-            if (language == 'BAL') {
-                dictionary.forEach(function(word) {
-                    if ((limit == 0 || limit == undefined || limit > 1) && word.palabra.toLowerCase().includes(queriedName.toLowerCase())) {
-                        return wordMatch.push(word);
-                    } else if (limit == 1 && word.palabra.toLowerCase() == queriedName.toLowerCase()) {
-                        return wordMatch.push(word);
-                    }
-                });
-
-            } else if (language == 'ESP') {
-                let validMatches = [
-                    ' ' + queriedName.toLowerCase() + ' ', 
-                    ' ' + queriedName.toLowerCase() + '.', 
-                    ' ' + queriedName.toLowerCase() + ',',
-                    '(' + queriedName.toLowerCase() + ',',
-                    '(' + queriedName.toLowerCase() + ' ',
-                    '(' + queriedName.toLowerCase() + ')',
-                    ' ' + queriedName.toLowerCase() + ')',
-                ]
-
-                dictionary.forEach(function(word) {
-                    word.acepciones.forEach(function(acepcion) {
-                        if (acepcion.substring(0, queriedName.length).toLowerCase() == queriedName.toLowerCase()) {
-                            validMatches.push(queriedName.toLowerCase() + ' ');
-                            validMatches.push(queriedName.toLowerCase() + '.');
-                            validMatches.push(queriedName.toLowerCase() + ',');
-                        }
-                        
-                        for (let index = 0; index < validMatches.length; index++) {
-                            if (acepcion.toLowerCase().includes(validMatches[index]) && (limit == 0 || limit == undefined || limit > 1) && wordMatch.indexOf(word) == -1) {
-                                return wordMatch.push(word);
-                            } else if (limit == 1 && acepcion.toLowerCase() == queriedName.toLowerCase()) {
-                                return wordMatch.push(word);
-                            }
-                        }
-                    });
-                });
-            }
-
-            //Ordena alfabéticamente las coincidencias.
-            wordMatch.sort((a, b) => (a.palabra > b.palabra) ? 1 : -1);
-            //Recorta las coincidencias en base al límite.
-            if (limit != undefined && limit > 0) {
-                wordMatch.splice(limit);
-            }
-
-            if (wordMatch.length > 0) {
-                wordMatch.forEach(function(match) {
-                    $(`
-                        <div class='searched-word' style='display: none;'>
-                            <h2 class='word-name'></h2>
-                            <p class='word-type'></p>
-                            <p class='word-description'></p>
-                            <hr style='border-top: 1px solid black;'>
-                            <p style='font-weight: bold;'>Acepciones:</p>
-                            <ol class='word-meanings'></ol>
-                        </div>
-                    `).appendTo('#search-result').fadeIn(400);
-
-                    let currentMatches = $('.searched-word').length - 1;
-                    let currentWordType = $(`.word-type:eq(${currentMatches})`);
-
-                    //Añade los valores de la coincidencia actual.
-                    $(`.word-name:eq(${currentMatches})`).text(match.palabra);
-                        
-                    match.tipo.forEach(function(tipo, index) {
-                        currentWordType.text(currentWordType.text() + tipo);
-    
-                        if (index < match.tipo.length - 1) {
-                            currentWordType.text(currentWordType.text() + ", ");
-                        }
-    
-                        if (index === match.tipo.length - 1) {
-                            currentWordType.text(currentWordType.text() + " (");
-                        }
-                    });
-
-                    match.subtipo.forEach(function(subtipo, index) {
-                        currentWordType.text(currentWordType.text() + subtipo);
-    
-                        if (index < match.subtipo.length - 1) {
-                            currentWordType.text(currentWordType.text() + ", ");
-                        }
-    
-                        if (index === match.subtipo.length - 1) {
-                            currentWordType.text(currentWordType.text() + ")");
-                        }
-                    });
-    
-                    $(`.word-description:eq(${currentMatches})`).html(match.descripcion);
-    
-                    match.acepciones.forEach(function(acepcion, index) {
-                        $(`.word-meanings:eq(${currentMatches})`).append(`<li class='word-meaning'>${acepcion}</li>`);
-
-                        try {
-                            $(`.word-meanings:eq(${currentMatches})`).append(`<ul style='padding: 0;'><li class='word-example'>${match.ejemplos[index]}</li></ul>`);
-                        } catch {
-                            $(`.word-meanings:eq(${currentMatches})`).append(`<ul style='padding: 0;'><li class='word-example'>Ejemplo no encontrado.</li></ul>`);
-                        }
-                    });
-                });
-
-            } else {
-                $(`
-                <div class='empty-search' style='display: none;'>
-                    La búsqueda no arrojó resultados.
-                </div>
-                `).appendTo('#search-result').fadeIn(400);
-            }
         }
     }
 
