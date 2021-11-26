@@ -82,7 +82,7 @@ function loadFilteredDictionary(req, res) {
             OR definition.word_definition5 LIKE '${likeSearch}'`;
             break;
         default:
-            whereSearch = 'word.word_name';
+            whereSearch = `word.word_name LIKE '${likeSearch}'`;
             break;
     }
 
@@ -96,6 +96,7 @@ function loadFilteredDictionary(req, res) {
                 title: `Balanlàedenuges ljngeg - ${view.charAt(0).toUpperCase() + view.slice(1)}`,
                 retrievedResults: JSON.stringify(result)
             });
+            console.log(JSON.stringify(result));
         }
     });
 }

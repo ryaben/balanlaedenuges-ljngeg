@@ -7,10 +7,11 @@ $(function() {
             this.setSearchDefaults('lang');
             this.setSearchDefaults('limit');
             this.displayDictionary(dictionary, this.loadParam('limit'));
+            this.displaySearchStats(dictionary);
             $('.listing-view-option:eq(1)').click();
             $('.letter-listing:eq(0)').click();
             $('.tab-btn:eq(0)').click();
-            $('#word-count').html('<b>Palabras registradas</b>: ' + totalWords);
+            $('#word-count').html('<b>Palabras registradas</b>: ');
         }
 
         eventsListening() {
@@ -140,6 +141,20 @@ $(function() {
         //Redirecciona según string de búsqueda.
         searchWord(searchString, language, limit) {
             window.location = `/diccionario/${searchString}?lang=${language}&limit=${limit}`;
+        }
+
+        countSearchStats(dictionary) {
+            let foundWords = dictionary.length;
+
+            return {
+                foundWords: foundWords
+            }
+        }
+
+        displaySearchStats(dictionary) {
+            let searchStats = this.countSearchStats(dictionary);
+
+            $('#found-words').text(`Coincidencias: ${searchStats.foundWords}`);
         }
 
         //Busca el storage de favoritos y crea uno vacío si no lo encuentra.

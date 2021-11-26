@@ -529,6 +529,14 @@ footer {
     justify-content: space-between;
 }
 
+#result-stats {
+    background-color: lightgrey;
+    border-bottom-left-radius: 6px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-top: 2px solid black;
+}
+
 #letters-box {
     display: flex;
     justify-content: space-between;
