@@ -351,7 +351,7 @@ footer {
 }
 
 .word-segmentation {
-    margin: 10px 20px 10px 20px;
+    margin: 0px 20px 10px 23px;
 }
 
 .word-segment {
@@ -535,6 +535,10 @@ footer {
     padding-left: 15px;
     padding-right: 15px;
     border-top: 2px solid black;
+}
+
+#found-words {
+    margin: 8px 0 8px 0;
 }
 
 #letters-box {
