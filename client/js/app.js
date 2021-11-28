@@ -1,17 +1,34 @@
 $(function() {
     class Handler {
+        constructor() {
+            this.pageView = window.location.pathname.split('/')[1]
+            this.limitParam = this.loadParam('limit');
+            this.listingParam = this.loadParam('listing');
+        }
+
         initialize() {
             this.eventsListening();
             this.checkFavorites();
-            this.setCurrentPage();
-            this.setSearchDefaults('lang');
-            this.setSearchDefaults('limit');
-            this.displayDictionary(dictionary, this.loadParam('limit'));
-            this.displaySearchStats(dictionary);
-            $('.listing-view-option:eq(1)').click();
-            $('.letter-listing:eq(0)').click();
+            this.setCurrentPage(this.pageView);
+
+            switch (this.pageView) {
+                case "diccionario":
+                    this.setSearchDefaults('lang');
+                    this.setSearchDefaults('limit');
+                    this.displayDictionary(dictionary, this.limitParam);
+                    this.displaySearchStats(dictionary);
+                    break;
+                case "listado":
+                    this.listWords(dictionary, this.listingParam);
+                    this.changeListingView(this.listingParam);
+                    this.setCurrentListing(this.listingParam);
+                    this.setCurrentLetter(window.location.pathname.split('/')[2])
+                    break;
+                default:
+                    break;
+            }
+
             $('.tab-btn:eq(0)').click();
-            $('#word-count').html('<b>Palabras registradas</b>: ');
         }
 
         eventsListening() {
@@ -46,13 +63,19 @@ $(function() {
                     handler.searchWord($('#word-search').val(), language, limit);
                 }
             });
-            
+
             $('.special-character').on('click', function() {
                 $('#word-search').val($('#word-search').val() + $(this).text());
             });
 
             $('.nav-link').on('click', function() {
-                window.location = `/${$(this).attr('id').slice(4)}`
+                let view = $(this).attr('id').slice(4);
+
+                if (view === "listado") {
+                    window.location = `/listado/a?listing=tree`
+                } else {
+                    window.location = `/${view}`
+                }
             });
 
             $('#search-result').on('click', '.favorite-icon', function() {
@@ -60,14 +83,14 @@ $(function() {
             });
 
             $('.letter-listing').on('click', function() {
-                $('.letter-listing').removeClass('letter-selected');
-                $(this).addClass('letter-selected');
-                handler.listWords($(this).text(), $('.listing-view:checked').val());
+                let letter = $(this).attr("id").slice(7);
+                window.location = `/listado/${letter}?listing=${handler.loadParam("listing")}`;
             });
 
             $('.listing-view').on('change', function() {
-                handler.changeListingView($(this).val());
-                handler.listWords($('.letter-selected').text(), $(this).val());
+                var searchParams = new URLSearchParams(window.location.search);
+                searchParams.set("listing", $(this).val());
+                window.location.search = searchParams.toString();
             });
 
             $('.tab-btn').on('click', function() {
@@ -85,9 +108,6 @@ $(function() {
                 $(this).closest('.root-tree').find('.root-word-title').toggle(200, 'linear');
                 $(this).closest('.root-tree').find('.child-word').toggle(200, 'linear');
                 $(this).closest('.root-tree').find('.composed-word').toggle(200, 'linear');
-
-                let unfoldBtn = $(this).find('.unfold-button');
-                if (unfoldBtn.text() == '▼') { unfoldBtn.text('◀') } else { unfoldBtn.text('▼') }
             });
         }
 
@@ -153,8 +173,9 @@ $(function() {
 
         displaySearchStats(dictionary) {
             let searchStats = this.countSearchStats(dictionary);
+            let foundWordsText = $('#found-words').text();
 
-            $('#found-words').text(`Coincidencias: ${searchStats.foundWords}`);
+            $('#found-words').text(foundWordsText + searchStats.foundWords);
         }
 
         //Busca el storage de favoritos y crea uno vacío si no lo encuentra.
@@ -220,7 +241,7 @@ $(function() {
 
             for (let i = 0; i < dictionaryLimit; i++) {
                 const word = dictionary[i];
-                
+
                 let concatType = '';
                 let concatSubtype = '(';
                 let concatMeaning = '';
@@ -286,150 +307,112 @@ $(function() {
             }
         }
 
-        listWords(letter, listing) {
-            //Vacía la lista de palabras.
-            $('#word-listing').html("");
+        //Lista todas las palabras del diccionario.
+        listWords(dictionary, listing) {
+            dictionary.sort((a, b) => (a.word_name > b.word_name) ? 1 : -1);
 
-            let matchedWords = [];
-            
-            //Calcula las estadísticas generales.
-            let totalWords = this.countGeneralStats().totalWords;
-            let totalRoots = this.countGeneralStats().totalRoots;
-            let totalTypes = this.countGeneralStats().totalTypes;
-
-            //Busca las palabras que empiezan con esa letra.
-            dictionary.forEach(function(word) {
-                let firstLetter = word.palabra.slice(0, 1).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-                //Si la primera letra de la palabra coincide con la letra por parámetro, se agrega.
-                if (firstLetter === letter) {
-                    matchedWords.push({
-                        palabra: word.palabra,
-                        raiz: word.raiz,
-                        tipo: word.word_type,
-                        subtipo: word.subtipo,
+            switch (listing) {
+                case "list":
+                    dictionary.forEach(function(word) {
+                        $('#word-listing').append(`
+                            <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")' class='listed-word'>${word.word_name}</label>
+                        `);
                     });
-                }
-            });
-
-            //Ordena los tipos obtenidos.
-            let valueTypes = Object.entries(totalTypes).sort((a,b) => b[1]-a[1]);
-
-            //Ordena alfabéticamente.
-            matchedWords.sort((a, b) => (a.palabra > b.palabra) ? 1 : -1);
-
-            //Agrega visualmente cada palabra válida.
-            if (listing == 'list') {
-                matchedWords.forEach(function(word) {
-                    $('#word-listing').append(`
-                        <label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("diccionario")' class='listed-word'>${word.palabra}</label>
-                    `);
-                });
-
-            } else if (listing == 'tree') {
-                matchedWords.forEach(function(word) {
-                    word.word_type.forEach(function(tipo) {
-                        tipo.charAt(0).toUpperCase();
-                    });
-
-                    function createRootTree() {
-                        //Busca la entrada de la raíz y agrega la palabra.
-                        if ($(`#root-${word.raiz}`).length === 0) {
-                            $('#word-listing').append(`
-                                <ul class='root-tree' id='root-${word.raiz}' root-name='${word.raiz}'>
-                                    <li class='root-tree-title'><label class='root-tree-title-label' onclick='handler.searchWord("${word.raiz}", "BAL", 0); handler.switchScreen("diccionario")'>${word.raiz}</label>
-                                    <div class='root-extra'>
-                                        <div class='root-amount-group'>
-                                            <label class='root-amount'>0</label>
-                                            <label> palabra(s)</label>
-                                        </div>
-                                        <label class='unfold-button' style='font-style: normal;'>◀</label></li>
-                                    </div>
-                                    <ul class='compositions'>
-
+                    break;
+                case "tree":
+                    dictionary.forEach(function(word) {
+                        function createRootTree() {
+                            //Busca la entrada de la raíz y agrega la palabra.
+                            if ($(`#root-${word.word_root}`).length === 0) {
+                                $('#word-listing').append(`
+                                    <ul class='root-tree' id='root-${word.word_root}' root-name='${word.word_root}'>
+                                        <li class='root-tree-title'><label class='root-tree-title-label' onclick='handler.searchWord("${word.word_root}", "bal", 0); handler.switchScreen("diccionario")'>${word.word_root}</label>
+                                            <div class='root-extra'>
+                                                <div class='root-amount-group'>
+                                                    <label class='root-amount'>0</label>
+                                                    <label> palabra(s)</label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <ul class='compositions'>
+    
+                                        </ul>
                                     </ul>
-                                </ul>
-                            `);
+                                `);
+                            }
                         }
-                    }
 
-                    //Sustantivos y verbos comunes, exceptuados y extranjeros, más cualquier otro tipo principal de palabra
-                    if (word.word_type.includes('Adverbio') || word.word_type.includes('Interjección') || word.word_type.includes('Adposición') || word.word_type.includes('Pronombre') || word.word_type.includes('Artículo') || word.word_type.includes('Conjunción') || word.word_type.includes('Contracción') || word.subtipo.includes('común') || word.subtipo.includes('exceptuado') || word.subtipo.includes('extranjerismo')) {
-                        createRootTree();
+                        let criterion = {
+                            criteria1: [
+                                "Adverbio", "Interjeción", "Adposición", "Pronombre",
+                                "Artículo", "Conjunción", "Contracción", "común",
+                                "exceptuado", "extranjerismo"
+                            ],
+                            criteria2: {
+                                criteria2_1: [
+                                    "Sustantivo", "Verbo", "Adjetivo"
+                                ],
+                                criteria2_2: [
+                                    "común", "compuesto"
+                                ]
+                            }
+                        }
 
-                        $(`#root-${word.raiz} .compositions`).before(`
-                            <ul class='root-word' id='word-${word.palabra}' word-type='${word.word_type}' word-name='${word.palabra}'>
-                                <li class='root-word-title'><label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("diccionario")'>${word.palabra}</label></li>
-                            </ul>
-                        `);
-                        $(`#root-${word.raiz}`).find('.root-amount').text(function(i, val) { 
-                            return parseInt(val) + 1;
-                        });
+                        for (let i = 1; i <= 5; i++) {
+                            let currentType = word[`word_type${i}`];
+                            let currentSubtype = word[`word_subtype${i}`];
 
-                    //Sustantivos modificados y verbos ampliados
-                    } else if ((word.word_type.includes('Sustantivo') || word.word_type.includes('Verbo') || word.word_type.includes('Adjetivo')) && (!word.subtipo.includes('común') && !word.subtipo.includes('compuesto'))) {
-                        $(`#word-${word.raiz}`).append(`
-                            <li style='color: rgb(212, 16, 16);' class='child-word'><label onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("diccionario")'>${word.palabra}</label></li>
-                        `);
-                        $(`#word-${word.raiz}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
-                            return parseInt(val) + 1;
-                        });
+                            //Sustantivos y verbos comunes, exceptuados y extranjeros, más cualquier otro tipo principal de palabra
+                            if (currentType.includes('Adverbio') || currentType.includes('Interjección') || currentType.includes('Adposición') || currentType.includes('Pronombre') || currentType.includes('Artículo') || currentType.includes('Conjunción') || currentType.includes('Contracción') || currentSubtype.includes('común') || currentSubtype.includes('exceptuado') || currentSubtype.includes('extranjerismo')) {
+                                createRootTree();
 
-                    //Palabras compuestas
-                    } else if (word.subtipo.includes('compuesto')) {
-                        createRootTree();
-                        
-                        $(`#root-${word.raiz}`).find('.compositions').append(`
-                            <li onclick='handler.searchWord("${word.palabra}", "BAL", 1); handler.switchScreen("diccionario")' class='composed-word'><label>${word.palabra}</label></li>
-                        `);
-                        $(`#root-${word.raiz}`).find('.root-amount').text(function(i, val) { 
-                            return parseInt(val) + 1;
-                        });
-                    }
-                });
+                                $(`#root-${word.word_root} .compositions`).before(`
+                                    <ul class='root-word' id='word-${word.word_name}' word-type='${'word.word_type' + i}' word-name='${word.word_name}'>
+                                        <li class='root-word-title'><label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label></li>
+                                    </ul>
+                                `);
+                                $(`#root-${word.word_root}`).find('.root-amount').text(function(i, val) {
+                                    return parseInt(val) + 1;
+                                });
+
+                            //Sustantivos modificados y verbos ampliados
+                            } else if ((currentType.includes('Sustantivo') || currentType.includes('Verbo') || currentType.includes('Adjetivo')) && (!currentSubtype.includes('común') && !currentSubtype.includes('compuesto'))) {
+                                $(`#word-${word.word_root}`).append(`
+                                    <li style='color: rgb(212, 16, 16);' class='child-word'><label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label></li>
+                                `);
+                                $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
+                                    return parseInt(val) + 1;
+                                });
+
+                            //Palabras compuestas
+                            } else if (currentSubtype.includes('compuesto')) {
+                                createRootTree();
+
+                                $(`#root-${word.word_root}`).find('.compositions').append(`
+                                    <li onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")' class='composed-word'><label>${word.word_name}</label></li>
+                                `);
+                                $(`#root-${word.word_root}`).find('.root-amount').text(function(i, val) {
+                                    return parseInt(val) + 1;
+                                });
+                            }  
+                        }
+                    });
+                    break;
+                default:
+                    break;
             }
-
-            //Aplica estadísticas visuales.
-            $('#listing-stats').html('');
-            $('#listing-stats').append(`
-                <label class='listing-header'>Aspecto/Valores</label>
-                <label class='listing-header'>Totales</label>
-                <label class='listing-header'></label>
-                <label class='listing-aspect' style='font-weight: bold;'>Raíces</label>
-                <label class='stat-to-fill'></label>
-                <label class='stat-to-fill'></label>
-                <label class='listing-aspect' style='border-bottom: 2px solid indianred;font-weight: bold;'>Palabras</label>
-                <label class='stat-to-fill' style='border-bottom: 2px solid indianred;'></label>
-                <label class='stat-to-fill' style='border-bottom: 2px solid indianred;'></label>
-            `);
-
-            $('.listing-header:eq(2)').html(`Inician con <b>${letter}</b>`);
-            $('.stat-to-fill:eq(0)').text(totalRoots.length);
-            $('.stat-to-fill:eq(1)').text($('.root-tree').length);
-            $('.stat-to-fill:eq(2)').text(totalWords);
-            $('.stat-to-fill:eq(3)').text(matchedWords.length);
-
-            valueTypes.forEach(function(value) {
-                let typeCount = 0;
-
-                matchedWords.forEach(function(word) {
-                    if (word.word_type.includes(value[0])) {
-                        typeCount++;
-                    }
-                });
-
-                $('#listing-stats').append(`
-                    <label class='listing-aspect'>${value[0]}</label>
-                    <label class='stat-to-fill'>${value[1]}</label>
-                    <label class='stat-to-fill'>${typeCount}</label>
-                `);
-            });
         }
 
-        setCurrentPage() {
-            // let currentPage = window.location.pathname.slice(1);
-            let currentPage = window.location.pathname.split('/')[1];
-            $(`#nav-${currentPage}`).addClass('nav-selected');
+        setCurrentPage(page) {
+            $(`#nav-${page}`).addClass('nav-selected');
+        }
+
+        setCurrentLetter(letter) {
+            $(`#letter-${letter}`).addClass('letter-selected');
+        }
+
+        setCurrentListing(view) {
+            $(`#listing-${view}`).prop("checked", true);
         }
     }
 
