@@ -3,12 +3,6 @@
     <div class='info-listing' id='word-listing'>
         
     </div>
-    <div class='info-listing' id='listing-stats'>
-    
-    </div>
     <%- include('./partials/listing-bottombar.ejs') %>
 </section>
-<script>
-    var rawDictionary = "<%= retrievedResults %>";
-    var dictionary = JSON.parse(rawDictionary.replace(/&#34;/g, String.fromCharCode(34)).replace(/&#39;/g, String.fromCharCode(39)));
-</script>
+<%- include('./partials/global-variables.ejs') %>
