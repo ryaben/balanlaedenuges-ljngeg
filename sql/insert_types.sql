@@ -1,3 +1,5 @@
+-- Criterios: primer tipo con mayúscula, el resto no.
+
 CREATE TABLE IF NOT EXISTS `dictionary`.`type` (
 id INT PRIMARY KEY AUTO_INCREMENT, 
 word_type1 VARCHAR(45),

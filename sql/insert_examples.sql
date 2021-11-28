@@ -1,3 +1,5 @@
+-- Criterios: no insertar múltiples líneas.
+
 CREATE TABLE IF NOT EXISTS `dictionary`.`example` (
 id INT PRIMARY KEY AUTO_INCREMENT,
 word_example1 VARCHAR(500),
@@ -62,8 +64,7 @@ VALUES
 ("Öl göljwùjk-süjkar öles fjalaj.","","","",""),
 ("Klaej süjkaenjàgaj göljkàj üke golunajes!","","","",""),
 ("Kon göljsfàej-ärger klaej bljunwùljgaj?","Öles awalaurkĵgeg göljàrger ä grüfug laswäld udaj öl tröljfjàlar klaej froj.","Klaej göljàrger ä daljajaf...","",""),
-("—Wäld göljkàj traej ärgug?
-—Göljklàsj-kaj öles laekug.","","","",""),
+("—Wäld göljkàj traej ärgug? —Göljklàsj-kaj öles laekug.","","","",""),
 ("Kones öndwùlejtug göljkàj üke ärguges!","","","",""),
 ("Öl göljglàsugon waej enäjàrgug tjl kones rjntèfjajon.","","","",""),
 ("Kjae frät göljwùjk enäjàrguges bljunwùljgajen.","","","",""),
@@ -79,8 +80,7 @@ VALUES
 ("Katerĵna j öl tröljsòjw ätej waej knöjsjònug.","Kjae tröljsòjw öl tör üke sjonugon.","","",""),
 ("Kjaejn jkë fjügulsfàej-täg knaej söjwaj.","","","",""),
 ("Kjaegen tröljòwader knaej söjwajes rëndeg.","","","",""),
-("—Kon göljkàj enäj? Kon göljkàj söjwajafes.
-—Öl jkë göljwùlasj-söjw faer kaj enäj.","","","",""),
+("—Kon göljkàj enäj? Kon göljkàj söjwajafes. —Öl jkë göljwùlasj-söjw faer kaj enäj.","","","",""),
 ("Kon jkë söjwajafer'al öl!","","","",""),
 ("Öl göljklàsj-tänstar fülwuj waej dajen faer wäld ölegen udajsfàej-laeker.","Kon göljsfàej-tänstar wjl öles ökjlugafes konpjùter?","","",""),
 ("Elkjer knaej kefjeget göljwùlasj üke tänsteg.","Wjl öles tänsteg öl göljèwlän fjke lujkaj.","","",""),
@@ -240,8 +240,7 @@ VALUES
 ("Tör kones göwelsfàejug, kon göljòwadegafer knaej aleged.","","","",""),
 ("Faer kaj fejfkèfjeg, kon göljklàsj-kaj göwelsfàejuges.","","","",""),
 ("Knaejkugen, göljkàj tösal tag göwelsfàejugaf...","Rikàrd göljkàj knaej kefjegon j kjae göljtàg göwelsfàejugaf.","","",""),
-("—Öl frät tröljknàjkar kon wän futeg!
-—Fälòj öl göljkàj ükon göwelsfàejugafes, änslaj.","","","",""),
+("—Öl frät tröljknàjkar kon wän futeg! —Fälòj öl göljkàj ükon göwelsfàejugafes, änslaj.","","","",""),
 ("Waej ölegenes stjlaw jkë göljkàj wjlaej göwelajaf.","","","",""),
 ("","","","",""),
 ("Öl jkë göljsfàej-göwelar kjaes talwug...","","","",""),
@@ -271,8 +270,7 @@ VALUES
 ("","","","",""),
 ("Öl tröljknàler süjkaenjàgaj tjl kokolàt, j Rikàrd tejgün.","","","",""),
 ("","","","",""),
-("—Öl ündjl trölègael wëroj
-—Öl tojsün.","","","",""),
+("—Öl ündjl trölègael wëroj. —Öl tojsün.","","","",""),
 ("","","","",""),
 ("Klaej laedenug göljtàg ükon alentajafes krjtonen.","","","",""),
 ("","","","",""),
@@ -353,8 +351,7 @@ VALUES
 ("Traej göljkàj Markus, künk tröljràwolar öl.","Künk tröljfjàlaj öles grüfug?","","",""),
 ("Öl tröljègael ä kjaes öndkĵgeg, laswäld kjae fjügulwùlasj wlaejaj.","Laswäld kon tröljàlar traej ä öl?","","",""),
 ("Kon söjw'al öl dëjwel kon udajkàj wëroj.","Dëjwel göljkàj waej Krjstòf'es wàjdaj?","","",""),
-("Öl följègael ä jlaek göljàw kulkeg.","—Jlaek göljkàj öles laekug?
-—Wëroj, döjk.","","",""),
+("Öl följègael ä jlaek göljàw kulkeg.","—Jlaek göljkàj öles laekug? —Wëroj, döjk.","","",""),
 ("Öl följàwalar bäjgun awalkòjwegen öl udajwùjk!","Bäjgun fjsljkèfjegen kon göljtàg?","Bäjgun ljwkeges öl göljkàj!","",""),
 ("Öles fjsljkèfjegur, sästan göljkàj üke gërflegones, göljàgnar wëroj.","Sästan göljkàj kones dëwoneges wülejtugen?","","",""),
 ("","","","",""),
@@ -389,10 +386,8 @@ VALUES
 ("Klaej göljkàj knaej wuljgĵgjaegetes bljunwùljgaj.","","","",""),
 ("","","","",""),
 ("Waej laedejwùljgaj fjügultàg döjkĵgjaegetes wuljgtèfjajeten.","","","",""),
-("—Dëjwel kon göljwùjk klaej?
-—Fölwe.","","","",""),
-("—Dëjwel kon följègael ä waej lujkĵgeg?
-—Gölj!","","","",""),
+("—Dëjwel kon göljwùjk klaej? —Fölwe.","","","",""),
+("—Dëjwel kon följègael ä waej lujkĵgeg? —Gölj!","","","",""),
 ("Udaj göljkàj knaej bljuneges daj!","","","",""),
 ("","","","",""),
 ("Künk göljkàj kjaes gägules glaekèfjeg?","","","",""),
@@ -408,20 +403,16 @@ VALUES
 ("Waej grüfug göljkàj knöjan waej laektajklànördnug.","","","",""),
 ("","","","",""),
 ("Waej knöjaj tjlaej kronug tröljàlar fülwuj waej kefjegen ljwkeges.","","","",""),
-("—Jlaek göljkàj öles laekug?
-—Wëroj, döjk.","","","",""),
+("—Jlaek göljkàj öles laekug? —Wëroj, döjk.","","","",""),
 ("Kones lujkaj kanskëklàsj-kaj döjkan waej öles fejfug.","","","",""),
 ("","","","",""),
 ("","","","",""),
-("—Jlaek göljkàj öles kefjdĵlugetur?
-—Sëgt tjlaej awalaurkĵgeg.","","","",""),
-("—Ölajn ëgael'al sëgtan.
-—Kon göljkàj kördajafes!","","","",""),
+("—Jlaek göljkàj öles kefjdĵlugetur? —Sëgt tjlaej awalaurkĵgeg.","","","",""),
+("—Ölajn ëgael'al sëgtan. —Kon göljkàj kördajafes!","","","",""),
 ("Öl göljsfàej-sëgtar ä kones öndkĵgeg?","","","",""),
 ("Kjaes sëgtaj tröljtàjklar fülwuj waej rjnlugen tjlaej aurkĵgeg.","","","",""),
 ("Waej sëgtajes sjonug tröljlàjter öles rjntèfjajon.","","","",""),
-("—Jlaek göljkàj öles lajtrjgëlànördnug?
-—Wjlaej sëgteg tjl kones autonòwajl.","Tjsälk wlaejaj, kon klën'al öles sëgteg.","","",""),
+("—Jlaek göljkàj öles lajtrjgëlànördnug? —Wjlaej sëgteg tjl kones autonòwajl.","Tjsälk wlaejaj, kon klën'al öles sëgteg.","","",""),
 ("Waej bjselùrnugen göljkàj sëgteges ürnugen.","Öl jkë göljwùjk-beräter kon, göljkàj knaej sëgteges rëndegaf.","","",""),
 ("Kon följfĵndar kones roglug?","Udaj ölajn följfĵndar knaej dësljkĵgeg!","","",""),
 ("Wjlaej fjndaj tjl kones wastùrnugen, öl tröljòwader waej ljwkeg.","Ölugen göljèwlän konugen ä waej fjndaj tjlaej läjrkĵgeg!","","",""),
@@ -485,8 +476,7 @@ VALUES
 ("Kon göljtàg knaej lündug tör öl.","","","",""),
 ("Kon kanskëlündkèfjer öl?","","","",""),
 ("Sofĵa göljkàj kones lündkèfjeg?","","","",""),
-("—Dëjwel kon följlündkèfjer knaejfjeg?
-—Öl jkë göljwùjk knaej lündsjonkèfjeg...","","","",""),
+("—Dëjwel kon följlündkèfjer knaejfjeg? —Öl jkë göljwùjk knaej lündsjonkèfjeg...","","","",""),
 ("Kjae göljkàj waej lündawalkèfjeg tjl öles awalbèrätegen.","","","",""),
 ("Ölegen göljklàsj-ökjler ölegenes lündkèfjegur, Marĵa.","","","",""),
 ("Waej ljwkeg tjl rawolar göljkàj sëjnteges.","","","",""),
@@ -511,8 +501,7 @@ VALUES
 ("Öl jkë göljsfàej-klën klaej fëjregur!","","","",""),
 ("Klaej rëndegaf göljwùlasj ësjl klënug tjl kon.","","","",""),
 ("Öl göljklàsj-dasker faer sfaej-alar klaej.","","","",""),
-("Kjae fjügulkàj knaej grägajafkèfjeg üke daskeges.","—Öl jkë göljsfàej-alar klaej.
-—Daskeg, awalkèfjeg!","","",""),
+("Kjae fjügulkàj knaej grägajafkèfjeg üke daskeges.","—Öl jkë göljsfàej-alar klaej. —Daskeg, awalkèfjeg!","","",""),
 ("Fërnànd göljkàj frät knaej kefjeget, fälòj kjae göljkàj daskeges.","","","",""),
 ("Göljkàj daskegon faer alar knaejteg loke wöjlegafes.","","","",""),
 ("Waej enljeges j daskegones kefjegen tröljònar adelante.","","","",""),
@@ -772,8 +761,7 @@ VALUES
 ("","","","",""),
 ("Klaej dönjlaj göljkòrdar öl.","Kon kördar'al dëjwel kon göljsòjw!","","",""),
 ("Klaej göljkàj knaej kördajes kefjegon.","Kon göljklàsj-knäler tör kördaj.","","",""),
-("—Ölajn ëgael'al sëgtan.
-—Konajn göljtàg kördajaf!","Göljkàj kördajafes üwlaed traej.","","",""),
+("—Ölajn ëgael'al sëgtan. —Konajn göljtàg kördajaf!","Göljkàj kördajafes üwlaed traej.","","",""),
 ("Kjae gägulkòrdajafar sjng kjaes wajug tröljknàwar.","Kon tröljkòrdajafar dëjwel kon tröljàlar traej.","","",""),
 ("Enljegafar gölkàj waej wöjlegafwèjkrjneg tjlaej sjfjeg.","Wjl klaej sjfjeg, jkë göljkàj wöjlegaf.","","",""),
 ("Udaj, ölegen följfènser waej berätfèjregures wenksĵfjeg bjtbjn klaej tö alegen.","","","",""),
@@ -870,8 +858,7 @@ VALUES
 ("Waej jönug tjl klaej beräteg stjlaw jkë tröljkàj-fejferes.","","","",""),
 ("","","","",""),
 ("Kon jkë jönugafer'al...","","","",""),
-("—Tjsälk kon göljkàj udaj?
-—Enäj, j kon?","","","",""),
+("—Tjsälk kon göljkàj udaj? —Enäj, j kon?","","","",""),
 ("Jkë göljàw üke enäjeg wjl Laedejug, fälòj kon göljtàg üke.","Klaej grüfug göljkàj üke enäjeges!","","",""),
 ("Kon jkë dönjlajafar'al kjae, kon kläsj'al-enäjer.","","","",""),
 ("Kon jkë göljklàsj-jagwĵkolar, traej göljkàj färal.","","","",""),
@@ -1089,10 +1076,8 @@ VALUES
 ("Knaejfjeged göljglàs klaej laekug!","","","",""),
 ("Klaej fejfeg göljkàj üke knöjsjònuges.","Öl göljglàs waej kaenĵgjaeget laswäld klaej göljtàg kaenaj!","","",""),
 ("","","","",""),
-("—Kon göljwùjk knaej fjke tjl grüfug?
-—Ëgwej!","","","",""),
-("—Öl älered tröljòkjler kones laektajklànördnug.
-—Tänksakon!","","","",""),
+("—Kon göljwùjk knaej fjke tjl grüfug? —Ëgwej!","","","",""),
+("—Öl älered tröljòkjler kones laektajklànördnug. —Tänksakon!","","","",""),
 ("Ölajn göljsfàej-laewün waej wülejtugen swejaug. Jäk!","","","","");
 
 SELECT * FROM `dictionary`.`example`;
