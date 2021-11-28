@@ -13,11 +13,12 @@ app.set('layout', './layouts/normal');
 app.set('view engine', 'ejs');
 
 //Rutas
+app.get('/estadisticas', controller.loadFullDictionary);
 app.get('/:name', (req, res) => {
     let capitalizedName = req.params.name.charAt(0).toUpperCase() + req.params.name.slice(1);
     res.render(req.params.name, {
         title: `Balanlàedenuges ljngeg - ${capitalizedName}`,
-        retrievedResults: "",
+        retrievedResults: ""
     });
 });
 app.get('/diccionario/:search', controller.loadFilteredDictionary);
