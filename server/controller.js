@@ -35,6 +35,7 @@ const query =
 
 function loadFullDictionary(req, res) {
     let queryGlobal = query + ';';
+    let view = req.url.split('/')[1];
 
     connection.query(queryGlobal, function(error, result) {
         if (error) {
@@ -96,7 +97,6 @@ function loadFilteredDictionary(req, res) {
                 title: `Balanlàedenuges ljngeg - ${view.charAt(0).toUpperCase() + view.slice(1)}`,
                 retrievedResults: JSON.stringify(result)
             });
-            console.log(JSON.stringify(result));
         }
     });
 }
