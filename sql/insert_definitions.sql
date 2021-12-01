@@ -1,3 +1,5 @@
+-- Criterios: inicio con abreviatura en mayúscula.
+
 CREATE TABLE IF NOT EXISTS `dictionary`.`definition` (
 id INT PRIMARY KEY AUTO_INCREMENT,
 word_definition1 VARCHAR(500),
@@ -418,7 +420,7 @@ VALUES
 ("Cerrar, tapar, sellar (bloquear cualquier abertura o comunicación hacia el exterior).","coloq. Clausurar, finalizar.","","",""),
 ("Cierre, cerramiento (acción de cerrar algo).","coloq. Clausura, finalización.","","",""),
 ("Cerrado (incomunicado con el exterior).","coloq. Que denota clausura o finalización.","coloq. Cabezadura e intransigente.","",""),
-("Puerta (abertura de un edificio).","coloq. Punta de partida hacia algo.","","",""),
+("Puerta (abertura de un edificio).","coloq. Punto de partida hacia algo.","","",""),
 ("Piso, pavimento, solado (superficie de material sobre el suelo).","","","",""),
 ("Techo, techado, cielorraso (material que recubre un edificio).","","","",""),
 ("Fuera, en el exterior.","","","",""),
@@ -1076,6 +1078,17 @@ VALUES
 ("Ese, eso, esos, esa o esas.","Aquel, aquello, aquellos, aquella o aquellas.","","",""),
 ("Vamos, bien, dale (aprobación o aliento).","","","",""),
 ("Gracias (muestra de agradecimiento).","","","",""),
-("ling. Denota disgusto o asco.","","","","");
+("ling. Denota disgusto o asco.","","","",""),
+("Esperanza, ilusión.","","","",""),
+("Último, postrero, final.","","","",""),
+("Esperanzar, ilusionar, infundir confianza.","","","",""),
+("Esperanzador, prometedor, halagüeño.","","","",""),
+("Desesperanza, desesperación, desaliento.","","","",""),
+("Vulva, tamb. vagina (genital externo femenino).","","","",""),
+("Pene (genital externo masculino).","","","",""),
+("Vulvar, vaginal.","","","",""),
+("Peneano.","","","",""),
+("Parecer, aparentar, semejar.","","","",""),
+("Natural (de la naturaleza y sin intervención humana).","Salvaje, silvestre, agreste.","","","");
 
 SELECT * FROM `dictionary`.`definition`;

@@ -1078,6 +1078,17 @@ VALUES
 ("","","","",""),
 ("—Kon göljwùjk knaej fjke tjl grüfug? —Ëgwej!","","","",""),
 ("—Öl älered tröljòkjler kones laektajklànördnug. —Tänksakon!","","","",""),
-("Ölajn göljsfàej-laewün waej wülejtugen swejaug. Jäk!","","","","");
+("Ölajn göljsfàej-laewün waej wülejtugen swejaug. Jäk!","","","",""),
+("Waej tajseg göljkàj waej fändjleges futeg wäld kon göljòwadegafer.","","","",""),
+("Waej fändjleges följkàj wänes.","","","",""),
+("Kon kläsj'al-tajser waej grägajafkèfjegen faer waej grägajafet.","","","",""),
+("Waej knuweregen göljkàj tajseges, ölegen följsfàej-dësljar waej öndkĵgeg!","","","",""),
+("Kjaes rjnlug tröljdòjker tör tajsegaf.","","","",""),
+("Waej awalkèfjegen göljtàg wän fajlaj.","","","",""),
+("Waej sjonkèfjegen göljtàg wän glajsug.","","","",""),
+("Göljàw fjke fajlajes dönjlegafen.","","","",""),
+("Klaej göljfrùker tjsälk knaej glasjuges fönleg.","","","",""),
+("Kjae göljfrùker tjsälk kon!","","","",""),
+("Klaej wüljgaj göljkàj knjfajeges. Knaejfjeged tröljwùljgar klaej.","Kon jkë tocar'al klaej, klaej göljkàj knaej knjfajeges wülejtug.","","","");
 
 SELECT * FROM `dictionary`.`example`;

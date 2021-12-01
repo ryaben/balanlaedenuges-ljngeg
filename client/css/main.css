@@ -530,15 +530,18 @@ footer {
 }
 
 #result-stats {
+    display: flex;
+    align-items: center;
     background-color: lightgrey;
-    border-bottom-left-radius: 6px;
+    min-height: calc(6vh - 2px);
     padding-left: 15px;
     padding-right: 15px;
     border-top: 2px solid black;
+    border-bottom-left-radius: 6px;
 }
 
 #found-words {
-    margin: 8px 0 8px 0;
+    margin: 0px;
 }
 
 #letters-box {

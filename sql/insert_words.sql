@@ -1,3 +1,8 @@
+-- Criterios:
+-- * Usar comillas simples
+-- 
+-- 
+
 CREATE TABLE IF NOT EXISTS `dictionary`.`word` (
 id INT PRIMARY KEY AUTO_INCREMENT, 
 word_name VARCHAR(100),
@@ -109,8 +114,8 @@ VALUES
 ("Wälejeges", "Lit. 'Relativo a amistad'", "Wälejeg"),
 ("Wälejegon", "Lit. 'Amistad grande'", "Wälejeg"),
 ("Wälejegones", "Lit. 'Relativo a amistad grande'", "Wälejeg"),
-("Wälejegaf", "Lit. 'Sin amistad'", "Wälej"),
-("Wälejegafer", "Lit. 'Hacer sin amistad'", "Wälej"),
+("Wälejegaf", "Lit. 'Sin amistad'", "Wälejeg"),
+("Wälejegafer", "Lit. 'Hacer sin amistad'", "Wälejeg"),
 ("Wälejkèfjeg", "De 'Wälejeg' y 'Kefjeg', lit. 'Persona con amistad'", "Wälej"),
 ("Üsker", "Palabra originante tradicional", "Üsk"),
 ("Üskug", "Palabra originante tradicional", "Üsk"),
@@ -1073,6 +1078,17 @@ VALUES
 ("Traej", "Palabra originante tradicional", "Traej"),
 ("Ëgwej", "De 'Ëgael' y 'Käswej'", "Ëgael"),
 ("Tänksakon", "De 'Tänkser', 'Ä' y 'Kon'", "Tänks"),
-("Jäk", "Sonido con significado verbal", "Jäk");
+("Jäk", "Sonido con significado verbal", "Jäk"),
+("Tajseg", "Palabra originante tradicional", "Tajs"),
+("Fändjleges", "Lit. 'Relativo a final'", "Fändjleg"),
+("Tajser", "Palabra originante tradicional", "Tajs"),
+("Tajseges", "Lit. 'Relativo a esperanza'", "Tajseg"),
+("Tajsegaf", "Lit. 'Sin esperanza'", "Tajseg"),
+("Fajlaj", "Palabra originante tradicional", "Fajl"),
+("Glajsug", "Palabra originante tradicional", "Glajs"),
+("Fajlajes", "Lit. 'Relativo a vulva'", "Fajlaj"),
+("Glajsuges", "Lit. 'Relativo a pene'", "Glajsug"),
+("Früker", "Palabra originante tradicional", "Frük"),
+("Knjfajeges", "Lit. 'Relativo a naturaleza'", "Knjfajeg");
 
 SELECT * FROM `dictionary`.`word`;

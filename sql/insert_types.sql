@@ -1078,6 +1078,17 @@ VALUES
 ("Pronombre","","","",""),
 ("Contracción","interjección","","",""),
 ("Interjección","","","",""),
-("Interjección","","","","");
+("Interjección","","","",""),
+("Sustantivo","","","",""),
+("Adjetivo","","","",""),
+("Verbo","","","",""),
+("Adjetivo","","","",""),
+("Sustantivo","","","",""),
+("Sustantivo","","","",""),
+("Sustantivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Verbo","","","",""),
+("Adjetivo","","","","");
 
 SELECT * FROM `dictionary`.`type`;

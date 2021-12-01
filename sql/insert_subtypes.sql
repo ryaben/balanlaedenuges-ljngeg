@@ -1,3 +1,5 @@
+-- Criterios: todo en minúscula
+
 CREATE TABLE IF NOT EXISTS `dictionary`.`subtype` (
 id INT PRIMARY KEY AUTO_INCREMENT, 
 word_subtype1 VARCHAR(45),
@@ -1076,6 +1078,17 @@ VALUES
 ("demostrativo","lejano","","",""),
 ("común","impropia","","",""),
 ("impropia","","","",""),
-("propia","","","","");
+("propia","","","",""),
+("común","","","",""),
+("relacional","","","",""),
+("común","","","",""),
+("calificativo","","","",""),
+("invertido","","","",""),
+("común","","","",""),
+("común","","","",""),
+("relacional","","","",""),
+("relacional","","","",""),
+("común","","","",""),
+("relacional","","","","");
 
 SELECT * FROM `dictionary`.`subtype`;
