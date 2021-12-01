@@ -1089,6 +1089,6 @@ VALUES
 ("Vulvar, vaginal.","","","",""),
 ("Peneano.","","","",""),
 ("Parecer, aparentar, semejar.","","","",""),
-("Natural (de la naturaleza y sin intervención humana).","Salvaje, silvestre, agreste.","","","");
+("Natural (de la naturaleza y sin intervención humana).","Salvaje, silvestre, agreste.","coloq. Espontáneo, maquinal, instintivo.","","");
 
 SELECT * FROM `dictionary`.`definition`;

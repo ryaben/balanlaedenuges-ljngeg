@@ -1089,6 +1089,6 @@ VALUES
 ("Göljàw fjke fajlajes dönjlegafen.","","","",""),
 ("Klaej göljfrùker tjsälk knaej glasjuges fönleg.","","","",""),
 ("Kjae göljfrùker tjsälk kon!","","","",""),
-("Klaej wüljgaj göljkàj knjfajeges. Knaejfjeged tröljwùljgar klaej.","Kon jkë tocar'al klaej, klaej göljkàj knaej knjfajeges wülejtug.","","","");
+("Klaej wüljgaj göljkàj knjfajeges. Knaejfjeged tröljwùljgar klaej.","Kon jkë tocar'al klaej, klaej göljkàj knaej knjfajeges wülejtug.","Tröljkàj knaej knjfajeges aleg, kjae jkë tröljfèlder.","","");
 
 SELECT * FROM `dictionary`.`example`;
