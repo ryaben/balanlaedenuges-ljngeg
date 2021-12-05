@@ -590,6 +590,27 @@ footer {
     margin: 10px;
 }
 
+#favorites-listing {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.6em;
+}
+
+.favorite-entry {
+    display: flex;
+    align-items: center;
+}
+
+.favorite-title {
+    margin: 2px;
+}
+
+.favorite-title:hover {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
 #footer-description {
     font-size: 0.9em;
     max-width: 25vw;

@@ -1088,7 +1088,25 @@ VALUES
 ("común","","","",""),
 ("relacional","","","",""),
 ("relacional","","","",""),
+("ampliado","","","",""),
+("relacional","","","",""),
 ("común","","","",""),
-("relacional","","","","");
+("común","","","",""),
+("diminutivizado","","","",""),
+("ampliado","","","",""),
+("relacional","","","",""),
+("relacional","","","",""),
+("calificativo","","","",""),
+("invertido","diminutivizado","","",""),
+("calificativo","","","",""),
+("relacional","","","",""),
+("calificativo","","","",""),
+("calificativo","","","",""),
+("calificativo","","","",""),
+("común","","","",""),
+("común","","","",""),
+("personal","","","",""),
+("personal","","","",""),
+("compuesto","","","","");
 
 SELECT * FROM `dictionary`.`subtype`;

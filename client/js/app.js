@@ -22,13 +22,17 @@ $(function() {
                     this.listWords(dictionary, this.listingParam);
                     this.changeListingView(this.listingParam);
                     this.setCurrentListing(this.listingParam);
-                    this.setCurrentLetter(window.location.pathname.split('/')[2])
+                    this.setCurrentLetter(window.location.pathname.split('/')[2]);
+                    this.setCurrentTab(0);
                     break;
+                case "favoritos":
+                    this.setCurrentPage('listado');
+                    this.setCurrentTab(1);
+                    this.displayFavorites();
+                    $('#listing-view').hide();
                 default:
                     break;
             }
-
-            $('.tab-btn:eq(0)').click();
         }
 
         eventsListening() {
@@ -79,7 +83,11 @@ $(function() {
             });
 
             $('#search-result').on('click', '.favorite-icon', function() {
-                handler.toggleFavorite($(this).closest('.searched-word').attr('id').slice(5));
+                handler.toggleFavorite($(this).closest('.searched-word').attr('id').slice(5), $(this).siblings('.word-name').text(), 'word');
+            });
+
+            $('#favorites-listing').on('click', '.favorite-icon', function() {
+                handler.toggleFavorite($(this).closest('.favorite-entry').attr('id').slice(9), $(this).siblings('.favorite-title').text(), 'favorite');
             });
 
             $('.letter-listing').on('click', function() {
@@ -94,14 +102,19 @@ $(function() {
             });
 
             $('.tab-btn').on('click', function() {
-                $('.tab-btn').removeClass('tab-selected');
-                $(this).addClass('tab-selected');
-
-                if ($(this).index('.tab-btn') == 0) { $('.listing-view-option').prop('disabled', false); }
-                else if ($(this).index('.tab-btn') == 1) { $('.listing-view-option').prop('disabled', true); }
-
-                $('.info-listing').hide();
-                $(`.info-listing:eq(${$(this).index('.tab-btn')})`).fadeIn(100);
+                switch ($(this).index()) {
+                    case 0:
+                        window.location = `/listado/a?listing=tree`;
+                        break;
+                    case 1:
+                        window.location = `/favoritos`;
+                        break;
+                    case 2:
+                        window.location = `/estadisticas`;
+                        break;
+                    default:
+                        break;
+                }
             });
 
             $('#word-listing').on('click', '.root-tree-title', function() {
@@ -186,22 +199,29 @@ $(function() {
         }
 
         //Invierte el estado de favorito de una palabra.
-        toggleFavorite(wordID) {
+        toggleFavorite(wordID, wordName, parent) {
             let currentStatus = this.getFavoriteStatus(wordID);
             let favoritesStorage = JSON.parse(localStorage.getItem('favoritesStorage'));
 
             switch (currentStatus) {
                 case false:
-                    favoritesStorage.push(wordID);
-                    $(`#word-${wordID}`).find('.favorite-icon').fadeOut(100, function() {
+                    favoritesStorage.push({
+                        id: wordID,
+                        name: wordName
+                    });
+
+                    $(`#${parent}-${wordID}`).find('.favorite-icon').fadeOut(100, function() {
                         $(this).attr('src', '/client/img/favorite.png');
                         $(this).fadeIn(100);
                     });
                     break;
                 case true:
-                    let wordIndex = favoritesStorage.indexOf(wordID)
-                    favoritesStorage.splice(wordIndex, 1);
-                    $(`#word-${wordID}`).find('.favorite-icon').fadeOut(100, function() {
+                    let wordIndexFilter = favoritesStorage.filter(fav => {
+                        return fav.id !== wordID;
+                    });
+
+                    favoritesStorage = wordIndexFilter;
+                    $(`#${parent}-${wordID}`).find('.favorite-icon').fadeOut(100, function() {
                         $(this).attr('src', '/client/img/non-favorite.png');
                         $(this).fadeIn(100);
                     });
@@ -219,13 +239,27 @@ $(function() {
             let favoritesStorage = JSON.parse(localStorage.getItem('favoritesStorage'));
 
             favoritesStorage.forEach(function(favorite) {
-                if (favorite == wordID) {
+                if (favorite.id == wordID) {
                     status = true;
                     return;
                 }
             });
 
             return status;
+        }
+
+        //Renderiza visualmente los favoritos del localStorage.
+        displayFavorites() {
+            let favoritesStorage = JSON.parse(localStorage.getItem('favoritesStorage'));
+
+            favoritesStorage.forEach(function(fav) {
+                $('#favorites-listing').append(`
+                    <div id="favorite-${fav.id}" class="favorite-entry">
+                        <img class="favorite-icon" src="/client/img/favorite.png" alt="fav">
+                        <label class="favorite-title" onclick="handler.searchWord('${fav.name}', 'bal', 1); handler.switchScreen('diccionario')">${fav.name}</label>
+                    </div>
+                `);
+            });
         }
 
         //Renderiza los resultados de la query.
@@ -413,6 +447,10 @@ $(function() {
 
         setCurrentListing(view) {
             $(`#listing-${view}`).prop("checked", true);
+        }
+
+        setCurrentTab(tab) {
+            $(`.tab-btn:eq(${tab})`).addClass('tab-selected');
         }
     }
 

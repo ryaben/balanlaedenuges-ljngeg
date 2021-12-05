@@ -1089,6 +1089,24 @@ VALUES
 ("Adjetivo","","","",""),
 ("Adjetivo","","","",""),
 ("Verbo","","","",""),
-("Adjetivo","","","","");
+("Adjetivo","","","",""),
+("Verbo","","","",""),
+("Sustantivo","","","",""),
+("Sustantivo","","","",""),
+("Verbo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Sustantivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Sustantivo","","","",""),
+("Verbo","","","",""),
+("Pronombre","","","",""),
+("Pronombre","","","",""),
+("Sustantivo","","","","");
 
 SELECT * FROM `dictionary`.`type`;

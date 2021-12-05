@@ -13,6 +13,8 @@ app.set('layout', './layouts/normal');
 app.set('view engine', 'ejs');
 
 //Rutas
+app.get('/diccionario/:search', controller.loadFilteredDictionary);
+app.get('/listado/:search', controller.loadFilteredDictionary);
 app.get('/estadisticas', controller.loadFullDictionary);
 app.get('/:name', (req, res) => {
     let capitalizedName = req.params.name.charAt(0).toUpperCase() + req.params.name.slice(1);
@@ -21,8 +23,6 @@ app.get('/:name', (req, res) => {
         retrievedResults: ""
     });
 });
-app.get('/diccionario/:search', controller.loadFilteredDictionary);
-app.get('/listado/:search', controller.loadFilteredDictionary);
 
 
 app.listen(port, () => {

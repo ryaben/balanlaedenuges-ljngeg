@@ -1088,7 +1088,26 @@ VALUES
 ("Glajsug", "Palabra originante tradicional", "Glajs"),
 ("Fajlajes", "Lit. 'Relativo a vulva'", "Fajlaj"),
 ("Glajsuges", "Lit. 'Relativo a pene'", "Glajsug"),
-("Früker", "Palabra originante tradicional", "Frük"),
-("Knjfajeges", "Lit. 'Relativo a naturaleza'", "Knjfajeg");
+("Wenkegetar", "Lit. 'Hacer igualdad pequeña'", "Wenkeg"),
+("Knjfajeges", "Lit. 'Relativo a naturaleza'", "Knjfajeg"),
+("Ëselar", "Palabra originante tradicional", "Ësel"),
+("Ëseleg", "Palabra originante tradicional", "Ësel"),
+("Ëseleget", "Lit. 'Toque pequeño'", "Ëseleg"),
+("Ëselegetar", "Lit. 'Hacer toque pequeño'", "Ëseleg"),
+("Dönjleges", "Lit. 'Relativo a salud'", "Dönjleg"),
+("Dönjlajes", "Lit. 'Relativo a cura'", "Dönjlaj"),
+("Wenkegetes", "Lit. 'Relativo a igualdad pequeña'", "Wenkeg"),
+("Wenkegetaf", "Lit. 'Sin igualdad pequeña'", "Wenkeg"),
+("Wenkegetafes", "Lit. 'Relativo a sin igualdad pequeño'", "Wenkeg"),
+("Wenkegafes", "Lit. 'Relativo a sin igualdad'", "Wenkeg"),
+("Wöjleges", "Lit. 'Relativo a placer'", "Wöjleg"),
+("Wöjlegafes", "Lit. 'Relativo a sin placer'", "Wöjleg"),
+("Dönjlajafes", "Lit. 'Relativo a sin cura'", "Dönjlaj"),
+("Fresteg", "Palabra originante tradicional", "Frest"),
+("Frester", "Palabra originante tradicional", "Frest"),
+("Kjaeug", "Palabra originante tradicional", "Kjae"),
+("Kjaej", "Palabra originante tradicional", "Kjae"),
+("Tägkèfjeg", "De 'Tägeg' y 'Kefjeg', lit. 'Persona con posesión'", "Täg");
+-- Krendaj (Kraj.) y Krendug (Krug.), tratativos comunes.
 
 SELECT * FROM `dictionary`.`word`;
