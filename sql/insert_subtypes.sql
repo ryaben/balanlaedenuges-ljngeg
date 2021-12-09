@@ -27,7 +27,7 @@ VALUES
 ("compuesto","","","",""),
 ("compuesto","relacional","","",""),
 ("compuesto","","","",""),
-("común","","","",""),
+("compuesto","","","",""),
 ("común","","","",""),
 ("común","","","",""),
 ("compuesto","","","",""),
@@ -1107,6 +1107,9 @@ VALUES
 ("común","","","",""),
 ("personal","","","",""),
 ("personal","","","",""),
-("compuesto","","","","");
+("compuesto","","","",""),
+("común","","","",""),
+("común","","","",""),
+("calificativo","","","","");
 
 SELECT * FROM `dictionary`.`subtype`;

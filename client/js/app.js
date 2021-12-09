@@ -8,14 +8,15 @@ $(function() {
 
         initialize() {
             this.eventsListening();
-            this.checkFavorites();
+            this.checkLocalStorage();
             this.setCurrentPage(this.pageView);
+            this.setConfig();
 
             switch (this.pageView) {
                 case "diccionario":
                     this.setSearchDefaults('lang');
                     this.setSearchDefaults('limit');
-                    this.displayDictionary(dictionary, this.limitParam);
+                    this.displayDictionary(dictionary, this.limitParam, 'search-result', 50, 200);
                     this.displaySearchStats(dictionary);
                     break;
                 case "listado":
@@ -53,6 +54,7 @@ $(function() {
                 handler.searchWord($('#word-search').val(), language, limit);
             });
 
+            //FIXME:
             $('#search-button').on('keypress', function(event) {
                 if (event.which == '13') {
                     let language;
@@ -68,8 +70,19 @@ $(function() {
                 }
             });
 
+            $('#config-menu-title label').on('click', function() {
+                let arrow = $('#config-menu-title label:eq(1)');
+
+                arrow.text(arrow.text() === '◀' ? '▼' : '◀');
+                $('#config-menu').slideToggle(200);
+            });
+
             $('.special-character').on('click', function() {
                 $('#word-search').val($('#word-search').val() + $(this).text());
+            });
+
+            $('.config-tooltip').on('click', function() {
+                handler.saveConfig('tooltip', $(this).val());
             });
 
             $('.nav-link').on('click', function() {
@@ -122,6 +135,73 @@ $(function() {
                 $(this).closest('.root-tree').find('.child-word').toggle(200, 'linear');
                 $(this).closest('.root-tree').find('.composed-word').toggle(200, 'linear');
             });
+
+            $('#word-listing').on('mouseenter', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
+                let configStorage = JSON.parse(localStorage.getItem('config'));
+                if (configStorage.tooltip == 'true') {
+                    handler.loadTooltip($(this).position(), $(this).css('width'), $(this).css('height'), $(this).html());
+                }
+            });
+
+            $('#word-listing').on('mouseleave', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
+                $('#tooltipArrow').hide();
+                $('#wordTooltip').hide();
+            });
+        }
+
+        //Reposiciona la ventana del tooltip y carga sus datos.
+        loadTooltip(position, width, height, name) {
+            $('#wordTooltip').html('');
+            let retrievedWord = dictionary.find(function(word) {
+                return word.word_name === name;
+            });
+
+            this.displayDictionary([retrievedWord], 1, 'wordTooltip', 0, 0);
+
+            let windowHeight = document.documentElement.clientHeight;
+            let windowWidth = document.documentElement.clientWidth;
+            let cleanWidth = width.substring(0, width.length - 2);
+
+            if ((position.left - cleanWidth) <= (windowWidth / 2)) {
+                $('#wordTooltip').css({
+                    'left': position.left,
+                    'margin-left': `calc(${width} + 10px)`
+                });
+                $('#tooltipArrow').css({
+                    'left': position.left,
+                    'margin-left': `calc(${width} - 3px)`,
+                    'border-color': 'transparent black transparent transparent'
+                });
+            } else {
+                let tooltipWidth = $('#wordTooltip').width();
+                console.log('position.left', position.left);
+                console.log('tooltipWidth', tooltipWidth);
+                console.log('width', width);
+                    
+                $('#wordTooltip').css({
+                    'left': `calc(${position.left}px - ${tooltipWidth}px - 12px)`,
+                    'margin-right': `calc(${width})`
+                });
+                $('#tooltipArrow').css({
+                    'left': `calc(${position.left}px - 11px)`,
+                    'margin-right': `calc(${width} - 3px)`,
+                    'border-color': 'transparent transparent transparent black'
+                });
+            }
+
+            if (position.top <= (windowHeight / 2)) {
+                $('#wordTooltip').css('top', position.top);
+                $('#tooltipArrow').css('top', position.top + 5);
+            } else {
+                setTimeout(() => {
+                    let tooltipHeight = $('#wordTooltip').height();
+                    $('#wordTooltip').css('top', `calc(${position.top}px - ${tooltipHeight}px + ${height})`);
+                    $('#tooltipArrow').css('top', `calc(${position.top}px + 5px)`);
+                }, 5);
+            }
+
+            $('#tooltipArrow').fadeIn(100);
+            $('#wordTooltip').fadeIn(100);
         }
 
         //Adapta los aspectos visuales de la vista.
@@ -176,6 +256,7 @@ $(function() {
             window.location = `/diccionario/${searchString}?lang=${language}&limit=${limit}`;
         }
 
+        //TODO:
         countSearchStats(dictionary) {
             let foundWords = dictionary.length;
 
@@ -192,9 +273,14 @@ $(function() {
         }
 
         //Busca el storage de favoritos y crea uno vacío si no lo encuentra.
-        checkFavorites() {
+        checkLocalStorage() {
             if (localStorage.getItem('favoritesStorage') == null) {
                 localStorage.setItem('favoritesStorage', '[]');
+            }
+            if (localStorage.getItem('config') == null) {
+                localStorage.setItem('config', JSON.stringify({
+                    tooltip: "true"
+                }));
             }
         }
 
@@ -263,9 +349,7 @@ $(function() {
         }
 
         //Renderiza los resultados de la query.
-        displayDictionary(dictionary, limit) {
-            let displayDelay = 50;
-            let fadeDuration = 200;
+        displayDictionary(dictionary, limit, container, displayDelay, fadeDuration) {
             let dictionaryLimit = limit;
 
             if (limit == 0) {
@@ -335,7 +419,7 @@ $(function() {
                             <p style='font-weight: bold;'>Acepciones:</p>
                             <ol class='word-meanings'>${concatMeaning}</ol>
                         </div>
-                    `).appendTo('#search-result').fadeIn(fadeDuration);
+                    `).appendTo(`#${container}`).fadeIn(fadeDuration);
                 }, displayDelay);
                 displayDelay += fadeDuration;
             }
@@ -376,6 +460,7 @@ $(function() {
                             }
                         }
 
+                        //TODO: no tiene uso.
                         let criterion = {
                             criteria1: [
                                 "Adverbio", "Interjeción", "Adposición", "Pronombre",
@@ -392,12 +477,21 @@ $(function() {
                             }
                         }
 
+                        //FIXME: los extranjerismos exceptuados se cargan dos veces.
                         for (let i = 1; i <= 5; i++) {
                             let currentType = word[`word_type${i}`];
                             let currentSubtype = word[`word_subtype${i}`];
 
+                            if ($(`#word-${word.word_name}`).length !== 0) {
+                                continue;
+                            }
+
                             //Sustantivos y verbos comunes, exceptuados y extranjeros, más cualquier otro tipo principal de palabra
                             if (currentType.includes('Adverbio') || currentType.includes('Interjección') || currentType.includes('Adposición') || currentType.includes('Pronombre') || currentType.includes('Artículo') || currentType.includes('Conjunción') || currentType.includes('Contracción') || currentSubtype.includes('común') || currentSubtype.includes('exceptuado') || currentSubtype.includes('extranjerismo')) {
+                                if (word.word_name === 'Konpjùter') {
+                                    console.log('entró en 1ra');
+                                }
+
                                 createRootTree();
 
                                 $(`#root-${word.word_root} .compositions`).before(`
@@ -410,7 +504,7 @@ $(function() {
                                 });
 
                             //Sustantivos modificados y verbos ampliados
-                            } else if ((currentType.includes('Sustantivo') || currentType.includes('Verbo') || currentType.includes('Adjetivo')) && (!currentSubtype.includes('común') && !currentSubtype.includes('compuesto'))) {
+                            } else if (((currentType.includes('Sustantivo') || currentType.includes('Verbo')) && (currentSubtype.includes('diminutivizado') || currentSubtype.includes('aumentativizado') || currentSubtype.includes('colectivizado') || currentSubtype.includes('ampliado') || currentSubtype.includes('invertido'))) || currentType.includes('Adjetivo')) {
                                 $(`#word-${word.word_root}`).append(`
                                     <li style='color: rgb(212, 16, 16);' class='child-word'><label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label></li>
                                 `);
@@ -418,8 +512,8 @@ $(function() {
                                     return parseInt(val) + 1;
                                 });
 
-                            //Palabras compuestas
-                            } else if (currentSubtype.includes('compuesto')) {
+                            //Sustantivos y verbos compuestos
+                            } else if (!currentType.includes('Adjetivo') && currentSubtype.includes('compuesto')) {
                                 createRootTree();
 
                                 $(`#root-${word.word_root}`).find('.compositions').append(`
@@ -451,6 +545,20 @@ $(function() {
 
         setCurrentTab(tab) {
             $(`.tab-btn:eq(${tab})`).addClass('tab-selected');
+        }
+
+        setConfig() {
+            let configStorage = JSON.parse(localStorage.getItem('config'));
+
+            $(`#tooltip-${configStorage.tooltip}`).prop('checked', true);
+        }
+
+        saveConfig(prop, value) {
+            let configStorage = JSON.parse(localStorage.getItem('config'));
+
+            configStorage[prop] = value;
+
+            localStorage.setItem('config', JSON.stringify(configStorage));
         }
     }
 

@@ -1107,6 +1107,9 @@ VALUES
 ("Verbo","","","",""),
 ("Pronombre","","","",""),
 ("Pronombre","","","",""),
-("Sustantivo","","","","");
+("Sustantivo","","","",""),
+("Sustantivo","","","",""),
+("Sustantivo","","","",""),
+("Adjetivo","","","","");
 
 SELECT * FROM `dictionary`.`type`;

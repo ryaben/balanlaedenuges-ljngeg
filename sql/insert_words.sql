@@ -1107,7 +1107,10 @@ VALUES
 ("Frester", "Palabra originante tradicional", "Frest"),
 ("Kjaeug", "Palabra originante tradicional", "Kjae"),
 ("Kjaej", "Palabra originante tradicional", "Kjae"),
-("Tägkèfjeg", "De 'Tägeg' y 'Kefjeg', lit. 'Persona con posesión'", "Täg");
--- Krendaj (Kraj.) y Krendug (Krug.), tratativos comunes.
+("Tägkèfjeg", "De 'Tägeg' y 'Kefjeg', lit. 'Persona con posesión'", "Täg"),
+("Krendaj", "Palabra originante tradicional", "Krend"),
+("Krendug", "Palabra originante tradicional", "Krend"),
+("Knaweges", "Lit. 'Relativo a muerte'", "Knaweg");
+-- Fosteges, Fostegones, Luwug (huevo), Lajteges, Lajtegafes
 
 SELECT * FROM `dictionary`.`word`;

@@ -1,3 +1,21 @@
+/* Estilos de renderizado de navegadores */
+
+*::-webkit-scrollbar {
+    width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: white;
+}
+  
+*::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 20px;
+    border: 2px solid white;
+}
+
+/* Estilos generales */
+
 body {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 0.95em;
@@ -94,6 +112,20 @@ footer {
 .nav-selected {
     background-color: red;
     color: white;
+}
+
+.config-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.config-options {
+    display: flex;
+    align-items: center;
+}
+
+.config-radio {
+    cursor: pointer;
 }
 
 .special-character {
@@ -442,10 +474,36 @@ footer {
 
 #options-tab {
     display: flex;
+    flex-direction: column;
     background-color: lightgray;
     border-bottom: 2px solid black;
-    padding: 10px;
+    padding: 7px;
     border-top-left-radius: 5px;
+}
+
+#config-menu-title {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    width: 100%;
+    border-radius: 6px;
+} #config-menu-title:hover {
+    background-color: darkslategray;
+    color: white;
+}
+
+#config-menu-title label {
+    cursor: pointer;
+    padding: 3px;
+} #config-menu-title label:nth-child(1) {
+    width: 100%;
+}
+
+#config-menu {
+    display: none;
+    border-top: solid 1px black;
+    padding: 3px;
+    margin-top: 3px;
 }
 
 #nav-links {
@@ -454,6 +512,7 @@ footer {
     margin-block-start: 0;
     margin-block-end: 0;
     overflow-y: scroll;
+
 }
 
 #search-screen {
@@ -615,6 +674,29 @@ footer {
     font-size: 0.9em;
     max-width: 25vw;
     margin: auto 5px auto 5px;
+}
+
+#word-listing #wordTooltip {
+    display: none;
+    background-color: white;
+    border: solid 1px black;
+    position: absolute;
+    z-index: 1;
+    width: 500px;
+    padding: 0;
+}
+
+#tooltipArrow {
+    display: none;
+    content: "";
+    position: absolute;
+    border-width: 7px;
+    border-style: solid;
+}
+
+#word-listing #wordTooltip .searched-word, #word-listing .searched-word {
+    margin: 0;
+    border: none;
 }
 
 @media only screen and (max-width: 974px) {

@@ -1,7 +1,19 @@
 <section id='listing-screen'>
     <%- include('./partials/listing-topbar.ejs') %>
     <div class='info-listing' id='word-listing'>
-        
+        <div id="tooltipArrow"></div>
+        <div id="wordTooltip" class='searched-word'>
+            <div class='result-title'>
+                <h2 class='word-name'></h2>
+                <img class='favorite-icon' src='' alt='Favorite'>
+            </div>
+            <p class='word-root'></p>
+            <p class='word-type'></p>
+            <p class='word-description'></p>
+            <hr style='border-top: 1px solid black;'>
+            <p style='font-weight: bold;'>Acepciones:</p>
+            <ol class='word-meanings'></ol>
+        </div>
     </div>
     <%- include('./partials/listing-bottombar.ejs') %>
 </section>

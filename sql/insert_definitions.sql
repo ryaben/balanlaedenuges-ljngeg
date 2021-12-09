@@ -1,4 +1,4 @@
--- Criterios: inicio con abreviatura en mayúscula.
+-- Criterios: inicio con abreviatura en mayúscula. Leyenda de etiquetas: coloq (coloquial), obs (obsoleto), tamb (también), equiv a (equivalente a), relig (religión), despect (despectivo), cult (cultural), neo (neologismo), tec (tecnicismo), vulg (vulgar), ling (lingüística)
 
 CREATE TABLE IF NOT EXISTS `dictionary`.`definition` (
 id INT PRIMARY KEY AUTO_INCREMENT,
@@ -239,7 +239,7 @@ VALUES
 ("Recuerdo, memoria, remembranza (imagen puntual de la mente).","","","",""),
 ("Memoria, retentiva (capacidad para evocar recuerdos).","","","",""),
 ("Memorioso, memorión, retentivo.","","","",""),
-("Desmemoria (falta de memoria).","med. Amnesia.","","",""),
+("Desmemoria (falta de memoria).","tec. Amnesia.","","",""),
 ("Desmemoriado, olvidadizo, descuidado.","","","",""),
 ("Olvido (pérdida o cese de un recuerdo).","","","",""),
 ("Olvidar, descuidar.","","","",""),
@@ -632,7 +632,7 @@ VALUES
 ("Escuchar, oír, atender.","","","",""),
 ("Escucha (evento en que algo fue escuchado).","","","",""),
 ("Audición.","","","",""),
-("med. Sordera, hipoacusia.","","","",""),
+("tec. Sordera, hipoacusia.","","","",""),
 ("Oyente de radio u otro medio de comunicación que involucra sonido.","","","",""),
 ("Audiencia (espectadores de un medio comunicativo que incluye sonido).","","","",""),
 ("Delinquir, perpetrar.","Infringir o incurrir en una infracción grave.","","",""),
@@ -733,7 +733,7 @@ VALUES
 ("Enfermedad, afección, dolencia.","","","",""),
 ("tec. Medicina (ciencia de las enfermedades).","","","",""),
 ("Médico o médica, galeno, doctor.","","","",""),
-("med. Virus (agente infeccioso microscópico).","","","",""),
+("tec. Virus (agente infeccioso microscópico).","","","",""),
 ("tec. Democracia (representación política de la sociedad por medio del voto).","","","",""),
 ("Tierra, suelo.","tec. Tierra (planeta del Sistema Solar).","coloq. Basamento o fundamento de algo.","",""),
 ("Hacer trabajos de agricultura sobre la tierra.","coloq. Encargarse de un trabajo difícil.","","",""),
@@ -760,8 +760,8 @@ VALUES
 ("Lugar, sitio, emplazamiento.","Edificio, edificación, establecimiento o construcción artificial genérico.","","",""),
 ("Ubicar, situar, localizar.","","","",""),
 ("Obtener o recuperar la cordura o sanidad mental.","Mesurar, moderar el juicio.","","",""),
-("med. Cordura (sanidad mental).","Sensatez, prudencia, juicio.","","",""),
-("med. Locura, demencia, insania.","Insensatez, imprudencia, indiscreción.","","",""),
+("tec. Cordura (sanidad mental).","Sensatez, prudencia, juicio.","","",""),
+("tec. Locura, demencia, insania.","Insensatez, imprudencia, indiscreción.","","",""),
 ("Enloquecer, delirar, desvariar.","Descuidar la prudencia o sensatez.","","",""),
 ("Tiempo (dimensión temporal).","coloq. Presente o momento actual.","","",""),
 ("Contemporaneidad (concepto de existencia al mismo tiempo).","","","",""),
@@ -771,7 +771,7 @@ VALUES
 ("despect. Escualidez, demacración, cualidad de macilento.","coloq. despect. Escasez o deficiencia de algo.","","",""),
 ("Gordura, adiposidad (acumulación de grasa y peso).","","","",""),
 ("Engordar (ganar peso).","","","",""),
-("med. Obesidad (patología de adiposis excesiva).","coloq. despect. Exceso o demasía de algo.","","",""),
+("tec. Obesidad (patología de adiposis excesiva).","coloq. despect. Exceso o demasía de algo.","","",""),
 ("Vengar, vindicar, desquitarse.","","","",""),
 ("Venganza, represalia, desquite.","Revancha (segunda oportunidad en juegos y deportes).","","",""),
 ("Encontrar, hallar, recuperar (algo o alguien perdido o sin paradero conocido).","Ubicar, localizar.","","",""),
@@ -1107,6 +1107,9 @@ VALUES
 ("Entusiasmar, apasionar, enardecer.","","","",""),
 ("Él (sujeto masculino).","","","",""),
 ("Ella (sujeto femenino).","","","",""),
-("Propietario, dueño.","obs. Amo, señor.","","","");
+("Propietario, dueño.","obs. Amo, señor.","","",""),
+("Señora, tamb. equiv. a señorita (vocativo tratativo antepuesto al nombre).","","","",""),
+("Señor (vocativo tratativo antepuesto al nombre).","","","",""),
+("Tétrico, lúgubre, fúnebre.","","","","");
 
 SELECT * FROM `dictionary`.`definition`;

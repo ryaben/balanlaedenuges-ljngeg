@@ -1,6 +1,20 @@
 <nav>
     <div id='options-tab'>
-        <label>Modo oscuro</label>
+        <div id="config-menu-title">
+            <label>Menú de configuración</label>
+            <label>◀</label>
+        </div>
+        <div id="config-menu">
+            <div id="tooltip-preview" class="config-section">
+                <label>Vista previa de palabra</label>
+                <div id="tooltip-preview-options" class="config-options">
+                    <input id="tooltip-true" class="config-radio config-tooltip" type="radio" name="tooltip-preview" value="true">
+                    <label for="tooltip-true">Sí</label>
+                    <input id="tooltip-false" class="config-radio config-tooltip" type="radio" name="tooltip-preview" value="false">
+                    <label for="tooltip-false">No</label>
+                </div>
+            </div>
+        </div>
     </div>
     <ul id='nav-links'>
         <ul class='nav-section' label='Diccionario'>
