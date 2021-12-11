@@ -288,6 +288,7 @@ $(function() {
         toggleFavorite(wordID, wordName, parent) {
             let currentStatus = this.getFavoriteStatus(wordID);
             let favoritesStorage = JSON.parse(localStorage.getItem('favoritesStorage'));
+            let favoriteIcon;
 
             switch (currentStatus) {
                 case false:
@@ -296,10 +297,7 @@ $(function() {
                         name: wordName
                     });
 
-                    $(`#${parent}-${wordID}`).find('.favorite-icon').fadeOut(100, function() {
-                        $(this).attr('src', '/client/img/favorite.png');
-                        $(this).fadeIn(100);
-                    });
+                    favoriteIcon = 'favorite';
                     break;
                 case true:
                     let wordIndexFilter = favoritesStorage.filter(fav => {
@@ -307,14 +305,16 @@ $(function() {
                     });
 
                     favoritesStorage = wordIndexFilter;
-                    $(`#${parent}-${wordID}`).find('.favorite-icon').fadeOut(100, function() {
-                        $(this).attr('src', '/client/img/non-favorite.png');
-                        $(this).fadeIn(100);
-                    });
+                    favoriteIcon = 'non-favorite';
                     break;
                 default:
                     break;
             }
+
+            $(`#${parent}-${wordID}`).find('.favorite-icon').fadeOut(100, function() {
+                $(this).attr('src', `/client/img/${favoriteIcon}.png`);
+                $(this).fadeIn(100);
+            });
 
             localStorage.setItem('favoritesStorage', JSON.stringify(favoritesStorage));
         }
@@ -363,7 +363,7 @@ $(function() {
                 let concatType = '';
                 let concatSubtype = '(';
                 let concatMeaning = '';
-                let favoriteStatus;
+                let favoriteStatus = this.getFavoriteStatus(word.id) ? 'favorite' : 'non-favorite';
 
                 for (let i = 1; i <= 5; i++) {
                     const currentType = word[`word_type${i}`];
@@ -392,18 +392,6 @@ $(function() {
                 }
 
                 concatSubtype += ')';
-
-                switch (handler.getFavoriteStatus(word.id)) {
-                    case true:
-                        favoriteStatus = 'favorite';
-                        break;
-                    case false:
-                        favoriteStatus = 'non-favorite';
-                        break;
-                    default:
-                        favoriteStatus = 'non-favorite';
-                        break;
-                }
 
                 setTimeout(function() {
                     $(`
@@ -477,7 +465,6 @@ $(function() {
                             }
                         }
 
-                        //FIXME: los extranjerismos exceptuados se cargan dos veces.
                         for (let i = 1; i <= 5; i++) {
                             let currentType = word[`word_type${i}`];
                             let currentSubtype = word[`word_subtype${i}`];
@@ -488,41 +475,44 @@ $(function() {
 
                             //Sustantivos y verbos comunes, exceptuados y extranjeros, más cualquier otro tipo principal de palabra
                             if (currentType.includes('Adverbio') || currentType.includes('Interjección') || currentType.includes('Adposición') || currentType.includes('Pronombre') || currentType.includes('Artículo') || currentType.includes('Conjunción') || currentType.includes('Contracción') || currentSubtype.includes('común') || currentSubtype.includes('exceptuado') || currentSubtype.includes('extranjerismo')) {
-                                if (word.word_name === 'Konpjùter') {
-                                    console.log('entró en 1ra');
-                                }
-
                                 createRootTree();
 
                                 $(`#root-${word.word_root} .compositions`).before(`
                                     <ul class='root-word' id='word-${word.word_name}' word-type='${'word.word_type' + i}' word-name='${word.word_name}'>
-                                        <li class='root-word-title'><label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label></li>
+                                        <li class='root-word-title'>
+                                            <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
+                                        </li>
                                     </ul>
                                 `);
                                 $(`#root-${word.word_root}`).find('.root-amount').text(function(i, val) {
                                     return parseInt(val) + 1;
                                 });
 
-                            //Sustantivos modificados y verbos ampliados
-                            } else if (((currentType.includes('Sustantivo') || currentType.includes('Verbo')) && (currentSubtype.includes('diminutivizado') || currentSubtype.includes('aumentativizado') || currentSubtype.includes('colectivizado') || currentSubtype.includes('ampliado') || currentSubtype.includes('invertido'))) || currentType.includes('Adjetivo')) {
+                            //Sustantivos modificados, verbos ampliados y adjetivos
+                            } else if (((currentType.includes('Sustantivo') || currentType.includes('Verbo')) && (currentSubtype.includes('diminutivizado') || currentSubtype.includes('aumentativizado') || currentSubtype.includes('colectivizado') || currentSubtype.includes('ampliado') || currentSubtype.includes('invertido'))) || (currentType.includes('Adjetivo') && !currentSubtype.includes('compuesto'))) {
                                 $(`#word-${word.word_root}`).append(`
-                                    <li style='color: rgb(212, 16, 16);' class='child-word'><label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label></li>
+                                    <li style='color: rgb(212, 16, 16);' class='child-word'>
+                                        <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
+                                    </li>
                                 `);
                                 $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
                                     return parseInt(val) + 1;
                                 });
 
-                            //Sustantivos y verbos compuestos
-                            } else if (!currentType.includes('Adjetivo') && currentSubtype.includes('compuesto')) {
+                            //Cualquier palabra compuesta
+                            } else if (currentSubtype.includes('compuesto')) {
                                 createRootTree();
 
                                 $(`#root-${word.word_root}`).find('.compositions').append(`
-                                    <li onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")' class='composed-word'><label>${word.word_name}</label></li>
+                                    <li onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")' id='word-${word.word_name}' class='composed-word'>
+                                        <label>${word.word_name}</label>
+                                    </li>
                                 `);
                                 $(`#root-${word.word_root}`).find('.root-amount').text(function(i, val) {
                                     return parseInt(val) + 1;
                                 });
-                            }  
+
+                            }
                         }
                     });
                     break;

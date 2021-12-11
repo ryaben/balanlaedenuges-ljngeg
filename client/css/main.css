@@ -2,6 +2,7 @@
 
 *::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
 }
 
 *::-webkit-scrollbar-track {
@@ -199,6 +200,11 @@ footer {
     width: 25px;
     height: 25px;
     cursor: pointer;
+}
+
+li .favorite-icon {
+    width: 15px;
+    height: 15px;
 }
 
 .word-root {
@@ -658,6 +664,7 @@ footer {
 .favorite-entry {
     display: flex;
     align-items: center;
+    border-bottom: 2px solid lightgrey;
 }
 
 .favorite-title {
