@@ -22,7 +22,7 @@ body {
     font-size: 0.95em;
     height: 100%;
     overflow: hidden;
-    min-width: 900px;
+    min-width: 340px;
 }
 
 button, input {
@@ -67,7 +67,7 @@ nav {
 
 section {
     width: 75vw;
-    min-width: 650px;
+    /* min-width: 650px; */
     margin: 0.5vh;
     height: 73vh;
 }
@@ -463,10 +463,12 @@ li .favorite-icon {
 }
 
 #page-title {
+    font-size: 30px;
     margin-bottom: 0;
 }
 
 #page-subtitle {
+    font-size: 18px;
     margin-top: 10px;
     font-style: italic;
     font-weight: normal;
@@ -712,8 +714,101 @@ li .favorite-icon {
     }
 }
 
+@media only screen and (max-width: 860px) {
+    #listing-lowbar {
+        flex-direction: column;
+    }
+
+    #listing-view {
+        justify-content: flex-start;
+        width: 100%;
+        margin-top: 0;
+    }
+
+    #search-box {
+        padding: 0.6em;
+    }
+
+    #special-characters {
+        min-width: 108px;
+        padding: 6px 6px 6px 2px;
+        margin-right: 8px;
+    }
+
+    #perfect-match-container {
+        margin-right: 8px;
+    }
+
+    #language-selection {
+        border-left: none;
+        margin-left: 0px;
+    }
+
+    .special-character {
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 719px) {
+    header {
+        height: 16vh;
+    }
+
+    nav {
+        height: 73vh;
+    }
+
+    section {
+        height: 79vh;
+    }
+
+    #flag {
+        min-width: 170px;
+    }
+
+    #coat {
+        min-width: 85px;
+    }
+
+    #page-title {
+        font-size: 26px;
+    }
+    
+    #page-subtitle {
+        font-size: 15px;
+    }
+
     #word-listing {
         grid-template-columns: 1fr 1fr;
+    }
+
+    #listing-screen {
+        min-width: 0;
+    }
+
+    .tab-btn {
+        width: 105px;
+    }
+}
+
+@media only screen and (max-width: 659px) {
+    header {
+        justify-content: center;
+    }
+
+    main {
+        flex-direction: column;
+    }
+
+    section {
+        width: auto;
+    }
+
+    #nav-wrapper {
+        display: none !important;
+    }
+
+    #flag, #coat {
+        display: none;
     }
 }

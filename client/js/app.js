@@ -448,71 +448,65 @@ $(function() {
                             }
                         }
 
-                        //TODO: no tiene uso.
-                        let criterion = {
-                            criteria1: [
-                                "Adverbio", "Interjeción", "Adposición", "Pronombre",
-                                "Artículo", "Conjunción", "Contracción", "común",
-                                "exceptuado", "extranjerismo"
-                            ],
-                            criteria2: {
-                                criteria2_1: [
-                                    "Sustantivo", "Verbo", "Adjetivo"
-                                ],
-                                criteria2_2: [
-                                    "común", "compuesto"
-                                ]
-                            }
-                        }
+                        let currentType = [];
+                        let currentSubtype = [];
 
                         for (let i = 1; i <= 5; i++) {
-                            let currentType = word[`word_type${i}`];
-                            let currentSubtype = word[`word_subtype${i}`];
+                            currentType.push(word[`word_type${i}`]);
+                            currentSubtype.push(word[`word_subtype${i}`]);
+                        }
 
-                            if ($(`#word-${word.word_name}`).length !== 0) {
-                                continue;
-                            }
+                        //Sustantivos y verbos comunes, exceptuados y extranjeros, más cualquier otro tipo principal de palabra
+                        if (currentType.includes('Adverbio') || currentType.includes('Interjección') || currentType.includes('Adposición') || currentType.includes('Pronombre') || currentType.includes('Artículo') || currentType.includes('Conjunción') || currentType.includes('Contracción') || currentSubtype.includes('común') || currentSubtype.includes('exceptuado') || currentSubtype.includes('extranjerismo')) {
+                            createRootTree();
 
-                            //Sustantivos y verbos comunes, exceptuados y extranjeros, más cualquier otro tipo principal de palabra
-                            if (currentType.includes('Adverbio') || currentType.includes('Interjección') || currentType.includes('Adposición') || currentType.includes('Pronombre') || currentType.includes('Artículo') || currentType.includes('Conjunción') || currentType.includes('Contracción') || currentSubtype.includes('común') || currentSubtype.includes('exceptuado') || currentSubtype.includes('extranjerismo')) {
-                                createRootTree();
-
-                                $(`#root-${word.word_root} .compositions`).before(`
-                                    <ul class='root-word' id='word-${word.word_name}' word-type='${'word.word_type' + i}' word-name='${word.word_name}'>
-                                        <li class='root-word-title'>
-                                            <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
-                                        </li>
-                                    </ul>
-                                `);
-                                $(`#root-${word.word_root}`).find('.root-amount').text(function(i, val) {
-                                    return parseInt(val) + 1;
-                                });
-
-                            //Sustantivos modificados, verbos ampliados y adjetivos
-                            } else if (((currentType.includes('Sustantivo') || currentType.includes('Verbo')) && (currentSubtype.includes('diminutivizado') || currentSubtype.includes('aumentativizado') || currentSubtype.includes('colectivizado') || currentSubtype.includes('ampliado') || currentSubtype.includes('invertido'))) || (currentType.includes('Adjetivo') && !currentSubtype.includes('compuesto'))) {
-                                $(`#word-${word.word_root}`).append(`
-                                    <li style='color: rgb(212, 16, 16);' class='child-word'>
+                            $(`#root-${word.word_root} .compositions`).before(`
+                                <ul class='root-word' id='word-${word.word_name}' word-type='${JSON.stringify(currentType)}' word-name='${word.word_name}'>
+                                    <li class='root-word-title'>
                                         <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
                                     </li>
-                                `);
-                                $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
-                                    return parseInt(val) + 1;
-                                });
+                                </ul>
+                            `);
+                            $(`#root-${word.word_root}`).find('.root-amount').text(function(i, val) {
+                                return parseInt(val) + 1;
+                            });
 
-                            //Cualquier palabra compuesta
-                            } else if (currentSubtype.includes('compuesto')) {
-                                createRootTree();
+                        //Sustantivos modificados, verbos ampliados y adjetivos
+                        } else if (((currentType.includes('Sustantivo') || currentType.includes('Verbo')) && (currentSubtype.includes('diminutivizado') || currentSubtype.includes('aumentativizado') || currentSubtype.includes('colectivizado') || currentSubtype.includes('ampliado') || currentSubtype.includes('invertido'))) || (currentType.includes('Adjetivo') && !currentSubtype.includes('compuesto'))) {
+                            $(`#word-${word.word_root}`).append(`
+                                <li style='color: rgb(212, 16, 16);' class='child-word'>
+                                    <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
+                                </li>
+                            `);
+                            $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
+                                return parseInt(val) + 1;
+                            });
 
-                                $(`#root-${word.word_root}`).find('.compositions').append(`
-                                    <li onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")' id='word-${word.word_name}' class='composed-word'>
-                                        <label>${word.word_name}</label>
-                                    </li>
-                                `);
-                                $(`#root-${word.word_root}`).find('.root-amount').text(function(i, val) {
-                                    return parseInt(val) + 1;
-                                });
+                        //TODO: adaptar la raíz de todos estos en la base de datos
+                        //Sustantivos compuestos con otro subtipo
+                        } else if (currentSubtype.includes('compuesto') && (currentSubtype.includes('diminutivizado') || currentSubtype.includes('aumentativizado') || currentSubtype.includes('colectivizado') || currentSubtype.includes('ampliado') || currentSubtype.includes('invertido'))) {
+                            $(`#word-${word.word_root}`).append(`
+                                <li style='color: rgb(212, 16, 16);' class='child-word'>
+                                    <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
+                                </li>
+                            `);
+                            $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
+                                return parseInt(val) + 1;
+                            });
 
-                            }
+                        //Sustantivos y verbos solo compuestos
+                        } else if (currentSubtype.includes('compuesto')) {
+                            createRootTree();
+
+                            $(`#root-${word.word_root}`).find('.compositions').append(`
+                                <li onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")' id='word-${word.word_name}' class='composed-word'>
+                                    <label>${word.word_name}</label>
+                                </li>
+                            `);
+                            $(`#root-${word.word_root}`).find('.root-amount').text(function(i, val) {
+                                return parseInt(val) + 1;
+                            });
+
                         }
                     });
                     break;
