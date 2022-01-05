@@ -2,11 +2,19 @@
 const express = require('express');
 const controller = require('./server/controller');
 const expressLayouts = require('express-ejs-layouts');
+const http = require('http');
 const app = express();
 const port = 5000;
+const hostname = 'localhost';
 
 app.use(express.static(__dirname));
 app.use(expressLayouts);
+
+//Server
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+});
 
 //Sets del express-ejs-layouts
 app.set('layout', './layouts/normal');
