@@ -21,6 +21,12 @@ app.set('layout', './layouts/normal');
 app.set('view engine', 'ejs');
 
 //Rutas
+app.get('/', (req, res) => {
+    res.render('diccionario', {
+        title: `Balanlàedenuges ljngeg - Diccionario`,
+        retrievedResults: ""
+    });
+});
 app.get('/diccionario/:search', controller.loadFilteredDictionary);
 app.get('/listado/:search', controller.loadFilteredDictionary);
 app.get('/estadisticas', controller.loadFullDictionary);
