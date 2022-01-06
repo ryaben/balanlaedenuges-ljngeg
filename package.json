@@ -18,7 +18,8 @@
     "express-ejs-layouts": "^2.5.1",
     "jquery": "^3.6.0",
     "jsdom": "^18.0.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "node": "^17.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
