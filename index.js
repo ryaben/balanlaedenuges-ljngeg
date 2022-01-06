@@ -5,7 +5,6 @@ const expressLayouts = require('express-ejs-layouts');
 const http = require('http');
 const app = express();
 const port = 5000;
-const hostname = 'localhost';
 
 app.use(express.static(__dirname));
 app.use(expressLayouts);
@@ -38,7 +37,7 @@ app.get('/:name', (req, res) => {
     });
 });
 
-
-app.listen(port, () => {
+//Agregado de process.env.PORT para Heroku
+app.listen(process.env.PORT || port, () => {
     console.log(`Now listening on port ${port}`); 
 });
