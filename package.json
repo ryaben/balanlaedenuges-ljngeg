@@ -4,8 +4,7 @@
   "description": "Diccionario y manual lingüístico del conlang balanlàedenuges.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "nodemon --watch index.js",
+    "dev": "nodemon --watch index.js",
     "start": "node index.js"
   },
   "keywords": [
