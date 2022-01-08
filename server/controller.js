@@ -27,11 +27,11 @@ const query =
     example.word_example5,
     word.word_root
     FROM
-	dictionary.word
-    INNER JOIN dictionary.type ON word.id = type.id
-    INNER JOIN dictionary.subtype ON word.id = subtype.id
-    INNER JOIN dictionary.definition ON word.id = definition.id
-    INNER JOIN dictionary.example ON word.id = example.id`;
+	heroku_bf7cb810553a372.word
+    INNER JOIN heroku_bf7cb810553a372.type ON word.id = type.id
+    INNER JOIN heroku_bf7cb810553a372.subtype ON word.id = subtype.id
+    INNER JOIN heroku_bf7cb810553a372.definition ON word.id = definition.id
+    INNER JOIN heroku_bf7cb810553a372.example ON word.id = example.id`;
 
 function loadFullDictionary(req, res) {
     let queryGlobal = query + ';';
