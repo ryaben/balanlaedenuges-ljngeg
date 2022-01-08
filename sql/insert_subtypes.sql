@@ -1,18 +1,18 @@
 -- Criterios: todo en minúscula
 
-CREATE TABLE IF NOT EXISTS `dictionary`.`subtype` (
+CREATE TABLE IF NOT EXISTS heroku_bf7cb810553a372.`subtype` (
 id INT PRIMARY KEY AUTO_INCREMENT, 
 word_subtype1 VARCHAR(45),
 word_subtype2 VARCHAR(45),
 word_subtype3 VARCHAR(45),
 word_subtype4 VARCHAR(45),
 word_subtype5 VARCHAR(45),
-FOREIGN KEY (`id`) REFERENCES `dictionary`.`word` (`id`)
+FOREIGN KEY (`id`) REFERENCES heroku_bf7cb810553a372.`word` (`id`)
 );
 
-TRUNCATE TABLE `dictionary`.`subtype`;
+TRUNCATE TABLE heroku_bf7cb810553a372.`subtype`;
 
-INSERT INTO `dictionary`.`subtype` (`word_subtype1`, `word_subtype2`, `word_subtype3`, `word_subtype4`, `word_subtype5`) 
+INSERT INTO heroku_bf7cb810553a372.`subtype` (`word_subtype1`, `word_subtype2`, `word_subtype3`, `word_subtype4`, `word_subtype5`) 
 VALUES
 ("exceptuado","","","",""),
 ("común","","","",""),
@@ -1160,4 +1160,4 @@ VALUES
 ("compuesto","","","",""),
 ("ordinal","","","","");
 
-SELECT * FROM `dictionary`.`subtype`;
+SELECT * FROM heroku_bf7cb810553a372.`subtype`;

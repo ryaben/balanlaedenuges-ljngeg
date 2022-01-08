@@ -3,16 +3,16 @@
 -- 
 -- 
 
-CREATE TABLE IF NOT EXISTS `dictionary`.`word` (
+CREATE TABLE IF NOT EXISTS heroku_bf7cb810553a372.`word` (
 id INT PRIMARY KEY AUTO_INCREMENT, 
 word_name VARCHAR(100),
 word_description VARCHAR(150),
 word_root VARCHAR(25)
 );
 
-TRUNCATE TABLE `dictionary`.`word`;
+TRUNCATE TABLE heroku_bf7cb810553a372.`word`;
 
-INSERT IGNORE INTO `dictionary`.`word` (`word_name`, `word_description`, `word_root`) 
+INSERT IGNORE INTO heroku_bf7cb810553a372.`word` (`word_name`, `word_description`, `word_root`) 
 VALUES
 ("Äw", "Palabra originante tradicional", "Äw"),
 ("Fejfeg", "Palabra originante tradicional", "Fejf"),
@@ -1162,4 +1162,4 @@ VALUES
 -- Fatjgeges
 -- Käswej (adelante), auxiliar/salvar/rescatar/socorrer
 
-SELECT * FROM `dictionary`.`word`;
+SELECT * FROM heroku_bf7cb810553a372.`word`;

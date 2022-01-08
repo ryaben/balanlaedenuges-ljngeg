@@ -1,18 +1,18 @@
 -- Criterios: no insertar múltiples líneas.
 
-CREATE TABLE IF NOT EXISTS `dictionary`.`example` (
+CREATE TABLE IF NOT EXISTS heroku_bf7cb810553a372.`example` (
 id INT PRIMARY KEY AUTO_INCREMENT,
 word_example1 VARCHAR(500),
 word_example2 VARCHAR(500),
 word_example3 VARCHAR(500),
 word_example4 VARCHAR(500),
 word_example5 VARCHAR(500),
-FOREIGN KEY (`id`) REFERENCES `dictionary`.`word` (`id`)
+FOREIGN KEY (`id`) REFERENCES heroku_bf7cb810553a372.`word` (`id`)
 );
 
-TRUNCATE TABLE `dictionary`.`example`;
+TRUNCATE TABLE heroku_bf7cb810553a372.`example`;
 
-INSERT INTO `dictionary`.`example` (`word_example1`, `word_example2`, `word_example3`, `word_example4`, `word_example5`) 
+INSERT INTO heroku_bf7cb810553a372.`example` (`word_example1`, `word_example2`, `word_example3`, `word_example4`, `word_example5`) 
 VALUES
 ("Froj göljàw tö kefjegen.","","","",""),
 ("Klaej fejfegen göljkàj üke knöjsjònuges.","Kjaes fejfeg göljtàjklar öl.","","",""),
@@ -1160,4 +1160,4 @@ VALUES
 ("Wjl klaej rjntèfjaj jkë göljàw blödug.","","","",""),
 ("Klaej göljkàj waej fajwes üskug wäld öl göljlàewün traej.","","","","");
 
-SELECT * FROM `dictionary`.`example`;
+SELECT * FROM heroku_bf7cb810553a372.`example`;

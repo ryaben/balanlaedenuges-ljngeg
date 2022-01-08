@@ -1,18 +1,18 @@
 -- Criterios: primer tipo con mayúscula, el resto no.
 
-CREATE TABLE IF NOT EXISTS `dictionary`.`type` (
+CREATE TABLE IF NOT EXISTS heroku_bf7cb810553a372.`type` (
 id INT PRIMARY KEY AUTO_INCREMENT, 
 word_type1 VARCHAR(45),
 word_type2 VARCHAR(45),
 word_type3 VARCHAR(45),
 word_type4 VARCHAR(45),
 word_type5 VARCHAR(45),
-FOREIGN KEY (`id`) REFERENCES `dictionary`.`word` (`id`)
+FOREIGN KEY (`id`) REFERENCES heroku_bf7cb810553a372.`word` (`id`)
 );
 
-TRUNCATE TABLE `dictionary`.`type`;
+TRUNCATE TABLE heroku_bf7cb810553a372.`type`;
 
-INSERT INTO `dictionary`.`type` (`word_type1`, `word_type2`, `word_type3`, `word_type4`, `word_type5`) 
+INSERT INTO heroku_bf7cb810553a372.`type` (`word_type1`, `word_type2`, `word_type3`, `word_type4`, `word_type5`) 
 VALUES
 ("Verbo","","","",""),
 ("Sustantivo","","","",""),
@@ -1160,4 +1160,4 @@ VALUES
 ("Sustantivo","","","",""),
 ("Adjetivo","","","","");
 
-SELECT * FROM `dictionary`.`type`;
+SELECT * FROM heroku_bf7cb810553a372.`type`;

@@ -1,18 +1,18 @@
 -- Criterios: inicio con abreviatura en mayúscula. Leyenda de etiquetas: coloq (coloquial), obs (obsoleto), tamb (también), equiv a (equivalente a), relig (religión), despect (despectivo), cult (cultural), neo (neologismo), tec (tecnicismo), vulg (vulgar), ling (lingüística)
 
-CREATE TABLE IF NOT EXISTS `dictionary`.`definition` (
+CREATE TABLE IF NOT EXISTS heroku_bf7cb810553a372.`definition` (
 id INT PRIMARY KEY AUTO_INCREMENT,
 word_definition1 VARCHAR(500),
 word_definition2 VARCHAR(500),
 word_definition3 VARCHAR(500),
 word_definition4 VARCHAR(500),
 word_definition5 VARCHAR(500),
-FOREIGN KEY (`id`) REFERENCES `dictionary`.`word` (`id`)
+FOREIGN KEY (`id`) REFERENCES heroku_bf7cb810553a372.`word` (`id`)
 );
 
-TRUNCATE TABLE `dictionary`.`definition`;
+TRUNCATE TABLE heroku_bf7cb810553a372.`definition`;
 
-INSERT INTO `dictionary`.`definition` (`word_definition1`, `word_definition2`, `word_definition3`, `word_definition4`, `word_definition5`) 
+INSERT INTO heroku_bf7cb810553a372.`definition` (`word_definition1`, `word_definition2`, `word_definition3`, `word_definition4`, `word_definition5`) 
 VALUES
 ("Haber.","","","",""),
 ("Palabra, vocablo, modismo.","coloq. Testimonio, atestación.","","",""),
@@ -1159,4 +1159,5 @@ VALUES
 ("Cardíaco (relativo o perteneciente al corazón).","","","",""),
 ("tec. Cualquiera de las capas que componen la anatomía humana o animal.","","","",""),
 ("Quinto (que ocupa el lugar número cinco en una serie).","","","","");
-SELECT * FROM `dictionary`.`definition`;
+
+SELECT * FROM heroku_bf7cb810553a372.`definition`;
