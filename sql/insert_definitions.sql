@@ -1158,6 +1158,7 @@ VALUES
 ("Impacientar, irritar, excitar.","","","",""),
 ("Cardíaco (relativo o perteneciente al corazón).","","","",""),
 ("tec. Cualquiera de las capas que componen la anatomía humana o animal.","","","",""),
-("Quinto (que ocupa el lugar número cinco en una serie).","","","","");
+("Quinto (que ocupa el lugar número cinco en una serie).","","","",""),
+("Octavo (que ocupa el lugar número ocho en una serie).","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`definition`;

@@ -1158,6 +1158,7 @@ VALUES
 ("Kjaeug göljkàj loke dünejeges wäld göljèrtjegafer öl.","","","",""),
 ("Öl göljtàg knaej blödùrnuges dönjlegafed.","","","",""),
 ("Wjl klaej rjntèfjaj jkë göljàw blödug.","","","",""),
-("Klaej göljkàj waej fajwes üskug wäld öl göljlàewün traej.","","","","");
+("Klaej göljkàj waej fajwes üskug wäld öl göljlàewün traej.","","","",""),
+("Klaej göljkàj waej ejwtes jgjaeg wäld öl jkë göljtàg glaekèfjeg.","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`example`;

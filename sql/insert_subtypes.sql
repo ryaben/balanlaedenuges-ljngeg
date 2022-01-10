@@ -1158,6 +1158,7 @@ VALUES
 ("ampliado","","","",""),
 ("relacional","","","",""),
 ("compuesto","","","",""),
+("ordinal","","","",""),
 ("ordinal","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`subtype`;

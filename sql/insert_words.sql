@@ -1158,7 +1158,8 @@ VALUES
 ("Ertjegafer", "Lit. 'Hacer sin paciencia'", "Ertjeg"),
 ("Blödùrnuges", "De 'Blödug' y 'Ürnug', lit. 'Relativo a órgano de sangre'", "Blödùrnug"),
 ("Rjntèfjaj", "De 'Rjnlug' y 'Tëfjaj', lit. 'Capa de cuerpo'", "Rjnl"),
-("Fajwes", "Lit. 'Relativo a cinco'", "Fajw");
+("Fajwes", "Lit. 'Relativo a cinco'", "Fajw"),
+("Ejwtes", "Lit. 'Relativo a ocho'", "Ejwt");
 -- Fatjgeges
 -- Käswej (adelante), auxiliar/salvar/rescatar/socorrer
 
