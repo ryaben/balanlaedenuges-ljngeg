@@ -85,7 +85,27 @@ $(function() {
                 handler.saveConfig('tooltip', $(this).val());
             });
 
-            $('.nav-link').on('click', function() {
+            $('nav').on('click', ".nav-section", function() {
+                if ($(this).index() === 0) {
+                    window.location = "/"
+                } else {
+                    let sectionId = $(this).attr('id').slice(8);
+
+                    $("nav").children(".nav-link").remove();
+                    $("nav").append($(`.nav-${sectionId}`).clone().addClass("nav-mobile"));
+                    $("#nav-links").css({
+                        "border-bottom": "2px solid darkred",
+                        "border-bottom-left-radius": "0px",
+                        "border-bottom-right-radius": "0px",
+                        "margin-bottom": "5px"
+                    });
+                    $("nav").css("padding-bottom", "5px");
+                    $("nav").children(`.nav-${sectionId}`).slideToggle(300);
+                }
+                
+            });
+
+            $('nav').on('click', ".nav-link", function() {
                 let view = $(this).attr('id').slice(4);
 
                 if (view === "listado") {
@@ -151,57 +171,59 @@ $(function() {
 
         //Reposiciona la ventana del tooltip y carga sus datos.
         loadTooltip(position, width, height, name) {
-            $('#wordTooltip').html('');
-            let retrievedWord = dictionary.find(function(word) {
-                return word.word_name === name;
-            });
+            if (window.innerWidth >= 660) {
+                $('#wordTooltip').html('');
+                let retrievedWord = dictionary.find(function(word) {
+                    return word.word_name === name;
+                });
 
-            this.displayDictionary([retrievedWord], 1, 'wordTooltip', 0, 0);
+                this.displayDictionary([retrievedWord], 1, 'wordTooltip', 0, 0);
 
-            let windowHeight = document.documentElement.clientHeight;
-            let windowWidth = document.documentElement.clientWidth;
-            let cleanWidth = width.substring(0, width.length - 2);
+                let windowHeight = document.documentElement.clientHeight;
+                let windowWidth = document.documentElement.clientWidth;
+                let cleanWidth = width.substring(0, width.length - 2);
 
-            if ((position.left - cleanWidth) <= (windowWidth / 2)) {
-                $('#wordTooltip').css({
-                    'left': position.left,
-                    'margin-left': `calc(${width} + 10px)`
-                });
-                $('#tooltipArrow').css({
-                    'left': position.left,
-                    'margin-left': `calc(${width} - 3px)`,
-                    'border-color': 'transparent black transparent transparent'
-                });
-            } else {
-                let tooltipWidth = $('#wordTooltip').width();
-                console.log('position.left', position.left);
-                console.log('tooltipWidth', tooltipWidth);
-                console.log('width', width);
-                    
-                $('#wordTooltip').css({
-                    'left': `calc(${position.left}px - ${tooltipWidth}px - 12px)`,
-                    'margin-right': `calc(${width})`
-                });
-                $('#tooltipArrow').css({
-                    'left': `calc(${position.left}px - 11px)`,
-                    'margin-right': `calc(${width} - 3px)`,
-                    'border-color': 'transparent transparent transparent black'
-                });
+                if ((position.left - cleanWidth) <= (windowWidth / 2)) {
+                    $('#wordTooltip').css({
+                        'left': position.left,
+                        'margin-left': `calc(${width} + 10px)`
+                    });
+                    $('#tooltipArrow').css({
+                        'left': position.left,
+                        'margin-left': `calc(${width} - 3px)`,
+                        'border-color': 'transparent black transparent transparent'
+                    });
+                } else {
+                    let tooltipWidth = $('#wordTooltip').width();
+                    console.log('position.left', position.left);
+                    console.log('tooltipWidth', tooltipWidth);
+                    console.log('width', width);
+                        
+                    $('#wordTooltip').css({
+                        'left': `calc(${position.left}px - ${tooltipWidth}px - 12px)`,
+                        'margin-right': `calc(${width})`
+                    });
+                    $('#tooltipArrow').css({
+                        'left': `calc(${position.left}px - 11px)`,
+                        'margin-right': `calc(${width} - 3px)`,
+                        'border-color': 'transparent transparent transparent black'
+                    });
+                }
+
+                if (position.top <= (windowHeight / 2)) {
+                    $('#wordTooltip').css('top', position.top);
+                    $('#tooltipArrow').css('top', position.top + 5);
+                } else {
+                    setTimeout(() => {
+                        let tooltipHeight = $('#wordTooltip').height();
+                        $('#wordTooltip').css('top', `calc(${position.top}px - ${tooltipHeight}px + ${height})`);
+                        $('#tooltipArrow').css('top', `calc(${position.top}px + 5px)`);
+                    }, 5);
+                }
+
+                $('#tooltipArrow').fadeIn(100);
+                $('#wordTooltip').fadeIn(100);
             }
-
-            if (position.top <= (windowHeight / 2)) {
-                $('#wordTooltip').css('top', position.top);
-                $('#tooltipArrow').css('top', position.top + 5);
-            } else {
-                setTimeout(() => {
-                    let tooltipHeight = $('#wordTooltip').height();
-                    $('#wordTooltip').css('top', `calc(${position.top}px - ${tooltipHeight}px + ${height})`);
-                    $('#tooltipArrow').css('top', `calc(${position.top}px + 5px)`);
-                }, 5);
-            }
-
-            $('#tooltipArrow').fadeIn(100);
-            $('#wordTooltip').fadeIn(100);
         }
 
         //Adapta los aspectos visuales de la vista.

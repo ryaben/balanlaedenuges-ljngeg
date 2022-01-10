@@ -22,7 +22,7 @@ body {
     font-size: 0.95em;
     height: 100%;
     overflow: hidden;
-    min-width: 340px;
+    min-width: 360px;
 }
 
 button, input {
@@ -70,6 +70,7 @@ section {
     /* min-width: 650px; */
     margin: 0.5vh;
     height: 73vh;
+    overflow-y: scroll;
 }
 
 footer {
@@ -85,6 +86,7 @@ footer {
 .nav-section {
     padding: 0;
     margin-top: 8px;
+    pointer-events: none;
 }
 
 .nav-section:before {
@@ -96,11 +98,26 @@ footer {
     border-bottom: 1px solid darkred;
 }
 
+.nav-section:nth-child(1) {
+    pointer-events: all;
+    width: auto;
+}
+
+.nav-section:nth-child(1):hover {
+    color: white;
+    cursor: pointer;
+}
+
+.nav-section:nth-child(1):before {
+    border-bottom: none;
+}
+
 .nav-link {
     list-style: none;
     font-size: 1.2em;
     margin: 3px auto 3px auto;
     cursor: pointer;
+    pointer-events: all;
 }
 
 .nav-link:hover {
@@ -365,7 +382,7 @@ li .favorite-icon {
     display: flex;
 }
 
-.section-content, .section-title, .section-subtitle, .section-table, .word-type-example {
+.section-content, .section-title, #home-title, .section-subtitle, .section-table, .word-type-example {
     margin: 25px;
 }
 
@@ -377,6 +394,10 @@ li .favorite-icon {
 .section-title {
     font-size: 1.7em;
     text-decoration: underline;
+}
+
+#home-title {
+    font-size: 1.9em;
 }
 
 .section-subtitle {
@@ -445,10 +466,6 @@ li .favorite-icon {
     padding: 2px;
 }
 
-#nouns-screen, #verbs-screen, #adjectives-screen, #compounds-screen {
-    overflow-y: scroll;
-}
-
 #flag {
     width: 17vw;
     min-width: 225px;
@@ -463,6 +480,7 @@ li .favorite-icon {
 }
 
 #page-title {
+    text-align: center;
     font-size: 30px;
     margin-bottom: 0;
 }
@@ -588,6 +606,8 @@ li .favorite-icon {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
+    padding-right: 0 !important;
 }
 
 #listing-section {
@@ -771,7 +791,7 @@ li .favorite-icon {
     }
 
     #page-title {
-        font-size: 26px;
+        font-size: 24px;
     }
     
     #page-subtitle {
@@ -792,8 +812,8 @@ li .favorite-icon {
 }
 
 @media only screen and (max-width: 659px) {
-    header {
-        justify-content: center;
+    body {
+        overflow-y: auto;
     }
 
     main {
@@ -805,10 +825,118 @@ li .favorite-icon {
     }
 
     #nav-wrapper {
-        display: none !important;
+        width: auto;
     }
 
-    #flag, #coat {
+    #options-tab {
+        border-top-right-radius: 5px;
+    }
+
+    nav {
+        width: auto;
+        border: 2px solid black;
+        border-bottom-left-radius: 8px;
+        border-radius: 8px;
+        margin-bottom: 0.5vh;
+        height: auto;
+    }
+
+    #nav-links {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: auto;
+        border-radius: 8px;
+        padding: 10px 0 10px 0;
+        margin: auto 10px auto 10px;
+        overflow: hidden;
+    }
+
+    .nav-link {
         display: none;
+    }
+
+    .nav-mobile {
+        margin-left: 10px;
+    }
+
+    .nav-section {
+        margin-top: 0px;
+        pointer-events: all;
+    }
+
+    .nav-section::before {
+        border-bottom: none;
+        padding: 2px;
+        font-size: 1.2em;
+    }
+
+    .nav-section:hover {
+        background-color: lightgrey;
+        color: white;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    #listing-screen, section {
+        margin-bottom: 8px;
+    }
+
+    footer {
+        display: none;
+    }
+
+    #tab-btns {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .tab-btn {
+        width: 33%;
+    }
+
+    #flag {
+        min-width: 135px;
+    }
+}
+
+@media only screen and (max-width: 470px) {
+    header {
+        position: relative;
+        justify-content: center;
+    }
+
+    #flag {
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0.2;
+    }
+
+    #title-div {
+        z-index: 2;
+    }
+
+    #coat {
+        display: none;
+    }
+
+    #home-title {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .nav-section::before {
+        font-size: 1em;
+    }
+}
+
+@media only screen and (min-width: 660px) {
+    nav > .nav-link {
+        display: none !important;
     }
 }

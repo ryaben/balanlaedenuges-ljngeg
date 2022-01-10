@@ -21,8 +21,8 @@ app.set('view engine', 'ejs');
 
 //Rutas
 app.get('/', (req, res) => {
-    res.render('diccionario', {
-        title: `Balanlàedenuges ljngeg - Diccionario`,
+    res.render('home', {
+        title: `Balanlàedenuges ljngeg - Inicio`,
         retrievedResults: ""
     });
 });
