@@ -18,7 +18,8 @@
 /* Estilos generales */
 
 body {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    position: relative;
+    font-family: Cambria;
     font-size: 0.95em;
     height: 100%;
     overflow: hidden;
@@ -26,7 +27,7 @@ body {
 }
 
 button, input {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: Cambria;
 }
 
 input {
@@ -99,17 +100,7 @@ footer {
 }
 
 .nav-section:nth-child(1) {
-    pointer-events: all;
-    width: auto;
-}
-
-.nav-section:nth-child(1):hover {
-    color: white;
-    cursor: pointer;
-}
-
-.nav-section:nth-child(1):before {
-    border-bottom: none;
+    display: none;
 }
 
 .nav-link {
@@ -135,6 +126,7 @@ footer {
 .config-section {
     display: flex;
     justify-content: space-between;
+    margin-top: 4px;
 }
 
 .config-options {
@@ -342,8 +334,18 @@ li .favorite-icon {
     color: black;
 }
 
+.child-word {
+    color: rgb(212, 16, 16);
+}
+
 .child-word::before {
     content: "║ ╟ ";
+}
+
+.dummy-word {
+    color: gray;
+    text-decoration: line-through;
+    pointer-events: none;
 }
 
 .listing-header {
@@ -378,10 +380,6 @@ li .favorite-icon {
     cursor: pointer;
 }
 
-.listing-view-option {
-    display: flex;
-}
-
 .section-content, .section-title, #home-title, .section-subtitle, .section-table, .word-type-example {
     margin: 25px;
 }
@@ -397,7 +395,7 @@ li .favorite-icon {
 }
 
 #home-title {
-    font-size: 1.9em;
+    font-size: 1.85em;
 }
 
 .section-subtitle {
@@ -544,6 +542,7 @@ li .favorite-icon {
 #search-screen {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 #search-box {
@@ -669,14 +668,6 @@ li .favorite-icon {
     text-align: center;
 }
 
-#listing-view {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 30%;
-    margin: 10px;
-}
-
 #favorites-listing {
     display: flex;
     flex-direction: column;
@@ -726,217 +717,4 @@ li .favorite-icon {
 #word-listing #wordTooltip .searched-word, #word-listing .searched-word {
     margin: 0;
     border: none;
-}
-
-@media only screen and (max-width: 974px) {
-    #word-listing {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-}
-
-@media only screen and (max-width: 860px) {
-    #listing-lowbar {
-        flex-direction: column;
-    }
-
-    #listing-view {
-        justify-content: flex-start;
-        width: 100%;
-        margin-top: 0;
-    }
-
-    #search-box {
-        padding: 0.6em;
-    }
-
-    #special-characters {
-        min-width: 108px;
-        padding: 6px 6px 6px 2px;
-        margin-right: 8px;
-    }
-
-    #perfect-match-container {
-        margin-right: 8px;
-    }
-
-    #language-selection {
-        border-left: none;
-        margin-left: 0px;
-    }
-
-    .special-character {
-        display: none;
-    }
-}
-
-@media only screen and (max-width: 719px) {
-    header {
-        height: 16vh;
-    }
-
-    nav {
-        height: 73vh;
-    }
-
-    section {
-        height: 79vh;
-    }
-
-    #flag {
-        min-width: 170px;
-    }
-
-    #coat {
-        min-width: 85px;
-    }
-
-    #page-title {
-        font-size: 24px;
-    }
-    
-    #page-subtitle {
-        font-size: 15px;
-    }
-
-    #word-listing {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    #listing-screen {
-        min-width: 0;
-    }
-
-    .tab-btn {
-        width: 105px;
-    }
-}
-
-@media only screen and (max-width: 659px) {
-    body {
-        overflow-y: auto;
-    }
-
-    main {
-        flex-direction: column;
-    }
-
-    section {
-        width: auto;
-    }
-
-    #nav-wrapper {
-        width: auto;
-    }
-
-    #options-tab {
-        border-top-right-radius: 5px;
-    }
-
-    nav {
-        width: auto;
-        border: 2px solid black;
-        border-bottom-left-radius: 8px;
-        border-radius: 8px;
-        margin-bottom: 0.5vh;
-        height: auto;
-    }
-
-    #nav-links {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: auto;
-        border-radius: 8px;
-        padding: 10px 0 10px 0;
-        margin: auto 10px auto 10px;
-        overflow: hidden;
-    }
-
-    .nav-link {
-        display: none;
-    }
-
-    .nav-mobile {
-        margin-left: 10px;
-    }
-
-    .nav-section {
-        margin-top: 0px;
-        pointer-events: all;
-    }
-
-    .nav-section::before {
-        border-bottom: none;
-        padding: 2px;
-        font-size: 1.2em;
-    }
-
-    .nav-section:hover {
-        background-color: lightgrey;
-        color: white;
-        cursor: pointer;
-        border-radius: 4px;
-    }
-
-    #listing-screen, section {
-        margin-bottom: 8px;
-    }
-
-    footer {
-        display: none;
-    }
-
-    #tab-btns {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .tab-btn {
-        width: 33%;
-    }
-
-    #flag {
-        min-width: 135px;
-    }
-}
-
-@media only screen and (max-width: 470px) {
-    header {
-        position: relative;
-        justify-content: center;
-    }
-
-    #flag {
-        position: absolute;
-        display: block;
-        top: 0;
-        left: 0;
-        width: 100%;
-        opacity: 0.2;
-    }
-
-    #title-div {
-        z-index: 2;
-    }
-
-    #coat {
-        display: none;
-    }
-
-    #home-title {
-        text-align: center;
-    }
-}
-
-@media only screen and (max-width: 425px) {
-    .nav-section::before {
-        font-size: 1em;
-    }
-}
-
-@media only screen and (min-width: 660px) {
-    nav > .nav-link {
-        display: none !important;
-    }
 }

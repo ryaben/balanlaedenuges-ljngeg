@@ -1,23 +1,28 @@
 <nav>
     <div id='options-tab'>
         <div id="config-menu-title">
-            <label>⚙ Menú de configuración</label>
+            <label>⚙️ Menú de configuración</label>
             <label>◀</label>
         </div>
         <div id="config-menu">
-            <div id="tooltip-preview" class="config-section">
+            <div class="config-section nav-config">
                 <label>Vista previa de palabra</label>
-                <div id="tooltip-preview-options" class="config-options">
-                    <input id="tooltip-true" class="config-radio config-tooltip" type="radio" name="tooltip-preview" value="true">
-                    <label for="tooltip-true">Sí</label>
-                    <input id="tooltip-false" class="config-radio config-tooltip" type="radio" name="tooltip-preview" value="false">
-                    <label for="tooltip-false">No</label>
+                <div class="config-options">
+                    <label><input class="config-radio" type="radio" name="tooltip" value="true">Sí</label>
+                    <label><input class="config-radio" type="radio" name="tooltip" value="false">No</label>
+                </div>
+            </div>
+            <div class="config-section nav-config">
+                <label>Vista del listado</label>
+                <div class="config-options">
+                    <label><input class='config-radio' type='radio' name='listing' value='list'>Lista</label>
+                    <label><input class='config-radio' type='radio' name='listing' value='tree'>Árbol</label>
                 </div>
             </div>
         </div>
     </div>
     <ul id='nav-links'>
-        <ul id="section-home" class='nav-section' label='🏠'></ul>
+        <ul id="section-config" class='nav-section' label='⚙️'></ul>
         <ul id="section-dictionary" class='nav-section' label='Diccionario'>
             <li class='nav-link nav-dictionary' id='nav-diccionario'>Búsqueda de palabra</li>
             <li class='nav-link nav-dictionary' id='nav-listado'>Listado de palabras</li>

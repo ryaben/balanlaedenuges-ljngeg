@@ -378,13 +378,13 @@ VALUES
 ("compuesto","","","",""),
 ("compuesto","","","",""),
 ("compuesto","","","",""),
-("compuesto","","","",""),
+("compuesto","diminutivizado","","",""),
 ("relacional","","","",""),
-("compuesto","","","",""),
+("compuesto","diminutivizado","","",""),
 ("relacional","","","",""),
-("compuesto","","","",""),
+("compuesto","diminutivizado","","",""),
 ("relacional","","","",""),
-("compuesto","","","",""),
+("compuesto","diminutivizado","","",""),
 ("relacional","","","",""),
 ("tiempo","","","",""),
 ("tiempo","","","",""),
@@ -734,7 +734,7 @@ VALUES
 ("compuesto","","","",""),
 ("compuesto","","","",""),
 ("extranjerismo","","","",""),
-("extranjerismo","","","",""),
+("extranjerismo","exceptuado","","",""),
 ("común","propio","","",""),
 ("común","","","",""),
 ("compuesto","","","",""),
@@ -1159,6 +1159,9 @@ VALUES
 ("relacional","","","",""),
 ("compuesto","","","",""),
 ("ordinal","","","",""),
-("ordinal","","","","");
+("ordinal","","","",""),
+("relacional","","","",""),
+("común","","","",""),
+("común","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`subtype`;

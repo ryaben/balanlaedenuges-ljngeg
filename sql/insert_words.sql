@@ -378,14 +378,14 @@ VALUES
 ("Fajwĵgjaeg", "De 'Fajw' e 'Jgjaeg', lit. 'Cinco años'", "Fajw"),
 ("Tjöĵgjaeg", "De 'Tjö' e 'Jgjaeg', lit. 'Diez años'", "Tjö"),
 ("Anküĵgjaeg", "De 'Anküj' e 'Jgjaeg', lit. 'Cien años'", "Anküj"),
-("Kaenĵgjaeget", "De 'Kaenaj' y 'Jgjaeget', lit. 'Año pequeño con nieve'", "Kaen"),
+("Kaenĵgjaeget", "De 'Kaenaj' y 'Jgjaeget', lit. 'Año pequeño con nieve'", "Kaenĵgjaeg"),
 ("Kaenĵgjaegetes", "De 'Kaenaj' y 'Jgjaeget', lit. 'Relativo a año pequeño con nieve'", "Kaenĵgjaeg"),
-("Sjonĵgjaeget", "De 'Sjonug' y 'Jgjaeget', lit. 'Año pequeño con sol'", "Sjon"),
+("Sjonĵgjaeget", "De 'Sjonug' y 'Jgjaeget', lit. 'Año pequeño con sol'", "Sjonĵgjaeg"),
 ("Sjonĵgjaegetes", "De 'Sjonug' y 'Jgjaeget', lit. 'Relativo a año pequeño con sol'", "Sjonĵgjaeg"),
-("Wuljgĵgjaeget", "De 'Wuljgaj' y 'Jgjaeget', lit. 'Año pequeño con plantas'", "Wuljg"),
+("Wuljgĵgjaeget", "De 'Wuljgaj' y 'Jgjaeget', lit. 'Año pequeño con plantas'", "Wuljgĵgjaeg"),
 ("Wuljgĵgjaegetes", "De 'Wuljgaj' y 'Jgjaeget', lit. 'Relativo a año pequeño con plantas'", "Wuljgĵgjaeg"),
-("Döjkĵgjaeget", "De 'Döjkug' y 'Jgjaeget', lit. 'Año pequeño con caída'", "Döjk"),
-("Döjkĵgjaegetes", "De 'Döjkug' y 'Jgjaeget', lit. 'Relativo a año pequeño con caída'", "Döjkĵgjaeg"),
+("Döjkĵgjaeget", "De 'Döjkug' y 'Jgjaeg', lit. 'Año pequeño con caída'", "Döjkĵgjaeg"),
+("Döjkĵgjaegetes", "De 'Döjkug' y 'Jgjaeg', lit. 'Relativo a año pequeño con caída'", "Döjkĵgjaeg"),
 ("Fölwe", "Palabra originante tradicional", "Fölwe"),
 ("Gölj", "Palabra originante tradicional", "Gölj"),
 ("Udaj", "Palabra originante tradicional", "Udaj"),
@@ -675,7 +675,7 @@ VALUES
 ("Bljuneg", "Palabra originante tradicional", "Bljun"),
 ("Bljunegaf", "Lit. 'Sin belleza'", "Bljuneg"),
 ("Bljunegafar", "Lit. 'Hacer sin belleza'", "Bljuneg"),
-("Bljunegafèjfeg", "De 'Bljunegaf' y 'Fejfeg', lit. 'Palabra fea'", "Bljun"),
+("Bljunegafèjfeg", "De 'Bljunegaf' y 'Fejfeg', lit. 'Palabra sin hermosura'", "Bljun"),
 ("Läjrar", "Palabra originante tradicional", "Läjr"),
 ("Läjraj", "Palabra originante tradicional", "Läjr"),
 ("Läjreg", "Palabra originante tradicional", "Läjr"),
@@ -1159,7 +1159,10 @@ VALUES
 ("Blödùrnuges", "De 'Blödug' y 'Ürnug', lit. 'Relativo a órgano de sangre'", "Blödùrnug"),
 ("Rjntèfjaj", "De 'Rjnlug' y 'Tëfjaj', lit. 'Capa de cuerpo'", "Rjnl"),
 ("Fajwes", "Lit. 'Relativo a cinco'", "Fajw"),
-("Ejwtes", "Lit. 'Relativo a ocho'", "Ejwt");
+("Ëjwtes", "Lit. 'Relativo a ocho'", "Ëjwt"),
+("Denokrätĵaes", "Lit. 'Relativo a democracia'", "Denokrätĵa"),
+("Wleteg", "Palabra originante tradicional", "Wlet"),
+("Wleter", "Palabra originante tradicional", "Wlet");
 -- Fatjgeges
 -- Käswej (adelante), auxiliar/salvar/rescatar/socorrer
 

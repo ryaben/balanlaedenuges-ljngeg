@@ -1159,6 +1159,9 @@ VALUES
 ("Öl göljtàg knaej blödùrnuges dönjlegafed.","","","",""),
 ("Wjl klaej rjntèfjaj jkë göljàw blödug.","","","",""),
 ("Klaej göljkàj waej fajwes üskug wäld öl göljlàewün traej.","","","",""),
-("Klaej göljkàj waej ejwtes jgjaeg wäld öl jkë göljtàg glaekèfjeg.","","","","");
+("Klaej göljkàj waej ëjwtes jgjaeg wäld öl jkë göljtàg glaekèfjeg.","","","",""),
+("Føjlgorjölàedenug jkë göljkàj knaej denokrätĵaes laedenug.","","","",""),
+("Kon jkë göljtàg wleteg för kones laedenug!","Kjaeug göljkàj knaej sjonkèfjeg tjl wleteg j läjreg","","",""),
+("Konegen träsjl göljklàsj-wleter ä konegenes fjsljkèfjeguren.","Öl göljwlèter waej krjtonen.","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`example`;

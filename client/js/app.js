@@ -10,7 +10,8 @@ $(function() {
             this.eventsListening();
             this.checkLocalStorage();
             this.setCurrentPage(this.pageView);
-            this.setConfig();
+            this.setConfig("tooltip");
+            this.setConfig("listing");
 
             switch (this.pageView) {
                 case "diccionario":
@@ -81,28 +82,12 @@ $(function() {
                 $('#word-search').val($('#word-search').val() + $(this).text());
             });
 
-            $('.config-tooltip').on('click', function() {
-                handler.saveConfig('tooltip', $(this).val());
+            $('nav').on('click', '.config-radio', function() {
+                handler.saveConfig($(this).attr("name"), $(this).val());
             });
 
             $('nav').on('click', ".nav-section", function() {
-                if ($(this).index() === 0) {
-                    window.location = "/"
-                } else {
-                    let sectionId = $(this).attr('id').slice(8);
-
-                    $("nav").children(".nav-link").remove();
-                    $("nav").append($(`.nav-${sectionId}`).clone().addClass("nav-mobile"));
-                    $("#nav-links").css({
-                        "border-bottom": "2px solid darkred",
-                        "border-bottom-left-radius": "0px",
-                        "border-bottom-right-radius": "0px",
-                        "margin-bottom": "5px"
-                    });
-                    $("nav").css("padding-bottom", "5px");
-                    $("nav").children(`.nav-${sectionId}`).slideToggle(300);
-                }
-                
+                handler.toggleMobileNav($(this).attr('id').slice(8));
             });
 
             $('nav').on('click', ".nav-link", function() {
@@ -301,8 +286,53 @@ $(function() {
             }
             if (localStorage.getItem('config') == null) {
                 localStorage.setItem('config', JSON.stringify({
-                    tooltip: "true"
+                    tooltip: "true",
+                    listing: "tree"
                 }));
+            }
+        }
+
+        toggleMobileNav(sectionId) {
+            if ($("nav").children(`.nav-${sectionId}`).length == 0) {
+                $("nav").children(".nav-mobile").remove();
+                $("nav").append($(`.nav-${sectionId}`).clone().addClass("nav-mobile").css("display", "none"));
+
+                $("#nav-links").css({
+                    "border-bottom": "2px solid darkred",
+                    "border-bottom-left-radius": "0px",
+                    "border-bottom-right-radius": "0px",
+                    "margin-bottom": "5px"
+                });
+                $("nav").css("padding-bottom", "5px");
+                $("section").css({
+                    "opacity": "0.3",
+                    "pointer-events": "none"
+                });
+
+                if (sectionId == "config") {
+                    this.setConfig("tooltip");
+                    this.setConfig("listing");
+                }
+
+                $("nav").children(`.nav-${sectionId}`).slideDown(300);
+            } else {
+                $("nav").children(`.nav-${sectionId}`).slideUp(300);
+
+                setTimeout(() => {
+                    $("#nav-links").css({
+                        "border-bottom": "none",
+                        "border-bottom-left-radius": "8px",
+                        "border-bottom-right-radius": "8px",
+                        "margin-bottom": "0"
+                    });
+                    $("nav").css("padding-bottom", "0");
+                    $("section").css({
+                        "opacity": "1",
+                        "pointer-events": "all"
+                    });
+                    
+                    $("nav").children(".nav-mobile").remove();
+                }, 301);
             }
         }
 
@@ -448,28 +478,43 @@ $(function() {
                     });
                     break;
                 case "tree":
-                    dictionary.forEach(function(word) {
-                        function createRootTree() {
-                            //Busca la entrada de la raíz y agrega la palabra.
-                            if ($(`#root-${word.word_root}`).length === 0) {
-                                $('#word-listing').append(`
-                                    <ul class='root-tree' id='root-${word.word_root}' root-name='${word.word_root}'>
-                                        <li class='root-tree-title'><label class='root-tree-title-label' onclick='handler.searchWord("${word.word_root}", "bal", 0); handler.switchScreen("diccionario")'>${word.word_root}</label>
-                                            <div class='root-extra'>
-                                                <div class='root-amount-group'>
-                                                    <label class='root-amount'>0</label>
-                                                    <label> palabra(s)</label>
-                                                </div>
+                    function createRootTree(root) {
+                        //Busca la entrada de la raíz y agrega la palabra.
+                        if ($(`#root-${root}`).length === 0) {
+                            $('#word-listing').append(`
+                                <ul class='root-tree' id='root-${root}' root-name='${root}'>
+                                    <li class='root-tree-title'><label class='root-tree-title-label' onclick='handler.searchWord("${root}", "bal", 0); handler.switchScreen("diccionario")'>${root}</label>
+                                        <div class='root-extra'>
+                                            <div class='root-amount-group'>
+                                                <label class='root-amount'>0</label>
+                                                <label> palabra(s)</label>
                                             </div>
-                                        </li>
-                                        <ul class='compositions'>
-    
-                                        </ul>
-                                    </ul>
-                                `);
-                            }
-                        }
+                                        </div>
+                                    </li>
+                                    <ul class='compositions'>
 
+                                    </ul>
+                                </ul>
+                            `);
+                        }
+                    }
+
+                    let dummyWords = [
+                        { word_name: "Döjkĵgjaeg", word_root: "Döjk", word_type1: "dummy-composed" },
+                        { word_name: "Kaenĵgjaeg", word_root: "Kaen", word_type1: "dummy-composed" },
+                        { word_name: "Sjonĵgjaeg", word_root: "Sjon", word_type1: "dummy-composed" },
+                        { word_name: "Wuljgĵgjaeg", word_root: "Wuljg", word_type1: "dummy-composed" }
+                    ]
+
+                    dummyWords.forEach(function(dummy) {
+                        if (dummy.word_name.charAt(0) == dictionary[0].word_name.charAt(0)) {
+                            dictionary.push(dummy);
+                        }
+                    });
+
+                    dictionary.sort((a,b) => (a.word_name > b.word_name) ? 1 : ((b.word_name > a.word_name) ? -1 : 0));
+
+                    dictionary.forEach(function(word) {
                         let currentType = [];
                         let currentSubtype = [];
 
@@ -480,7 +525,7 @@ $(function() {
 
                         //Sustantivos y verbos comunes, exceptuados y extranjeros, más cualquier otro tipo principal de palabra
                         if (currentType.includes('Adverbio') || currentType.includes('Interjección') || currentType.includes('Adposición') || currentType.includes('Pronombre') || currentType.includes('Artículo') || currentType.includes('Conjunción') || currentType.includes('Contracción') || currentSubtype.includes('común') || currentSubtype.includes('exceptuado') || currentSubtype.includes('extranjerismo')) {
-                            createRootTree();
+                            createRootTree(word.word_root);
 
                             $(`#root-${word.word_root} .compositions`).before(`
                                 <ul class='root-word' id='word-${word.word_name}' word-type='${JSON.stringify(currentType)}' word-name='${word.word_name}'>
@@ -496,7 +541,7 @@ $(function() {
                         //Sustantivos modificados, verbos ampliados y adjetivos
                         } else if (((currentType.includes('Sustantivo') || currentType.includes('Verbo')) && (currentSubtype.includes('diminutivizado') || currentSubtype.includes('aumentativizado') || currentSubtype.includes('colectivizado') || currentSubtype.includes('ampliado') || currentSubtype.includes('invertido'))) || (currentType.includes('Adjetivo') && !currentSubtype.includes('compuesto'))) {
                             $(`#word-${word.word_root}`).append(`
-                                <li style='color: rgb(212, 16, 16);' class='child-word'>
+                                <li class='child-word'>
                                     <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
                                 </li>
                             `);
@@ -512,13 +557,14 @@ $(function() {
                                     <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
                                 </li>
                             `);
+                            
                             $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
                                 return parseInt(val) + 1;
                             });
 
                         //Sustantivos y verbos solo compuestos
                         } else if (currentSubtype.includes('compuesto')) {
-                            createRootTree();
+                            createRootTree(word.word_root);
 
                             $(`#root-${word.word_root}`).find('.compositions').append(`
                                 <li onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")' id='word-${word.word_name}' class='composed-word'>
@@ -529,8 +575,19 @@ $(function() {
                                 return parseInt(val) + 1;
                             });
 
+                        //"Dummies", palabras inexistentes que sostienen otras en el árbol.
+                        } else if (word.word_type1.includes('dummy-composed')) {
+                            createRootTree(word.word_root);
+
+                            $(`#root-${word.word_root}`).find('.compositions').append(`
+                                <li id='word-${word.word_name}' class='composed-word'>
+                                    <label class="dummy-word">${word.word_name}</label>
+                                </li>
+                            `);
                         }
                     });
+
+                    
                     break;
                 default:
                     break;
@@ -553,10 +610,10 @@ $(function() {
             $(`.tab-btn:eq(${tab})`).addClass('tab-selected');
         }
 
-        setConfig() {
+        setConfig(name) {
             let configStorage = JSON.parse(localStorage.getItem('config'));
 
-            $(`#tooltip-${configStorage.tooltip}`).prop('checked', true);
+            $(`.config-radio[name="${name}"][value="${configStorage[name]}"]`).prop("checked", true);
         }
 
         saveConfig(prop, value) {
