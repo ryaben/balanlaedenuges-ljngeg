@@ -348,21 +348,72 @@ li .favorite-icon {
     pointer-events: none;
 }
 
-.listing-header {
+.category-header, .category-title, .category-value, .category-percentage {
+    z-index: 2;
+    height: 45px;
+    margin: 0;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-header, .category-entry, .category-back {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.category-entry {
+    position: relative;
+}
+
+.category-header {
     border-bottom: 2px darkred solid;
-    font-size: 1.1em;
+    background-color: #faebd7;
+    font-size: 21px;
+    font-weight: bold;
 }
 
-.listing-aspect {
-    /* font-weight: bold; */
+.category-title {
     border-bottom: 1px solid darkgrey;
-    margin-top: 4px;
+    font-size: 22px;
 }
 
-.stat-to-fill {
-    font-size: 1.3em;
+.category-value {
+    font-size: 29px;
     color: rgb(216, 13, 13);
     border-bottom: 1px solid darkgrey;
+}
+
+.category-percentage {
+    border-bottom: 1px solid darkgrey;
+    font-size: 22px;
+}
+
+.category-clickable {
+    cursor: pointer;
+}
+
+.category-back {
+    justify-content: center;
+    height: auto;
+    padding: 10px 0 10px 0;
+}
+
+.category-back-button {
+    font-size: 21px;
+}
+
+.colorer {
+    z-index: 1;
+    content: '\A';
+    position: absolute;
+    background: lightgray;
+    top: 0;
+    bottom:0;
+    left: 0;
+    width: 0;
 }
 
 .tab-btn {
@@ -508,6 +559,7 @@ li .favorite-icon {
 #config-menu-title {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-weight: bold;
     width: 100%;
     border-radius: 6px;
@@ -642,14 +694,14 @@ li .favorite-icon {
 }
 
 .info-listing, #listing-stats, #search-result {
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 5px;
     height: 100%;
 }
 
 #listing-lowbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     background-color: lightgray;
     border-top: 2px solid black;
     border-bottom-left-radius: 8px;
@@ -658,14 +710,16 @@ li .favorite-icon {
 #stats-bar {
     display: flex;
     align-items: center;
+    justify-content: center;
     margin: 10px;
 }
 
 #listing-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    width: auto;
     font-size: 1.5em;
-    text-align: center;
+    padding: 0;
 }
 
 #favorites-listing {

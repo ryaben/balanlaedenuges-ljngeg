@@ -18,7 +18,6 @@ $(function() {
                     this.setSearchDefaults('lang');
                     this.setSearchDefaults('limit');
                     this.displayDictionary(dictionary, this.limitParam, 'search-result', 50, 200);
-                    this.displaySearchStats(dictionary);
                     break;
                 case "listado":
                     this.listWords(dictionary, this.listingParam);
@@ -31,7 +30,12 @@ $(function() {
                     this.setCurrentPage('listado');
                     this.setCurrentTab(1);
                     this.displayFavorites();
-                    $('#listing-view').hide();
+                    break;
+                case "estadisticas":
+                    this.setCurrentPage('listado');
+                    this.setCurrentTab(2);
+                    this.displaySearchStats(dictionary, "type", "Palabra", true);
+                    break;
                 default:
                     break;
             }
@@ -87,7 +91,9 @@ $(function() {
             });
 
             $('nav').on('click', ".nav-section", function() {
-                handler.toggleMobileNav($(this).attr('id').slice(8));
+                if (window.innerWidth < 659) {
+                    handler.toggleMobileNav($(this).attr('id').slice(8));
+                }
             });
 
             $('nav').on('click', ".nav-link", function() {
@@ -151,6 +157,33 @@ $(function() {
             $('#word-listing').on('mouseleave', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
                 $('#tooltipArrow').hide();
                 $('#wordTooltip').hide();
+            });
+
+            $("#listing-stats").on("click", ".category-clickable", function() {
+                let parent = $(this).attr("id").slice(9);
+                handler.displaySearchStats(dictionary, "subtype", parent);
+            });
+
+            $("#listing-stats").on("click", ".category-back-button", function() {
+                handler.displaySearchStats(dictionary, "type", "Palabra", true);
+            });
+
+            $("#listing-stats").on("mouseenter", ".category-clickable", function() {
+                $(this).css({
+                    "background-color": "black",
+                    "color": "white"
+                });
+                $(this).children(".category-value").css("color", "white");
+                $(this).children(".colorer").css("display", "none");
+            });
+
+            $("#listing-stats").on("mouseleave", ".category-clickable", function() {
+                $(this).css({
+                    "background-color": "white",
+                    "color": "black"
+                });
+                $(this).children(".category-value").css("color", "rgb(216, 13, 13)");
+                $(this).children(".colorer").css("display", "block");
             });
         }
 
@@ -263,20 +296,135 @@ $(function() {
             window.location = `/diccionario/${searchString}?lang=${language}&limit=${limit}`;
         }
 
-        //TODO:
-        countSearchStats(dictionary) {
-            let foundWords = dictionary.length;
-
-            return {
-                foundWords: foundWords
+        //Obtiene todos los valroe actuales para determinada propiedad de un diccionario.
+        getSearchValues(dictionary, category, parent) {
+            function makeUnique(array) {
+                var seen = {};
+                return array.filter(function(item) {
+                    return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+                });
             }
+
+            let values = [];
+
+            dictionary.forEach(function(word) {
+                for (let i = 1; i <= 5; i++) {
+                    let currentValue = word[`word_${category}${i}`];
+                    let capitalizedValue = currentValue.charAt(0).toUpperCase() + currentValue.slice(1);
+
+                    switch (category) {
+                        case "type":
+                            if (currentValue != "") {
+                                values.push(capitalizedValue);
+                            }
+                            break;
+                        case "subtype":
+                            let currentParent = word[`word_type${i}`];
+                            let capitalizedParent = currentParent.charAt(0).toUpperCase() + currentParent.slice(1);
+
+                            if (currentValue != "" && capitalizedParent.includes(parent)) {
+                                if (capitalizedValue.includes(",")) {
+                                    let splittedSubtypes = capitalizedValue.split(", ");
+    
+                                    for (let j = 0; j < splittedSubtypes.length; j++) {
+                                        values.push(splittedSubtypes[j].charAt(0).toUpperCase() + splittedSubtypes[j].slice(1));
+                                    }
+                                } else {
+                                    values.push(capitalizedValue.charAt(0).toUpperCase() + capitalizedValue.slice(1));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+
+            return makeUnique(values).sort((a, b) => (a > b) ? 1 : -1);
         }
 
-        displaySearchStats(dictionary) {
-            let searchStats = this.countSearchStats(dictionary);
-            let foundWordsText = $('#found-words').text();
+        //Recorre propiedades de un diccionario y cuenta los casos que tengan determinado valor.
+        countSearchStats(dictionary, category, value, parent) {
+            let counter = 0;
 
-            $('#found-words').text(foundWordsText + searchStats.foundWords);
+            dictionary.forEach(function(word) {
+                for (let i = 1; i <= 5; i++) {
+                    let currentValue = word[`word_${category}${i}`];
+                    let capitalizedValue = currentValue.charAt(0).toUpperCase() + currentValue.slice(1);
+                    let currentParent = word[`word_type${i}`];
+                    let capitalizedParent = currentParent.charAt(0).toUpperCase() + currentParent.slice(1);
+
+                    switch (category) {
+                        case "type":
+                            if (capitalizedValue.includes(value)) {
+                                counter++;
+                            }
+                            break;
+                        case "subtype":
+                            if (capitalizedValue.includes(",")) {
+                                let splittedSubtypes = capitalizedValue.split(", ");
+    
+                                for (let j = 0; j < splittedSubtypes.length; j++) {
+                                    let capitalizedSplitted = splittedSubtypes[j].charAt(0).toUpperCase() + splittedSubtypes[j].slice(1);
+
+                                    if (capitalizedSplitted.includes(value) && capitalizedParent.includes(parent)) {
+                                        counter++;
+                                    }
+                                }
+                            } else {
+                                if (capitalizedValue.includes(value) && capitalizedParent.includes(parent)) {
+                                    counter++;
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+
+           return counter;
+        }
+
+        //Agrega una entrada visual de estadísticas.
+        appendEntry(style, title, value, percentage, clickable) {
+            $("#listing-stats").append(`
+                <div id="category-${title}" class="category-entry ${clickable == true ? 'category-clickable' : 'category-nonclickable'}">
+                    <div class="colorer"></div>
+                    <p class="category-${style[0]}">${title}</p>
+                    <p class="category-${style[1]}">${value}</p>
+                    <p class="category-${style[2]}">${percentage}</p>
+                </div>
+            `).fadeIn(300);
+        }
+
+        //Muestra estadísticas del diccionario, recorriendo varios otros métodos.
+        displaySearchStats(dictionary, category, parent, clickable) {
+            let valuesArray = this.getSearchValues(dictionary, category, parent);
+            let totalWords = category == "type" ? dictionary.length : this.countSearchStats(dictionary, "type", parent);
+
+            $("#listing-stats").hide();
+            $("#listing-stats").html("");
+
+            this.appendEntry(["header", "header", "header"], "Tipo", "Cantidad", "Porcentaje");
+            this.appendEntry(["title", "value", "percentage"], parent, totalWords, "100.00%");
+            $(`#category-${parent} .colorer`).css({"width": "100%", "border-bottom": "2px solid black"});
+
+            valuesArray.forEach(function(value) {
+                let countOp = this.countSearchStats(dictionary, category, value, parent);
+                let percentage = ((countOp * 100) / totalWords).toFixed(2) + "%";
+
+                this.appendEntry(["title", "value", "percentage"], value, countOp, percentage, clickable);
+                $(`#category-${value} .colorer`).css("width", percentage);
+            }, this);
+
+            if (category == "subtype") {
+                $("#listing-stats").append(`
+                    <div class="category-back">
+                        <button class="category-back-button">← Atrás</button>
+                    </div>
+                `).fadeIn(300);
+            }
         }
 
         //Busca el storage de favoritos y crea uno vacío si no lo encuentra.
@@ -409,6 +557,8 @@ $(function() {
                 dictionary.sort((a, b) => (a.word_name > b.word_name) ? 1 : -1);
             }
 
+            $("#found-words").text("Resultados obtenidos: " + dictionary.length);
+
             for (let i = 0; i < dictionaryLimit; i++) {
                 const word = dictionary[i];
 
@@ -499,13 +649,6 @@ $(function() {
                         }
                     }
 
-                    let dummyWords = [
-                        { word_name: "Döjkĵgjaeg", word_root: "Döjk", word_type1: "dummy-composed" },
-                        { word_name: "Kaenĵgjaeg", word_root: "Kaen", word_type1: "dummy-composed" },
-                        { word_name: "Sjonĵgjaeg", word_root: "Sjon", word_type1: "dummy-composed" },
-                        { word_name: "Wuljgĵgjaeg", word_root: "Wuljg", word_type1: "dummy-composed" }
-                    ]
-
                     dummyWords.forEach(function(dummy) {
                         if (dummy.word_name.charAt(0) == dictionary[0].word_name.charAt(0)) {
                             dictionary.push(dummy);
@@ -519,8 +662,23 @@ $(function() {
                         let currentSubtype = [];
 
                         for (let i = 1; i <= 5; i++) {
-                            currentType.push(word[`word_type${i}`]);
-                            currentSubtype.push(word[`word_subtype${i}`]);
+                            let typeI = word[`word_type${i}`];
+                            let subtypeI = word[`word_subtype${i}`];
+
+                            //El caso de undefined es por las dummy words.
+                            if (typeI != "" && typeI != undefined) { currentType.push(typeI) }
+                            if (subtypeI != "" && subtypeI != undefined) { currentSubtype.push(subtypeI); }
+                        }
+
+                        for (let i = 0; i < currentSubtype.length; i++) {
+                            if (currentSubtype[i].includes(",")) {
+                                let splittedSubtypes = currentSubtype[i].split(", ");
+
+                                for (let j = 0; j < splittedSubtypes.length; j++) {
+                                    currentSubtype.push(splittedSubtypes[j]);
+                                }
+                                currentSubtype.splice(i, 1);
+                            }
                         }
 
                         //Sustantivos y verbos comunes, exceptuados y extranjeros, más cualquier otro tipo principal de palabra
@@ -576,7 +734,7 @@ $(function() {
                             });
 
                         //"Dummies", palabras inexistentes que sostienen otras en el árbol.
-                        } else if (word.word_type1.includes('dummy-composed')) {
+                        } else if (word.word_subtype1.includes('dummy-composed')) {
                             createRootTree(word.word_root);
 
                             $(`#root-${word.word_root}`).find('.compositions').append(`

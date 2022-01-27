@@ -368,7 +368,7 @@ VALUES
 ("Sĵwedaj", "De 'Sjwe' y 'Daj', lit. 'Siete días'", "Sjwe"),
 ("Sĵwedajes", "De 'Sjwe' y 'Daj', lit. 'Relativo a siete días'", "Sjwe"),
 ("Trĵtjödaj", "De 'Trj', 'Tjö' y 'Daj', lit. 'Tres decenas de días'", "Trj"),
-("Trĵtjödajes", "De 'Trj', 'Tjö' y 'Daj', lit. 'Relativo a tres decenas de días'", "Trj"),
+("Trĵtjödajes", "De 'Trj', 'Tjö' y 'Daj', lit. 'Relativo a tres decenas de días'", "Trĵtjödaj"),
 ("Dëwoneg", "Palabra originante tradicional", "Dëwon"),
 ("Dëwoneges", "Lit. 'Relativo a favoritismo'", "Dëwoneg"),
 ("Dëwonar", "Palabra originante tradicional", "Dëwon"),
@@ -1162,7 +1162,12 @@ VALUES
 ("Ëjwtes", "Lit. 'Relativo a ocho'", "Ëjwt"),
 ("Denokrätĵaes", "Lit. 'Relativo a democracia'", "Denokrätĵa"),
 ("Wleteg", "Palabra originante tradicional", "Wlet"),
-("Wleter", "Palabra originante tradicional", "Wlet");
+("Wleter", "Palabra originante tradicional", "Wlet"),
+("Wletegaf", "Lit. 'Sin respeto'", "Wleteg"),
+("Wletegafer", "Lit. 'Hacer sin respeto'", "Wleteg"),
+("Wleteges", "Lit. 'Relativo a respeto'", "Wleteg"),
+("Wletegafes", "Lit. 'Relativo a sin respeto'", "Wleteg"),
+("Luwùlejtug", "De 'Luwer' y 'Wülejtug', lit. 'Animal que ova'", "Luw");
 -- Fatjgeges
 -- Käswej (adelante), auxiliar/salvar/rescatar/socorrer
 

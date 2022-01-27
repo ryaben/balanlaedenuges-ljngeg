@@ -24,7 +24,45 @@ function handleDisconnect() {
 
 handleDisconnect();
 
-const query = 
+function loadFullDictionary(req, res) {
+    let view = req.url.split('/')[1];
+    let query = 
+    `SELECT 
+    word.id,
+    word.word_name,
+    type.word_type1,
+    type.word_type2,
+    type.word_type3,
+    type.word_type4,
+    type.word_type5,
+    subtype.word_subtype1,
+    subtype.word_subtype2,
+    subtype.word_subtype3,
+    subtype.word_subtype4,
+    subtype.word_subtype5,
+    word.word_root
+    FROM
+	heroku_bf7cb810553a372.word
+    INNER JOIN heroku_bf7cb810553a372.type ON word.id = type.id
+    INNER JOIN heroku_bf7cb810553a372.subtype ON word.id = subtype.id;`;
+
+    connection.query(query, function(error, result) {
+        if (error) {
+            return console.log("Hubo un error al cargar el diccionario: " + error.message);
+        } else {
+            res.render(view, {
+                title: `Balanlàedenuges ljngeg - ${view.charAt(0).toUpperCase() + view.slice(1)}`,
+                retrievedResults: JSON.stringify(result)
+            });
+        }
+    });
+}
+
+function loadFilteredDictionary(req, res) {
+    let whereSearch;
+    let likeSearch;
+    let view = req.url.split('/')[1];
+    let query = 
     `SELECT 
     word.id,
     word.word_name,
@@ -56,27 +94,6 @@ const query =
     INNER JOIN heroku_bf7cb810553a372.subtype ON word.id = subtype.id
     INNER JOIN heroku_bf7cb810553a372.definition ON word.id = definition.id
     INNER JOIN heroku_bf7cb810553a372.example ON word.id = example.id`;
-
-function loadFullDictionary(req, res) {
-    let queryGlobal = query + ';';
-    let view = req.url.split('/')[1];
-
-    connection.query(queryGlobal, function(error, result) {
-        if (error) {
-            return console.log("Hubo un error al cargar el diccionario: " + error.message);
-        } else {
-            res.render(view, {
-                title: `Balanlàedenuges ljngeg - ${view.charAt(0).toUpperCase() + view.slice(1)}`,
-                retrievedResults: JSON.stringify(result)
-            });
-        }
-    });
-}
-
-function loadFilteredDictionary(req, res) {
-    let whereSearch;
-    let likeSearch;
-    let view = req.url.split('/')[1];
 
     switch (view) {
         case 'diccionario':

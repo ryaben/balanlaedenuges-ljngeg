@@ -1162,6 +1162,11 @@ VALUES
 ("Octavo (que ocupa el lugar número ocho en una serie).","","","",""),
 ("Democrático (que aplica la democracia).","","","",""),
 ("Respeto, consideración, miramiento.","Cortesía, urbanidad, deferencia.","","",""),
-("Respetar (tratar con respeto o consideración).","Tolerar, acatar o cumplir.","","","");
+("Respetar (tratar con respeto o consideración).","Tolerar, acatar o cumplir.","","",""),
+("Insolencia, desconsideración, desaire.","","","",""),
+("Desconsiderar, desairar, faltar el respeto.","","","",""),
+("Respetuoso, considerado, mirado.","","","",""),
+("Irrespetuoso, desconsiderado, insolente.","","","",""),
+("Ovíparo (familia de animales que ovan).","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`definition`;

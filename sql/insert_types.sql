@@ -347,7 +347,7 @@ VALUES
 ("Adverbio","","","",""),
 ("Adverbio","conjunción","","",""),
 ("Conjunción","pronombre","interjección","",""),
-("Adverbio","","","",""),
+("Conjunción","adverbio","","",""),
 ("Pronombre","","","",""),
 ("Conjunción","adverbio","","",""),
 ("Conjunción","adverbio","","",""),
@@ -1074,8 +1074,8 @@ VALUES
 ("Contracción","pronombre","","",""),
 ("Contracción","pronombre","","",""),
 ("Contracción","pronombre","","",""),
-("Pronombre","","","",""),
-("Pronombre","","","",""),
+("Pronombre","artículo","","",""),
+("Pronombre","artículo","","",""),
 ("Contracción","interjección","","",""),
 ("Interjección","","","",""),
 ("Interjección","","","",""),
@@ -1162,6 +1162,11 @@ VALUES
 ("Adjetivo","","","",""),
 ("Adjetivo","","","",""),
 ("Sustantivo","","","",""),
-("Verbo","","","","");
+("Verbo","","","",""),
+("Sustantivo","","","",""),
+("Verbo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Sustantivo","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`type`;
