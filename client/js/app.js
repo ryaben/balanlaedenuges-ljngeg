@@ -3,7 +3,7 @@ $(function() {
         constructor() {
             this.pageView = window.location.pathname.split('/')[1]
             this.limitParam = this.loadParam('limit');
-            this.listingParam = this.loadParam('listing');
+            this.listingParam = this.getConfig('listing');
         }
 
         initialize() {
@@ -47,31 +47,12 @@ $(function() {
             });
 
             $('#search-button').on('click', function() {
-                let language;
-                let limit;
-
-                if ($('.language:eq(0)').is(':checked')) { language = 'bal' }
-                else if ($('.language:eq(1)').is(':checked')) { language = 'esp' }
-
-                if ($('#perfect-match').is(':checked')) { limit = 1 }
-                else { limit = 0 }
-
-                handler.searchWord($('#word-search').val(), language, limit);
+                handler.customizeSearch();
             });
 
-            //FIXME:
-            $('#search-button').on('keypress', function(event) {
-                if (event.which == '13') {
-                    let language;
-                    let limit;
-
-                    if ($('.language:eq(0)').is(':checked')) { language = 'bal' }
-                    else if ($('.language:eq(1)').is(':checked')) { language = 'esp' }
-
-                    if ($('#perfect-match').is(':checked')) { limit = 1 }
-                    else { limit = 0 }
-
-                    handler.searchWord($('#word-search').val(), language, limit);
+            $('body').on('keypress', function(event) {
+                if (handler.pageView == 'diccionario' && event.keyCode == 13) {
+                    handler.customizeSearch();
                 }
             });
 
@@ -100,7 +81,7 @@ $(function() {
                 let view = $(this).attr('id').slice(4);
 
                 if (view === "listado") {
-                    window.location = `/listado/a?listing=tree`
+                    window.location = `/listado/a?listing=${handler.listingParam}`
                 } else {
                     window.location = `/${view}`
                 }
@@ -116,7 +97,7 @@ $(function() {
 
             $('.letter-listing').on('click', function() {
                 let letter = $(this).attr("id").slice(7);
-                window.location = `/listado/${letter}?listing=${handler.loadParam("listing")}`;
+                window.location = `/listado/${letter}?listing=${handler.listingParam}`;
             });
 
             $('.listing-view').on('change', function() {
@@ -289,6 +270,20 @@ $(function() {
             }
 
             $('#word-search').val(window.location.pathname.split('/')[2]);
+        }
+
+        //Analiza variables que determinan una búsqueda en el diccionario.
+        customizeSearch() {
+            let language;
+            let limit;
+
+            if ($('.language:eq(0)').is(':checked')) { language = 'bal' }
+            else if ($('.language:eq(1)').is(':checked')) { language = 'esp' }
+
+            if ($('#perfect-match').is(':checked')) { limit = 1 }
+            else { limit = 0 }
+
+            this.searchWord($('#word-search').val(), language, limit);
         }
 
         //Redirecciona según string de búsqueda.
@@ -538,80 +533,87 @@ $(function() {
         displayFavorites() {
             let favoritesStorage = JSON.parse(localStorage.getItem('favoritesStorage'));
 
-            favoritesStorage.forEach(function(fav) {
+            if (favoritesStorage.length > 0) {
+                favoritesStorage.forEach(function(fav) {
+                    $('#favorites-listing').append(`
+                        <div id="favorite-${fav.id}" class="favorite-entry">
+                            <img class="favorite-icon" src="/client/img/favorite.png" alt="fav">
+                            <label class="favorite-title" onclick="handler.searchWord('${fav.name}', 'bal', 1); handler.switchScreen('diccionario')">${fav.name}</label>
+                        </div>
+                    `);
+                });
+            } else {
                 $('#favorites-listing').append(`
-                    <div id="favorite-${fav.id}" class="favorite-entry">
-                        <img class="favorite-icon" src="/client/img/favorite.png" alt="fav">
-                        <label class="favorite-title" onclick="handler.searchWord('${fav.name}', 'bal', 1); handler.switchScreen('diccionario')">${fav.name}</label>
-                    </div>
+                    <h3 class="no-favorites">Aún no hay favoritos agregados.</h3>
                 `);
-            });
+            }
         }
 
         //Renderiza los resultados de la query.
         displayDictionary(dictionary, limit, container, displayDelay, fadeDuration) {
             let dictionaryLimit = limit;
 
-            if (limit == 0) {
-                dictionaryLimit = dictionary.length;
-                dictionary.sort((a, b) => (a.word_name > b.word_name) ? 1 : -1);
-            }
-
-            $("#found-words").text("Resultados obtenidos: " + dictionary.length);
-
-            for (let i = 0; i < dictionaryLimit; i++) {
-                const word = dictionary[i];
-
-                let concatType = '';
-                let concatSubtype = '(';
-                let concatMeaning = '';
-                let favoriteStatus = this.getFavoriteStatus(word.id) ? 'favorite' : 'non-favorite';
-
-                for (let i = 1; i <= 5; i++) {
-                    const currentType = word[`word_type${i}`];
-                    const currentSubtype = word[`word_subtype${i}`];
-                    const currentDefinition = word[`word_definition${i}`];
-                    const currentExample = word[`word_example${i}`];
-
-                    if (currentType != "") {
-                        if (i > 1 ) {
-                            concatType += ',&nbsp;';
-                        }
-                        concatType += currentType;
-                    }
-                    if (currentSubtype != "") {
-                        if (i > 1 ) {
-                            concatSubtype += ',&nbsp;';
-                        }
-                        concatSubtype += currentSubtype;
-                    }
-                    if (currentDefinition != "") {
-                        concatMeaning += `<li class='word-meaning'>${currentDefinition}</li>`;
-                    }
-                    if (currentExample != "") {
-                        concatMeaning += `<ul style='padding: 0;'><li class='word-example'>${currentExample}</li></ul>`;
-                    }
+            if (dictionary.length > 0) {
+                if (limit == 0) {
+                    dictionaryLimit = dictionary.length;
+                    dictionary.sort((a, b) => (a.word_name > b.word_name) ? 1 : -1);
                 }
+    
+                $("#found-words").text("Resultados obtenidos: " + dictionary.length);
+    
+                for (let i = 0; i < dictionaryLimit; i++) {
+                    const word = dictionary[i];
+    
+                    let concatType = '';
+                    let concatSubtype = '(';
+                    let concatMeaning = '';
+                    let favoriteStatus = this.getFavoriteStatus(word.id) ? 'favorite' : 'non-favorite';
+    
+                    for (let i = 1; i <= 5; i++) {
+                        const currentType = word[`word_type${i}`];
+                        const currentSubtype = word[`word_subtype${i}`];
+                        const currentDefinition = word[`word_definition${i}`];
+                        const currentExample = word[`word_example${i}`];
+    
+                        if (currentType != "") {
+                            (i > 1) ? concatType += ',&nbsp;' : '';
+                            concatType += currentType;
+                        }
+                        if (currentSubtype != "") {
+                            (i > 1) ? concatSubtype += ',&nbsp;' : '';
+                            concatSubtype += currentSubtype;
+                        }
 
-                concatSubtype += ')';
-
-                setTimeout(function() {
-                    $(`
-                        <div id="word-${word.id}" class='searched-word' style='display: none;'>
-                            <div class='result-title'>
-                                <h2 class='word-name'>${word.word_name}</h2>
-                                <img class='favorite-icon' src='/client/img/${favoriteStatus}.png' alt='Favorite'>
+                        if (currentDefinition != "") {
+                            concatMeaning += `<li class='word-meaning'>${currentDefinition}</li>`;
+                        }
+                        if (currentExample != "") {
+                            concatMeaning += `<ul style='padding: 0;'><li class='word-example'>${currentExample}</li></ul>`;
+                        }
+                    }
+    
+                    concatSubtype += ')';
+    
+                    setTimeout(function() {
+                        $(`
+                            <div id="word-${word.id}" class='searched-word' style='display: none;'>
+                                <div class='result-title'>
+                                    <h2 class='word-name'>${word.word_name}</h2>
+                                    <img class='favorite-icon' src='/client/img/${favoriteStatus}.png' alt='Favorite'>
+                                </div>
+                                <p class='word-root'>(en raíz&nbsp;<i>${word.word_root}</i>)</p>
+                                <p class='word-type'>${concatType}&nbsp;${concatSubtype}</p>
+                                <p class='word-description'>${word.word_description}</p>
+                                <hr style='border-top: 1px solid black;'>
+                                <p style='font-weight: bold;'>Acepciones:</p>
+                                <ol class='word-meanings'>${concatMeaning}</ol>
                             </div>
-                            <p class='word-root'>(en raíz&nbsp;<i>${word.word_root}</i>)</p>
-                            <p class='word-type'>${concatType}&nbsp;${concatSubtype}</p>
-                            <p class='word-description'>${word.word_description}</p>
-                            <hr style='border-top: 1px solid black;'>
-                            <p style='font-weight: bold;'>Acepciones:</p>
-                            <ol class='word-meanings'>${concatMeaning}</ol>
-                        </div>
-                    `).appendTo(`#${container}`).fadeIn(fadeDuration);
-                }, displayDelay);
-                displayDelay += fadeDuration;
+                        `).appendTo(`#${container}`).fadeIn(fadeDuration);
+                    }, displayDelay);
+                    displayDelay += fadeDuration;
+                }
+            } else if (dictionary.length === 0) {
+                $(`<div class="empty-search">La búsqueda no arrojó resultados.</div>`).appendTo(`#${container}`).fadeIn(fadeDuration);
             }
         }
 
@@ -682,7 +684,7 @@ $(function() {
                         }
 
                         //Sustantivos y verbos comunes, exceptuados y extranjeros, más cualquier otro tipo principal de palabra
-                        if (currentType.includes('Adverbio') || currentType.includes('Interjección') || currentType.includes('Adposición') || currentType.includes('Pronombre') || currentType.includes('Artículo') || currentType.includes('Conjunción') || currentType.includes('Contracción') || currentSubtype.includes('común') || currentSubtype.includes('exceptuado') || currentSubtype.includes('extranjerismo')) {
+                        if ((currentType.includes('Adverbio') || currentType.includes('Interjección') || currentType.includes('Adposición') || currentType.includes('Pronombre') || currentType.includes('Artículo') || currentType.includes('Conjunción') || currentType.includes('Contracción') || currentSubtype.includes('común') || currentSubtype.includes('exceptuado') || currentSubtype.includes('extranjerismo')) && !currentType.includes('Adjetivo')) {
                             createRootTree(word.word_root);
 
                             $(`#root-${word.word_root} .compositions`).before(`
@@ -766,6 +768,11 @@ $(function() {
 
         setCurrentTab(tab) {
             $(`.tab-btn:eq(${tab})`).addClass('tab-selected');
+        }
+
+        getConfig(name) {
+            let configStorage = JSON.parse(localStorage.getItem('config'));
+            return configStorage[name];
         }
 
         setConfig(name) {

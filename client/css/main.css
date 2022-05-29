@@ -186,6 +186,10 @@ footer {
     margin: 8px;
 }
 
+.empty-search {
+    text-align: center;
+}
+
 .word-description {
     margin: 0 auto 1em auto;
 }
@@ -214,6 +218,11 @@ footer {
 li .favorite-icon {
     width: 15px;
     height: 15px;
+}
+
+.no-favorites {
+    font-size: 20px;
+    margin: 15px auto 0 auto;
 }
 
 .word-root {
@@ -311,6 +320,7 @@ li .favorite-icon {
 
 .root-word-title, .child-word, .composed-word {
     display: none;
+    margin: 0;
 }
 
 .compositions {

@@ -1,5 +1,5 @@
 -- Criterios:
--- * Usar comillas simples
+-- * Usar solo comillas simples dentro de los strings
 -- 
 -- 
 
@@ -939,7 +939,7 @@ VALUES
 ("Kälarjgëlànördnug", "De 'Kälaeg', 'Rjgëlug' y 'Anördnug', lit. 'Máquina de dibujos con movimiento'", "Käla"),
 ("Kälarjgëlkĵgeg", "De 'Kälaeg', 'Rjgëlug' y 'Kjgeg', lit. 'Lugar de dibujos con movimiento'", "Käla"),
 ("Kälarjgëlfèjregur", "De 'Kälaeg', 'Rjgëlug' y 'Fejregur', lit. 'Colectivo de conocimientos de dibujos con movimiento'", "Käla"),
-("Frojkàlaer", "Palabra originante tradicional", "Froj"),
+("Frojkàlaer", "De 'Froj' y 'Kälaer', lit. 'Mover aquí'", "Froj"),
 ("Sjoner", "Palabra originante tradicional", "Sjon"),
 ("Wajsjòner", "De 'Wajug' y 'Sjoner', lit. 'Solear (un) nacimiento'", "Waj"),
 ("Wajsjònug", "De 'Wajug' y 'Sjonug', lit. 'Nacimiento soleado'", "Waj"),
@@ -1167,8 +1167,41 @@ VALUES
 ("Wletegafer", "Lit. 'Hacer sin respeto'", "Wleteg"),
 ("Wleteges", "Lit. 'Relativo a respeto'", "Wleteg"),
 ("Wletegafes", "Lit. 'Relativo a sin respeto'", "Wleteg"),
-("Luwùlejtug", "De 'Luwer' y 'Wülejtug', lit. 'Animal que ova'", "Luw");
--- Fatjgeges
+("Luwùlejtug", "De 'Luwer' y 'Wülejtug', lit. 'Animal que ova'", "Luw"),
+("Ënskjegaf", "Lit. 'Sin uso'", "Ënskjeg"),
+("Fjalajes", "Lit. 'Relativo a bebida'", "Fjalaj"),
+("Fjres", "Lit. 'Relativo a cuatro'", "Fjr"),
+("Gërtug", "Palabra originante tradicional", "Gërt"),
+("Fenseges", "Lit. 'Relativo a aprendizaje'", "Fenseg"),
+("Fatjgeges", "Lit. 'Relativo a destino'", "Fatjgeg"),
+("Frejar", "Palabra originante tradicional", "Frej"),
+("Frejegafar", "Lit. 'Hacer sin facilidad'", "Frejeg"),
+("Fresteges", "Lit. 'Relativo a entusiasmo'", "Fresteg"),
+("Frëteges", "Lit. 'Relativo a intento'", "Frëteg"),
+("Fëjreges", "Lit. 'Relativo a conocimiento'", "Fëjreg"),
+("Fändjlegafes", "Lit. 'Relativo a sin final'", "Fändjlegaf"),
+("Fejfuges", "Lit. 'Relativo a texto'", "Fejfug"),
+("Rogkèfjeg", "De 'Rogler' y 'Kefjeg', lit. 'Persona que regala'", "Rogl"),
+("Golunùrnuges", "De 'Golunar' y 'Ürnug', lit. 'Relativo a órgano para degustar'", "Golunùrnug"),
+("Jagajes", "Lit. 'Relativo a agua'", "Jagaj"),
+("Jagajures", "Lit. 'Relativo a colectivo de agua'", "Jagaj"),
+("Jageges", "Lit. 'Relativo a hidratación'", "Jageg"),
+("Jagegafes", "Lit. 'Relativo a sin hidratación'", "Jageg"),
+("Jagegaflàedejuges", "De 'Jagegaf' y 'Laedejug', lit. 'Relativo a tierra sin hidratación'", "Jagegaflàedejug"),
+("Jagneges", "Lit. 'Relativo a vivo'", "Jagneg"),
+("Jagàjurones", "Lit. 'Relativo a colectivo grande de agua'", "Jagaj"),
+("Jagajones", "Lit. 'Relativo a agua grande'", "Jagaj"),
+("Jaglĵneges", "De 'Jagaj' y 'Ljneg', lit. 'Relativo a línea de agua'", "Jaglĵneg"),
+("Jaglàedejuges", "De 'Jagaj' y 'Laedejug', lit. 'Relativo a tierra con agua'", "Jaglàedejug"),
+("Jagbĵseleges", "De 'Jagaj' y 'Bjseleg', lit. 'Relativo a aire con agua'", "Jagbĵseleg"),
+("Jagwĵkolaj", "De 'Jagar' y 'Wjkolaj', lit. 'Acción de la boca para mojar'", "Jag"),
+("Jgjaegetes", "Lit. 'Relativo a año pequeño'", "Jgjaeg"),
+("Kjltajes", "Lit. 'Relativo a leche'", "Kjltaj"),
+("Klënuges", "Lit. 'Relativo a entendimiento'", "Klënug"),
+("Knjfajegaf", "Lit. 'Sin naturaleza'", "Knjfajeg"),
+("Knjfajegafes", "Lit. 'Relativo a sin naturaleza'", "Knjfajeg"),
+("Flajkeg", "Palabra originante tradicional", "Flajk"),
+("Flajkeges", "Lit. 'Relativo a anterioridad'", "Flajkeg");
 -- Käswej (adelante), auxiliar/salvar/rescatar/socorrer
 
 SELECT * FROM heroku_bf7cb810553a372.`word`;
