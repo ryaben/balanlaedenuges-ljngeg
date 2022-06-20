@@ -239,6 +239,7 @@ li .favorite-icon {
     text-align: center;
     cursor: pointer;
     width: 4%;
+    border-radius: 4px;
 }
 
 .letter-listing:hover {

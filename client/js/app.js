@@ -36,6 +36,9 @@ $(function() {
                     this.setCurrentTab(2);
                     this.displaySearchStats(dictionary, "type", "Palabra", true);
                     break;
+                case "guias":
+                    this.drawWorldMap();
+                    break;
                 default:
                     break;
             }
@@ -752,6 +755,109 @@ $(function() {
                 default:
                     break;
             }
+        }
+
+        drawWorldMap() {
+            var svgMapEuroCurrency = new svgMap({
+                targetElementID: 'svgMapEuroCurrency',
+                data: {
+                  data: {
+                    librishGrammar: {}
+                  },
+                  applyData: 'librishGrammar',
+                  values: {
+                    AT: { librishGrammar: 1, eurozone: 1 }, // Austria
+                    BE: { librishGrammar: 1, eurozone: 1 }, // Belgium
+                    CY: { librishGrammar: 1, eurozone: 1 }, // Cyprus
+                    EE: { librishGrammar: 1, eurozone: 1 }, // Estonia
+                    FI: { librishGrammar: 1, eurozone: 1 }, // Finland
+                    FR: { librishGrammar: 1, eurozone: 1 }, // France
+                    DE: { librishGrammar: 1, eurozone: 1 }, // Germany
+                    GR: { librishGrammar: 1, eurozone: 1 }, // Greece
+                    IE: { librishGrammar: 1, eurozone: 1 }, // Ireland
+                    IT: { librishGrammar: 1, eurozone: 1 }, // Italy
+                    LV: { librishGrammar: 1, eurozone: 1 }, // Latvia
+                    LT: { librishGrammar: 1, eurozone: 1 }, // Lithuania
+                    LU: { librishGrammar: 1, eurozone: 1 }, // Luxembourg
+                    MT: { librishGrammar: 1, eurozone: 1 }, // Malta
+                    NL: { librishGrammar: 1, eurozone: 1 }, // Netherlands
+                    PT: { librishGrammar: 1, eurozone: 1 }, // Portugal
+                    ES: { librishGrammar: 1, eurozone: 1 }, // Spain
+                    SI: { librishGrammar: 1, eurozone: 1 }, // Slovenia
+                    SK: { librishGrammar: 1, eurozone: 1 }, // Slovakia
+    
+                    // Countries using euro but not in eurozone
+                    XK: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // Kosovo
+                    ME: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // Montenegro
+                    AD: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // Andorra
+                    MC: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // Monaco
+                    SM: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // San Marino
+                    VA: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // Vatican City
+    
+                    // Countries in eurozone but not using euro
+                    BG: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Bulgaria
+                    CZ: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Czech Republic
+                    DK: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Denmark
+                    HR: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Croatia
+                    HU: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Hungary
+                    PL: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Poland
+                    RO: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Romania
+                    SE: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' } // Sweden
+                  }
+                },
+                colorMin: '#E2E2E2',
+                colorMax: '#297ACC',
+                colorNoData: '#E2E2E2',
+                thresholdMax: 1,
+                thresholdMin: 0,
+                initialZoom: 0,
+                initialPan: {
+                  x: 0,
+                  y: 0
+                },
+                mouseWheelZoomEnabled: true,
+                mouseWheelZoomWithKey: true,
+                onGetTooltip: function (tooltipDiv, countryID, countryValues) {
+                  // Geting the list of countries
+                  var countries = svgMapEuroCurrency.countries;
+    
+                  // Create tooltip content element
+                  var tooltipContentElement = document.createElement('div');
+                  tooltipContentElement.style.padding = '16px 24px';
+    
+                  // Fill content
+                  var innerHTML =
+                    '<div style="margin: 0 0 10px; text-align: center"><img src="https://cdn.jsdelivr.net/gh/hjnilsson/country-flags@latest/svg/{0}.svg" alt="" style="height: 40px; width: auto; border: 2px solid #eee"></div>'.replace(
+                      '{0}',
+                      countryID.toLowerCase()
+                    );
+    
+                  innerHTML +=
+                    '<div style="min-width: 180px; font-weight: bold; margin: 0 0 15px; text-align: center">' +
+                    countries[countryID] +
+                    '</div>';
+    
+                  if (countryValues && countryValues.eurozone == 1) {
+                    innerHTML +=
+                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Part of eurozone</div>';
+                  } else {
+                    innerHTML +=
+                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Not a part of eurozone</div>';
+                  }
+    
+                  if (countryValues && countryValues.librishGrammar == 1) {
+                    innerHTML +=
+                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Uses Euro</div>';
+                  } else {
+                    innerHTML +=
+                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Does not use Euro</div>';
+                  }
+    
+                  // Return element with custom content
+                  tooltipContentElement.innerHTML = innerHTML;
+                  return tooltipContentElement;
+                }
+            });
         }
 
         setCurrentPage(page) {

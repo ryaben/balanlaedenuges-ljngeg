@@ -1201,7 +1201,27 @@ VALUES
 ("Knjfajegaf", "Lit. 'Sin naturaleza'", "Knjfajeg"),
 ("Knjfajegafes", "Lit. 'Relativo a sin naturaleza'", "Knjfajeg"),
 ("Flajkeg", "Palabra originante tradicional", "Flajk"),
-("Flajkeges", "Lit. 'Relativo a anterioridad'", "Flajkeg");
+("Flajkeges", "Lit. 'Relativo a anterioridad'", "Flajkeg"),
+("Awalblòdug", "De 'Awalaj' y 'Blödug', lit. 'Sangre de luna'", "Awal"),
+("Awalblòder", "De 'Awalaj' y 'Blöder', lit. 'Sangrar de la luna'", "Awal"),
+("Frjwlàedenug", "De 'Frjweg' y 'Laedenug', lit. 'País del sur'", "Frjw"),
+("Tujkneg", "Palabra originante tradicional", "Tujkn"),
+("Tujkneges", "Lit. 'Relativo a posterioridad'", "Tujkneg"),
+("Türajuges", "Lit. 'Relativo a mundo'", "Türajug"),
+("Klëk", "Palabra originante tradicional", "Klëk"),
+("Klausdàj", "De 'Klaus (nombre)' y 'Daj', lit. 'Día de Klaus'", "Klaus"),
+("Kjgkojwàsteg", "De 'Kjgeg', 'Kojweg' y 'Wasteg', lit. 'Vista de cielo de lugar'", "Kjg"),
+("Wonajeg", "Palabra originante tradicional", "Wonaj"),
+("Wonajer", "Palabra originante tradicional", "Wonaj"),
+("Wonajegon", "Lit 'Enojo grande'", "Wonajeg"),
+("Wonajegoner", "Lit 'Hacer enojo grande'", "Wonajeg"),
+("Wonajeges", "Lit. 'Relativo a enojo'", "Wonajeg"),
+("Wonajegones", "Lit. 'Relativo a enojo grande'", "Wonajeg"),
+("Balandàj", "De 'Balanug' y 'Daj', lit. 'Día de equilibrio'", "Balan"),
+("Kunstaj", "Palabra originante tradicional", "Kunst"),
+("Kunstar", "Palabra originante tradicional", "Kunst"),
+("Kunsteg", "Palabra originante tradicional", "Kunst"),
+("Kunstajes", "Lit. 'Relativo a madera'", "Kunstaj");
 -- Käswej (adelante), auxiliar/salvar/rescatar/socorrer
 
 SELECT * FROM heroku_bf7cb810553a372.`word`;
