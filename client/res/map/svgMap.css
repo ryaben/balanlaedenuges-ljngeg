@@ -40,7 +40,9 @@
 
 .svgMap-map-wrapper {
   position: relative;
-  width: 100%;
+  width: calc(100% - 50px);
+  height: 0px;
+  margin-left: 25px;
   padding-top: 50%;
   overflow: hidden;
   background: #d9ecff;

@@ -758,59 +758,61 @@ $(function() {
         }
 
         drawWorldMap() {
-            var svgMapEuroCurrency = new svgMap({
-                targetElementID: 'svgMapEuroCurrency',
+            var svgMapCountryNames = new svgMap({
+                targetElementID: 'svgMapCountryNames',
                 data: {
                   data: {
-                    librishGrammar: {}
+                    librishNaming: {
+                        color: '#88e067'
+                    }
                   },
-                  applyData: 'librishGrammar',
+                  applyData: 'librishNaming',
                   values: {
-                    AT: { librishGrammar: 1, eurozone: 1 }, // Austria
-                    BE: { librishGrammar: 1, eurozone: 1 }, // Belgium
-                    CY: { librishGrammar: 1, eurozone: 1 }, // Cyprus
-                    EE: { librishGrammar: 1, eurozone: 1 }, // Estonia
-                    FI: { librishGrammar: 1, eurozone: 1 }, // Finland
-                    FR: { librishGrammar: 1, eurozone: 1 }, // France
-                    DE: { librishGrammar: 1, eurozone: 1 }, // Germany
-                    GR: { librishGrammar: 1, eurozone: 1 }, // Greece
-                    IE: { librishGrammar: 1, eurozone: 1 }, // Ireland
-                    IT: { librishGrammar: 1, eurozone: 1 }, // Italy
-                    LV: { librishGrammar: 1, eurozone: 1 }, // Latvia
-                    LT: { librishGrammar: 1, eurozone: 1 }, // Lithuania
-                    LU: { librishGrammar: 1, eurozone: 1 }, // Luxembourg
-                    MT: { librishGrammar: 1, eurozone: 1 }, // Malta
-                    NL: { librishGrammar: 1, eurozone: 1 }, // Netherlands
-                    PT: { librishGrammar: 1, eurozone: 1 }, // Portugal
-                    ES: { librishGrammar: 1, eurozone: 1 }, // Spain
-                    SI: { librishGrammar: 1, eurozone: 1 }, // Slovenia
-                    SK: { librishGrammar: 1, eurozone: 1 }, // Slovakia
+                    AT: { librishNaming: 1, librishGrammar: 1 }, // Austria
+                    BE: { librishNaming: 1, librishGrammar: 1 }, // Belgium
+                    CY: { librishNaming: 1, librishGrammar: 1 }, // Cyprus
+                    EE: { librishNaming: 1, librishGrammar: 1 }, // Estonia
+                    FI: { librishNaming: 1, librishGrammar: 1 }, // Finland
+                    FR: { librishNaming: 1, librishGrammar: 1 }, // France
+                    DE: { librishNaming: 1, librishGrammar: 1 }, // Germany
+                    GR: { librishNaming: 1, librishGrammar: 1 }, // Greece
+                    IE: { librishNaming: 1, librishGrammar: 1 }, // Ireland
+                    IT: { librishNaming: 1, librishGrammar: 1 }, // Italy
+                    LV: { librishNaming: 1, librishGrammar: 1 }, // Latvia
+                    LT: { librishNaming: 1, librishGrammar: 1 }, // Lithuania
+                    LU: { librishNaming: 1, librishGrammar: 1 }, // Luxembourg
+                    MT: { librishNaming: 1, librishGrammar: 1 }, // Malta
+                    NL: { librishNaming: 1, librishGrammar: 1 }, // Netherlands
+                    PT: { librishNaming: 1, librishGrammar: 1 }, // Portugal
+                    ES: { librishNaming: 1, librishGrammar: 1 }, // Spain
+                    SI: { librishNaming: 1, librishGrammar: 1 }, // Slovenia
+                    SK: { librishNaming: 1, librishGrammar: 1 }, // Slovakia
     
-                    // Countries using euro but not in eurozone
-                    XK: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // Kosovo
-                    ME: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // Montenegro
-                    AD: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // Andorra
-                    MC: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // Monaco
-                    SM: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // San Marino
-                    VA: { librishGrammar: 1, eurozone: 0, color: '#528FCC' }, // Vatican City
+                    // Countries using librishNaming but not librishGrammar
+                    XK: { librishNaming: 1, librishGrammar: 0 }, // Kosovo
+                    ME: { librishNaming: 1, librishGrammar: 0, color: '#88e067' }, // Montenegro
+                    AD: { librishNaming: 1, librishGrammar: 0, color: '#88e067' }, // Andorra
+                    MC: { librishNaming: 1, librishGrammar: 0, color: '#88e067' }, // Monaco
+                    SM: { librishNaming: 1, librishGrammar: 0, color: '#88e067' }, // San Marino
+                    VA: { librishNaming: 1, librishGrammar: 0, color: '#88e067' }, // Vatican City
     
-                    // Countries in eurozone but not using euro
-                    BG: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Bulgaria
-                    CZ: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Czech Republic
-                    DK: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Denmark
-                    HR: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Croatia
-                    HU: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Hungary
-                    PL: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Poland
-                    RO: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' }, // Romania
-                    SE: { librishGrammar: 0, eurozone: 1, color: '#a6d2ff' } // Sweden
+                    // Countries with librishGrammar but not using librishNaming
+                    BG: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Bulgaria
+                    CZ: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Czech Republic
+                    DK: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Denmark
+                    HR: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Croatia
+                    HU: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Hungary
+                    PL: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Poland
+                    RO: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Romania
+                    SE: { librishNaming: 0, librishGrammar: 1, color: '#88e067' } // Sweden
                   }
                 },
                 colorMin: '#E2E2E2',
-                colorMax: '#297ACC',
+                colorMax: '#487a36',
                 colorNoData: '#E2E2E2',
                 thresholdMax: 1,
                 thresholdMin: 0,
-                initialZoom: 0,
+                initialZoom: 1,
                 initialPan: {
                   x: 0,
                   y: 0
@@ -819,7 +821,7 @@ $(function() {
                 mouseWheelZoomWithKey: true,
                 onGetTooltip: function (tooltipDiv, countryID, countryValues) {
                   // Geting the list of countries
-                  var countries = svgMapEuroCurrency.countries;
+                  var countries = svgMapCountryNames.countries;
     
                   // Create tooltip content element
                   var tooltipContentElement = document.createElement('div');
@@ -837,20 +839,20 @@ $(function() {
                     countries[countryID] +
                     '</div>';
     
-                  if (countryValues && countryValues.eurozone == 1) {
+                  if (countryValues && countryValues.librishNaming == 1) {
                     innerHTML +=
-                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Part of eurozone</div>';
+                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Nomenclatura libraterrense</div>';
                   } else {
                     innerHTML +=
-                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Not a part of eurozone</div>';
+                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Nomenclatura libraterrense</div>';
                   }
-    
+                  
                   if (countryValues && countryValues.librishGrammar == 1) {
                     innerHTML +=
-                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Uses Euro</div>';
+                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Gramática libraterrense completa</div>';
                   } else {
                     innerHTML +=
-                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Does not use Euro</div>';
+                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Gramática libraterrense completa</div>';
                   }
     
                   // Return element with custom content
