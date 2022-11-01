@@ -6,8 +6,8 @@ $(function() {
             this.listingParam = this.getConfig('listing');
         }
 
-        initialize() {
-            this.eventsListening();
+        initialize(handler) {
+            this.eventsListening(handler);
             this.checkLocalStorage();
             this.setCurrentPage(this.pageView);
             this.setConfig("tooltip");
@@ -17,7 +17,7 @@ $(function() {
                 case "diccionario":
                     this.setSearchDefaults('lang');
                     this.setSearchDefaults('limit');
-                    this.displayDictionary(dictionary, this.limitParam, 'search-result', 50, 200);
+                    this.displayDictionary(dictionary, this.limitParam, 'searchResult', 50, 200);
                     break;
                 case "listado":
                     this.listWords(dictionary, this.listingParam);
@@ -44,12 +44,12 @@ $(function() {
             }
         }
 
-        eventsListening() {
-            $('#title-div').on('click', function() {
+        eventsListening(handler) {
+            $('#titleDiv').on('click', function() {
                 window.location = '/'
             });
 
-            $('#search-button').on('click', function() {
+            $('#searchButton').on('click', function() {
                 handler.customizeSearch();
             });
 
@@ -59,15 +59,15 @@ $(function() {
                 }
             });
 
-            $('#config-menu-title label').on('click', function() {
-                let arrow = $('#config-menu-title label:eq(1)');
+            $('#configMenuTitle label').on('click', function() {
+                let arrow = $('#configMenuTitle label:eq(1)');
 
                 arrow.text(arrow.text() === '◀' ? '▼' : '◀');
-                $('#config-menu').slideToggle(200);
+                $('#configMenu').slideToggle(200);
             });
 
             $('.special-character').on('click', function() {
-                $('#word-search').val($('#word-search').val() + $(this).text());
+                $('#wordSearch').val($('#wordSearch').val() + $(this).text());
             });
 
             $('nav').on('click', '.config-radio', function() {
@@ -90,11 +90,19 @@ $(function() {
                 }
             });
 
-            $('#search-result').on('click', '.favorite-icon', function() {
+            $('.data-index-link').on('mouseenter', function() {
+                handler.hoverIndexLink($(this), 'red');
+            });
+
+            $('.data-index-link').on('mouseleave', function() {
+                handler.hoverIndexLink($(this), 'black');
+            });
+
+            $('#searchResult').on('click', '.favorite-icon', function() {
                 handler.toggleFavorite($(this).closest('.searched-word').attr('id').slice(5), $(this).siblings('.word-name').text(), 'word');
             });
 
-            $('#favorites-listing').on('click', '.favorite-icon', function() {
+            $('#favoritesListing').on('click', '.favorite-icon', function() {
                 handler.toggleFavorite($(this).closest('.favorite-entry').attr('id').slice(9), $(this).siblings('.favorite-title').text(), 'favorite');
             });
 
@@ -125,34 +133,47 @@ $(function() {
                 }
             });
 
-            $('#word-listing').on('click', '.root-tree-title', function() {
+            $('#wordListing').on('click', '.root-tree-title', function() {
                 $(this).closest('.root-tree').find('.root-word-title').toggle(200, 'linear');
                 $(this).closest('.root-tree').find('.child-word').toggle(200, 'linear');
                 $(this).closest('.root-tree').find('.composed-word').toggle(200, 'linear');
             });
 
-            $('#word-listing').on('mouseenter', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
+            $('#guidesScreen').on('click', '.root-tree-title.guide', function() {
+                $(this).closest('.root-tree').find('.guide-container').toggle(200, 'linear');
+            });
+
+            $('#wordListing').on('mouseenter', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
                 let configStorage = JSON.parse(localStorage.getItem('config'));
                 if (configStorage.tooltip == 'true') {
-                    handler.loadTooltip($(this).position(), $(this).css('width'), $(this).css('height'), $(this).html());
+                    handler.loadTooltip($(this).position(), $(this).css('width'), $(this).css('height'), $(this).html(), 'document');
                 }
             });
 
-            $('#word-listing').on('mouseleave', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
+            $('#wordListing').on('mouseleave', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
                 $('#tooltipArrow').hide();
                 $('#wordTooltip').hide();
             });
 
-            $("#listing-stats").on("click", ".category-clickable", function() {
+            $('.guide-polygon').on('mouseenter', function() {
+                handler.loadTooltip($(this).position(), $(this).css('width'), $(this).css('height'), $(this).attr('guide-word'), $(this).closest('.guide-container').attr('id'));
+            });
+
+            $('.guide-polygon').on('mouseleave', function() {
+                $('#tooltipArrow').hide();
+                $('#wordTooltip').hide();
+            });
+
+            $("#listingStats").on("click", ".category-clickable", function() {
                 let parent = $(this).attr("id").slice(9);
                 handler.displaySearchStats(dictionary, "subtype", parent);
             });
 
-            $("#listing-stats").on("click", ".category-back-button", function() {
+            $("#listingStats").on("click", ".category-back-button", function() {
                 handler.displaySearchStats(dictionary, "type", "Palabra", true);
             });
 
-            $("#listing-stats").on("mouseenter", ".category-clickable", function() {
+            $("#listingStats").on("mouseenter", ".category-clickable", function() {
                 $(this).css({
                     "background-color": "black",
                     "color": "white"
@@ -161,7 +182,7 @@ $(function() {
                 $(this).children(".colorer").css("display", "none");
             });
 
-            $("#listing-stats").on("mouseleave", ".category-clickable", function() {
+            $("#listingStats").on("mouseleave", ".category-clickable", function() {
                 $(this).css({
                     "background-color": "white",
                     "color": "black"
@@ -172,7 +193,7 @@ $(function() {
         }
 
         //Reposiciona la ventana del tooltip y carga sus datos.
-        loadTooltip(position, width, height, name) {
+        loadTooltip(position, width, height, name, parent) {
             if (window.innerWidth >= 660) {
                 $('#wordTooltip').html('');
                 let retrievedWord = dictionary.find(function(word) {
@@ -181,8 +202,16 @@ $(function() {
 
                 this.displayDictionary([retrievedWord], 1, 'wordTooltip', 0, 0);
 
-                let windowHeight = document.documentElement.clientHeight;
-                let windowWidth = document.documentElement.clientWidth;
+                let windowHeight;
+                let windowWidth;
+                if (parent === 'document') {
+                    windowHeight = document.documentElement.clientHeight;
+                    windowWidth = document.documentElement.clientWidth;
+                } else {
+                    windowHeight = $(`#${parent}`).height();
+                    windowWidth = $(`#${parent}`).width();
+                }
+
                 let cleanWidth = width.substring(0, width.length - 2);
 
                 if ((position.left - cleanWidth) <= (windowWidth / 2)) {
@@ -213,7 +242,7 @@ $(function() {
                 }
 
                 if (position.top <= (windowHeight / 2)) {
-                    $('#wordTooltip').css('top', position.top);
+                    $('#wordTooltip').css('top', position.top - 15);
                     $('#tooltipArrow').css('top', position.top + 5);
                 } else {
                     setTimeout(() => {
@@ -228,17 +257,23 @@ $(function() {
             }
         }
 
+        //Colorea los links del índice de la ficha técnica.
+        hoverIndexLink(link, color) {
+            link.css("color", color);
+            $(link).children('a').css("color", color);
+        }
+
         //Adapta los aspectos visuales de la vista.
         changeListingView(view) {
             if (view === 'list') {
-                $('#word-listing').css({
+                $('#wordListing').css({
                     display: 'grid',
                     'justify-items': 'center',
                     'grid-template-columns': '1fr 1fr 1fr 1fr',
                     'grid-template-rows': 'repeat(13, 1fr)'
                 });
             } else if (view === 'tree') {
-                $('#word-listing').css({
+                $('#wordListing').css({
                     display: 'flex',
                     'flex-direction': 'column'
                 });
@@ -272,7 +307,7 @@ $(function() {
                     break;
             }
 
-            $('#word-search').val(window.location.pathname.split('/')[2]);
+            $('#wordSearch').val(window.location.pathname.split('/')[2]);
         }
 
         //Analiza variables que determinan una búsqueda en el diccionario.
@@ -286,7 +321,7 @@ $(function() {
             if ($('#perfect-match').is(':checked')) { limit = 1 }
             else { limit = 0 }
 
-            this.searchWord($('#word-search').val(), language, limit);
+            this.searchWord($('#wordSearch').val(), language, limit);
         }
 
         //Redirecciona según string de búsqueda.
@@ -386,7 +421,7 @@ $(function() {
 
         //Agrega una entrada visual de estadísticas.
         appendEntry(style, title, value, percentage, clickable) {
-            $("#listing-stats").append(`
+            $("#listingStats").append(`
                 <div id="category-${title}" class="category-entry ${clickable == true ? 'category-clickable' : 'category-nonclickable'}">
                     <div class="colorer"></div>
                     <p class="category-${style[0]}">${title}</p>
@@ -401,8 +436,8 @@ $(function() {
             let valuesArray = this.getSearchValues(dictionary, category, parent);
             let totalWords = category == "type" ? dictionary.length : this.countSearchStats(dictionary, "type", parent);
 
-            $("#listing-stats").hide();
-            $("#listing-stats").html("");
+            $("#listingStats").hide();
+            $("#listingStats").html("");
 
             this.appendEntry(["header", "header", "header"], "Tipo", "Cantidad", "Porcentaje");
             this.appendEntry(["title", "value", "percentage"], parent, totalWords, "100.00%");
@@ -417,7 +452,7 @@ $(function() {
             }, this);
 
             if (category == "subtype") {
-                $("#listing-stats").append(`
+                $("#listingStats").append(`
                     <div class="category-back">
                         <button class="category-back-button">← Atrás</button>
                     </div>
@@ -443,7 +478,7 @@ $(function() {
                 $("nav").children(".nav-mobile").remove();
                 $("nav").append($(`.nav-${sectionId}`).clone().addClass("nav-mobile").css("display", "none"));
 
-                $("#nav-links").css({
+                $("#navLinks").css({
                     "border-bottom": "2px solid darkred",
                     "border-bottom-left-radius": "0px",
                     "border-bottom-right-radius": "0px",
@@ -465,7 +500,7 @@ $(function() {
                 $("nav").children(`.nav-${sectionId}`).slideUp(300);
 
                 setTimeout(() => {
-                    $("#nav-links").css({
+                    $("#navLinks").css({
                         "border-bottom": "none",
                         "border-bottom-left-radius": "8px",
                         "border-bottom-right-radius": "8px",
@@ -538,7 +573,7 @@ $(function() {
 
             if (favoritesStorage.length > 0) {
                 favoritesStorage.forEach(function(fav) {
-                    $('#favorites-listing').append(`
+                    $('#favoritesListing').append(`
                         <div id="favorite-${fav.id}" class="favorite-entry">
                             <img class="favorite-icon" src="/client/img/favorite.png" alt="fav">
                             <label class="favorite-title" onclick="handler.searchWord('${fav.name}', 'bal', 1); handler.switchScreen('diccionario')">${fav.name}</label>
@@ -546,7 +581,7 @@ $(function() {
                     `);
                 });
             } else {
-                $('#favorites-listing').append(`
+                $('#favoritesListing').append(`
                     <h3 class="no-favorites">Aún no hay favoritos agregados.</h3>
                 `);
             }
@@ -562,7 +597,7 @@ $(function() {
                     dictionary.sort((a, b) => (a.word_name > b.word_name) ? 1 : -1);
                 }
     
-                $("#found-words").text("Resultados obtenidos: " + dictionary.length);
+                $("#foundWords").text("Resultados obtenidos: " + dictionary.length);
     
                 for (let i = 0; i < dictionaryLimit; i++) {
                     const word = dictionary[i];
@@ -627,7 +662,7 @@ $(function() {
             switch (listing) {
                 case "list":
                     dictionary.forEach(function(word) {
-                        $('#word-listing').append(`
+                        $('#wordListing').append(`
                             <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")' class='listed-word'>${word.word_name}</label>
                         `);
                     });
@@ -636,7 +671,7 @@ $(function() {
                     function createRootTree(root) {
                         //Busca la entrada de la raíz y agrega la palabra.
                         if ($(`#root-${root}`).length === 0) {
-                            $('#word-listing').append(`
+                            $('#wordListing').append(`
                                 <ul class='root-tree' id='root-${root}' root-name='${root}'>
                                     <li class='root-tree-title'><label class='root-tree-title-label' onclick='handler.searchWord("${root}", "bal", 0); handler.switchScreen("diccionario")'>${root}</label>
                                         <div class='root-extra'>
@@ -768,43 +803,68 @@ $(function() {
                   },
                   applyData: 'librishNaming',
                   values: {
-                    AT: { librishNaming: 1, librishGrammar: 1 }, // Austria
-                    BE: { librishNaming: 1, librishGrammar: 1 }, // Belgium
-                    CY: { librishNaming: 1, librishGrammar: 1 }, // Cyprus
-                    EE: { librishNaming: 1, librishGrammar: 1 }, // Estonia
+                    //Librish naming and full grammar
+                    AR: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Argentina
+                    AU: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Australia
                     FI: { librishNaming: 1, librishGrammar: 1 }, // Finland
+                    JP: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Japan
+                    NL: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Netherlands
+                    KP: { librishNaming: 1, librishGrammar: 1 }, // North Korea
+                    NO: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Norway
+                    RU: { librishNaming: 1, librishGrammar: 1 }, // Russia
+                    KR: { librishNaming: 1, librishGrammar: 1 }, // South Korea
+                    SE: { librishNaming: 1, librishGrammar: 1 }, // Sweden
                     FR: { librishNaming: 1, librishGrammar: 1 }, // France
-                    DE: { librishNaming: 1, librishGrammar: 1 }, // Germany
-                    GR: { librishNaming: 1, librishGrammar: 1 }, // Greece
                     IE: { librishNaming: 1, librishGrammar: 1 }, // Ireland
-                    IT: { librishNaming: 1, librishGrammar: 1 }, // Italy
-                    LV: { librishNaming: 1, librishGrammar: 1 }, // Latvia
-                    LT: { librishNaming: 1, librishGrammar: 1 }, // Lithuania
-                    LU: { librishNaming: 1, librishGrammar: 1 }, // Luxembourg
-                    MT: { librishNaming: 1, librishGrammar: 1 }, // Malta
-                    NL: { librishNaming: 1, librishGrammar: 1 }, // Netherlands
-                    PT: { librishNaming: 1, librishGrammar: 1 }, // Portugal
-                    ES: { librishNaming: 1, librishGrammar: 1 }, // Spain
-                    SI: { librishNaming: 1, librishGrammar: 1 }, // Slovenia
-                    SK: { librishNaming: 1, librishGrammar: 1 }, // Slovakia
-    
-                    // Countries using librishNaming but not librishGrammar
-                    XK: { librishNaming: 1, librishGrammar: 0 }, // Kosovo
-                    ME: { librishNaming: 1, librishGrammar: 0, color: '#88e067' }, // Montenegro
-                    AD: { librishNaming: 1, librishGrammar: 0, color: '#88e067' }, // Andorra
-                    MC: { librishNaming: 1, librishGrammar: 0, color: '#88e067' }, // Monaco
-                    SM: { librishNaming: 1, librishGrammar: 0, color: '#88e067' }, // San Marino
-                    VA: { librishNaming: 1, librishGrammar: 0, color: '#88e067' }, // Vatican City
-    
-                    // Countries with librishGrammar but not using librishNaming
-                    BG: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Bulgaria
-                    CZ: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Czech Republic
-                    DK: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Denmark
-                    HR: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Croatia
-                    HU: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Hungary
-                    PL: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Poland
-                    RO: { librishNaming: 0, librishGrammar: 1, color: '#88e067' }, // Romania
-                    SE: { librishNaming: 0, librishGrammar: 1, color: '#88e067' } // Sweden
+                    BY: { librishNaming: 1, librishGrammar: 1 }, // Belarus
+                    GL: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Greenland
+                    IS: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Iceland TODO: tierra de hielo
+                    CH: { librishNaming: 1, librishGrammar: 1 }, // Switzerland TODO: tierra de los swiss
+                    BE: { librishNaming: 1, librishGrammar: 1 }, // Belgium TODO: tierra de las Bélgicas
+                    UA: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Ukraine TODO: tierra de las Bélgicas
+                    CZ: { librishNaming: 1, librishGrammar: 1 }, // Czech Republic TODO: tierra de los checos
+
+                    //Only librish full grammar
+                    GI: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Gibraltar
+                    TT: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Trinidad and Tobago
+                    WF: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Wallis and Futuna
+                    VA: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Vatican City
+                    GF: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // French Guiana
+                    TF: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // French Southern Territories
+                    CX: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Christmas Island
+                    CK: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Cook Islands
+                    CC: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Cocos Islands
+                    FO: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Faroe Islands
+                    TC: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Turks and Caicos Islands
+                    EH: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Western Sahara
+                    AI: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Anguilla
+                    KY: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Cayman Islands
+                    KI: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Kiribati
+                    NF: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Norfolk Island
+                    CA: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Canada
+                    GY: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Guyana
+                    US: { librishNaming: 0, librishGrammar: 1, librishVocabulary: 1, color: '#487a36' }, // USA TODO:
+                    CW: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Curacao
+                    RE: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Reunion
+
+                    //Only librish naming
+                    DE: { librishNaming: 1, librishGrammar: 0, color: '#62f252' }, // Germany
+                    HU: { librishNaming: 1, librishGrammar: 0, color: '#62f252' }, // Hungary TODO: tierra de los magiares
+                    PH: { librishNaming: 1, librishGrammar: 0, color: '#62f252' }, // Filipinas TODO: tierra de Felipe
+                    RO: { librishNaming: 1, librishGrammar: 0, color: '#62f252' }, // Romania TODO: tierra de los romanos
+
+                    //Neither librish naming nor full grammar, yet translated
+                    PF: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // French Polynesia
+                    IM: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Isle of Man
+                    MH: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Marshall Islands
+                    MP: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Northern Mariana Islands
+                    MQ: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Martinique
+                    YT: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Mayotte
+                    GU: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Guam
+                    FK: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Islas Malvinas
+                    SR: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Surinam
+                    AS: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // American Samoa
+                    PN: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Pitcairn Islands
                   }
                 },
                 colorMin: '#E2E2E2',
@@ -841,18 +901,26 @@ $(function() {
     
                   if (countryValues && countryValues.librishNaming == 1) {
                     innerHTML +=
-                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Nomenclatura libraterrense</div>';
+                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Nomenclatura compuesta libraterrense</div>';
                   } else {
                     innerHTML +=
-                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Nomenclatura libraterrense</div>';
+                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Nomenclatura compuesta libraterrense</div>';
                   }
                   
                   if (countryValues && countryValues.librishGrammar == 1) {
                     innerHTML +=
-                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Gramática libraterrense completa</div>';
+                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Gramática nativa libraterrense</div>';
                   } else {
                     innerHTML +=
-                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Gramática libraterrense completa</div>';
+                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Gramática nativa libraterrense</div>';
+                  }
+
+                  if (countryValues && countryValues.librishVocabulary == 1) {
+                    innerHTML +=
+                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Vocabulario nativo libraterrense</div>';
+                  } else {
+                    innerHTML +=
+                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Vocabulario nativo libraterrense</div>';
                   }
     
                   // Return element with custom content
@@ -899,5 +967,5 @@ $(function() {
     }
 
     handler = new Handler();
-    handler.initialize();
+    handler.initialize(handler);
 });

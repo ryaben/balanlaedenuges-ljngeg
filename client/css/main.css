@@ -23,7 +23,7 @@ body {
     font-size: 0.95em;
     height: 100%;
     overflow: hidden;
-    min-width: 360px;
+    min-width: 410px;
 }
 
 button, input {
@@ -82,6 +82,20 @@ footer {
     margin: 0.5vh;
     margin-top: 0;
     border-top-left-radius: 0px;
+}
+
+a {
+    color: #0645ad;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+footer a img {
+    display: none;
 }
 
 .nav-section {
@@ -273,6 +287,11 @@ li .favorite-icon {
     margin: 4px;
 }
 
+.root-tree.guide {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
 .root-tree-title {
     display: flex;
     justify-content: space-between;
@@ -283,6 +302,10 @@ li .favorite-icon {
     font-weight: bold;
 }
 
+.root-tree-title.guide {
+    font-style: normal;
+}
+
 .root-tree-title:hover {
     background-color: black;
     color: white;
@@ -290,14 +313,14 @@ li .favorite-icon {
     cursor: pointer;
 }
 
-.root-tree-title-label:hover {
-    background-color: red;
-    cursor: pointer;
-}
-
 .root-tree-title-label {
     display: flex;
     align-items: center;
+    cursor: pointer;
+}
+
+.root-tree-title-label:not(.guide):hover {
+    background-color: red;
 }
 
 .root-extra {
@@ -442,7 +465,7 @@ li .favorite-icon {
     cursor: pointer;
 }
 
-.section-content, .section-title, #home-title, .section-subtitle, .section-table, .word-type-example {
+.section-content, .section-title, #homeTitle, .section-subtitle, .section-table, .word-type-example {
     margin: 25px;
 }
 
@@ -456,7 +479,7 @@ li .favorite-icon {
     text-decoration: underline;
 }
 
-#home-title {
+#homeTitle {
     font-size: 1.85em;
 }
 
@@ -526,26 +549,34 @@ li .favorite-icon {
     padding: 2px;
 }
 
+.guide-container {
+    display: none;
+}
+
+.guide-container:nth-of-type(1) {
+    display: block;
+}
+
 #flag {
     width: 17vw;
     min-width: 225px;
     height: 100%;
 }
 
-#title-div {
+#titleDiv {
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
 }
 
-#page-title {
+#pageTitle {
     text-align: center;
     font-size: 30px;
     margin-bottom: 0;
 }
 
-#page-subtitle {
+#pageSubtitle {
     font-size: 18px;
     margin-top: 10px;
     font-style: italic;
@@ -558,7 +589,7 @@ li .favorite-icon {
     min-width: 120px;
 }
 
-#options-tab {
+#optionsTab {
     display: flex;
     flex-direction: column;
     background-color: lightgray;
@@ -567,33 +598,33 @@ li .favorite-icon {
     border-top-left-radius: 5px;
 }
 
-#config-menu-title {
+#configMenuTitle {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: bold;
     width: 100%;
     border-radius: 6px;
-} #config-menu-title:hover {
+} #configMenuTitle:hover {
     background-color: darkslategray;
     color: white;
 }
 
-#config-menu-title label {
+#configMenuTitle label {
     cursor: pointer;
     padding: 3px;
-} #config-menu-title label:nth-child(1) {
+} #configMenuTitle label:nth-child(1) {
     width: 100%;
 }
 
-#config-menu {
+#configMenu {
     display: none;
     border-top: solid 1px black;
     padding: 3px;
     margin-top: 3px;
 }
 
-#nav-links {
+#navLinks {
     list-style-type: circle;
     padding: 0 10px 10px 10px;
     margin-block-start: 0;
@@ -602,13 +633,13 @@ li .favorite-icon {
 
 }
 
-#search-screen {
+#searchScreen {
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 
-#search-box {
+#searchBox {
     display: flex;
     justify-content: space-around;
     padding: 1em;
@@ -617,7 +648,7 @@ li .favorite-icon {
     border-top-left-radius: 8px;
 }
 
-#special-characters {
+#specialCharacters {
     display: flex;
     align-items: center;
     min-width: 240px;
@@ -627,26 +658,26 @@ li .favorite-icon {
     background-color: white;
 }
 
-#language-selection {
+#languageSelection {
     display: flex;
     align-items: center;
     border-left: 1px solid grey;
     margin-left: 5px;
 }
 
-#word-subscreen {
+#wordSubscreen {
     display: flex;
     justify-content: center;
 }
 
-#word-search {
+#wordSearch {
     width: 48%;
     font-size: 1.1em;
     border: 1px solid darkgray;
     border-right: none;
 }
 
-#perfect-match-container {
+#perfectMatchContainer {
     display: flex;
     align-items: center;
     font-size: 0.7em;
@@ -658,13 +689,13 @@ li .favorite-icon {
     padding-right: 5px;
 }
 
-#search-button {
+#searchButton {
     width: 25%;
     font-size: 1.1em;
     background-color: darkgrey;
 }
 
-#listing-screen {
+#listingScreen {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -672,13 +703,13 @@ li .favorite-icon {
     padding-right: 0 !important;
 }
 
-#listing-section {
+#listingSection {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-#result-stats {
+#resultStats {
     display: flex;
     align-items: center;
     background-color: lightgrey;
@@ -689,28 +720,28 @@ li .favorite-icon {
     border-bottom-left-radius: 6px;
 }
 
-#found-words {
+#foundWords {
     margin: 0px;
 }
 
-#letters-box {
+#lettersBox {
     display: flex;
     justify-content: space-between;
     font-size: 1.3em;
-    padding: 10px 5% 10px 5%;
+    padding: 9px 5% 8px 5%;
     width: 90%;
     border-bottom: 2px solid black;
     border-top-left-radius: 8px;
     background-color: lightgray;
 }
 
-.info-listing, #listing-stats, #search-result {
+.info-listing, #listingStats, #searchResult {
     overflow-y: auto;
     padding: 5px;
     height: 100%;
 }
 
-#listing-lowbar {
+#listingLowbar {
     display: flex;
     justify-content: center;
     background-color: lightgray;
@@ -718,14 +749,14 @@ li .favorite-icon {
     border-bottom-left-radius: 8px;
 }
 
-#stats-bar {
+#statsBar {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 10px;
 }
 
-#listing-stats {
+#listingStats {
     display: flex;
     flex-direction: column;
     width: auto;
@@ -733,10 +764,225 @@ li .favorite-icon {
     padding: 0;
 }
 
-#favorites-listing {
+#favoritesListing {
     display: flex;
     flex-direction: column;
     font-size: 1.6em;
+}
+
+#datasheetScreen {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#dataIndex {
+    padding: 6px;
+    padding-inline-start: 30px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.data-index-link {
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    cursor: pointer;
+}
+
+.data-index-link a {
+    color: black;
+    text-decoration: none;
+}
+
+#dataText {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 60%;
+    margin: 12px;
+    margin-right: 0;
+}
+
+.data-grey-container {
+    border: 1px solid grey;
+    background: #e9e2e2;
+    margin-bottom: 5vh;
+}
+
+.data-main-title {
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 2px dotted gray;
+    margin: 12px 0 0 0;
+}
+
+.data-main-text {
+    margin: 5px 5px 5px 0;
+    font-size: 16px;
+}
+
+.data-main-text br {
+    content: "";
+    display: block;
+    margin-bottom: 8px;
+}
+
+.data-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 40%;
+    padding: 12px;
+}
+
+#dataTable {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: fit-content;
+    padding: 5px 3px 3px 3px;
+}
+
+.data-table-section {
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
+}
+
+.data-table-fact {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 2px 4px 2px;
+}
+
+.data-table-fact p {
+    margin: 0;
+}
+
+.data-table-fact p:nth-child(1) {
+    font-weight: bold;
+}
+
+#dataName {
+    text-align: center;
+    margin-top: 0;
+}
+
+#dataName p {
+    margin-bottom: 0;
+    margin-top: 0;
+    font-weight: bold;
+}
+
+p#dataTranslatedName {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+#dataOriginalName {
+    font-style: italic;
+    font-size: 15px;
+}
+
+#dataOriginalName span, #dataNationalHolidayValue span {
+    font-style: normal;
+    font-weight: normal;
+}
+
+#dataNationalSymbols {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#dataFlag {
+    text-align: center;
+    width: 55%;
+}
+
+#dataBanner {
+    text-align: center;
+    width: 35%;
+}
+
+#dataFlag p, #dataBanner p {
+    margin: 3px 0 0 0;
+    font-size: 12px;
+}
+
+#dataFlag img {
+    width: 100%;
+}
+
+#dataBanner img {
+    width: 100%;
+}
+
+#dataMotto, #dataAnthem {
+    text-align: center;
+}
+
+#dataMotto p, #dataAnthem p {
+    margin-bottom: 0;
+    margin-top: 0;
+    font-style: italic;
+    font-size: 15px;
+}
+
+#dataMotto p:nth-child(2), #dataAnthem p:nth-child(2) {
+    font-style: normal;
+}
+
+#dataMotto p span, #dataAnthem p span {
+    font-style: normal;
+}
+
+#dataFacts {
+    display: flex;
+    flex-direction: column;
+}
+
+#dataLanguageValue, #dataNationalHolidayValue {
+    font-style: italic;
+}
+
+.fact-title {
+    width: 45%;
+    word-break: break-word;
+}
+
+.fact-value {
+    width: 55%;
+    word-break: break-word;
+}
+
+.data-image-container {
+    padding: 8px 8px 0 8px;
+    height: fit-content;
+    text-align: center;
+}
+
+.data-image-container img {
+    width: 100%;
+}
+
+.double-image-container {
+    display: flex;
+    /* flex-direction: column; */
+    width: 100%;
+}
+
+.data-image-container .double-image-container img.double-image {
+    width: 50%;
+}
+
+.data-image-container.coat img {
+    max-width: 185px;
+}
+
+.data-image-container p {
+    margin: 4px 0 8px 0;
 }
 
 .favorite-entry {
@@ -755,13 +1001,14 @@ li .favorite-icon {
     cursor: pointer;
 }
 
-#footer-description {
+#footerDescription {
     font-size: 0.9em;
     max-width: 25vw;
     margin: auto 5px auto 5px;
 }
 
-#word-listing #wordTooltip {
+#wordTooltip {
+    position: absolute;
     display: none;
     background-color: white;
     border: solid 1px black;
@@ -779,7 +1026,18 @@ li .favorite-icon {
     border-style: solid;
 }
 
-#word-listing #wordTooltip .searched-word, #word-listing .searched-word {
+#wordListing #wordTooltip .searched-word,
+#guidesScreen #wordTooltip .searched-word {
     margin: 0;
     border: none;
+}
+
+#householdContainer {
+    position: relative;
+}
+
+#householdImage {
+    width: 564px;
+    height: 417px;
+    margin: 5px;
 }

@@ -1,4 +1,4 @@
--- Criterios: inicio con abreviatura en mayúscula. Leyenda de etiquetas: coloq (coloquial), obs (obsoleto), tamb (también), equiv a (equivalente a), relig (religión), despect (despectivo), cult (cultural), neo (neologismo), tec (tecnicismo), vulg (vulgar), ling (lingüística)
+-- Criterios: inicio con abreviatura en mayúscula. Leyenda de etiquetas: coloq (coloquial), obs (obsoleto), tamb (también), equiv a (equivalente a), relig (religión), despect (despectivo), cult (cultural), neo (neologismo), tec (tecnicismo), vulg (vulgar), ling (lingüística), lit (literalmente)
 
 CREATE TABLE IF NOT EXISTS heroku_bf7cb810553a372.`definition` (
 id INT PRIMARY KEY AUTO_INCREMENT,
@@ -317,7 +317,7 @@ VALUES
 ("Problemático (que causa o supone un problema).","","","",""),
 ("Junto a (algo en compañía o cercanía con otra cosa).","","","",""),
 ("ling. Expresión adjetiva sirviente de adverbio y equivalente a juntos o juntas.","","","",""),
-("Juntar, combinar, mezclar, fusionar.","","","",""),
+("Combinar, mezclar, fusionar.","","","",""),
 ("Mezcla, fusión, combinación.","","","",""),
 ("Causar, provocar, ocasionar, desencadenar.","","","",""),
 ("Causa, motivo (razón por la que sucede algo).","","","",""),
@@ -597,7 +597,7 @@ VALUES
 ("Dios, diosa.","Persona celestial o sobrenatural.","","",""),
 ("Panteón de dioses y diosas.","","","",""),
 ("Escritor, escritora.","Guionista, argumentista.","coloq. Persona que fabula e inventa cosas.","",""),
-("Cantante, cantor, cantora.","Corista.","","",""),
+("Cantante, cantor, cantora, vocalista.","Corista.","","",""),
 ("Dúo, pareja o tándem de personas.","coloq. Pareja o relación (amorosa).","","",""),
 ("Trío, terna de personas.","tec. Triunvirato (forma de gobierno con tres gobernantes).","","",""),
 ("Vivir, existir.","","","",""),
@@ -744,7 +744,7 @@ VALUES
 ("Provincia, departamento, estado o cualquier jurisdicción subnacional (generalmente gozante de autonomía o identidad propias).","Porción de un terreno o propiedad privados.","","",""),
 ("Continente.","Región importante o grande.","","",""),
 ("Ciudadano (persona gozante de derechos políticos).","Patriota, persona con orgullo nacionalista.","","",""),
-("Nación, patria o matria (sociedad unida bajo la misma identidad cultural e histórica).","","","",""),
+("Nación, pueblo, patria o matria (sociedad unida bajo la misma identidad cultural e histórica).","","","",""),
 ("Apátrida (persona carente de nacionalidad).","","","",""),
 ("Compatriota, conciudadano, coterráneo, paisano.","","","",""),
 ("Ciudad, urbe, metrópolis.","coloq. Centro o eje de una actividad o característica.","","",""),
@@ -1221,6 +1221,20 @@ VALUES
 ("Madera (sustancia dura y fibrosa de los árboles).","","","",""),
 ("Talar (cortar un árbol por el pie).","Maderar (extraer madera de los bosques).","","",""),
 ("Tala (acción de talar un árbol).","","","",""),
-("Maderero (de la madera o relacionado con ella).","","","","");
+("Maderero (de la madera o relacionado con ella).","","","",""),
+("Francia.","","","",""),
+("Isla, ínsula (porción de tierra rodeada de agua).","","","",""),
+("República de Irlanda.","","","",""),
+("Bielorrusia (o Belarús).","","","",""),
+("Alemania.","","","",""),
+("Unir, juntar, enlazar.","coloq. Emparentar por matrimonio.","","",""),
+("Unión, junta, fusión.","","","",""),
+("Unido, junto, a la par.","","","",""),
+("tec. Dialecto (variedad de lengua derivada).","","","",""),
+("Islote (isla pequeña y generalmente despoblada).","","","",""),
+("cult. Ley absoluta valeriana, tamb. mandato ducal (precepto normativo social impuesto por la Gran Duquesa que se antepone a la legislación).","","","",""),
+("Huir, escapar, fugar.","coloq. Salir o abandonar una persona de un evento o circunstancia.","","",""),
+("Huida, escapada, fuga.","","","",""),
+("coloq. Escapista (persona que elude responsabilidades y evade problemas).","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`definition`;

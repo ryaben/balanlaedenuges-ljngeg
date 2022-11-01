@@ -1221,6 +1221,20 @@ VALUES
 ("común","","","",""),
 ("común","","","",""),
 ("común","","","",""),
-("relacional","","","","");
+("relacional","","","",""),
+("propio, compuesto","","","",""),
+("común","","","",""),
+("propio, compuesto","","","",""),
+("propio, compuesto","","","",""),
+("propio, compuesto","","","",""),
+("común","","","",""),
+("común","","","",""),
+("relacional","","","",""),
+("diminutivizado","","","",""),
+("diminutivizado","","","",""),
+("compuesto","","","",""),
+("común","","","",""),
+("común","","","",""),
+("compuesto","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`subtype`;

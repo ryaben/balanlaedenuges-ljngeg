@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
 app.get('/diccionario/:search', controller.loadFilteredDictionary);
 app.get('/listado/:search', controller.loadFilteredDictionary);
 app.get('/estadisticas', controller.loadFullDictionary);
+app.get('/guias', controller.loadFilteredDictionary);
 app.get('/:name', (req, res) => {
     let capitalizedName = req.params.name.charAt(0).toUpperCase() + req.params.name.slice(1);
     res.render(req.params.name, {

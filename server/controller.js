@@ -102,6 +102,9 @@ function loadFilteredDictionary(req, res) {
         case 'listado':
             likeSearch = `${req.params.search}%`;
             break;
+        case 'guias':
+            likeSearch = `%%%`;
+            break;
         default:
             likeSearch = `%${req.params.search}%`;
             break;

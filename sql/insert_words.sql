@@ -1221,7 +1221,21 @@ VALUES
 ("Kunstaj", "Palabra originante tradicional", "Kunst"),
 ("Kunstar", "Palabra originante tradicional", "Kunst"),
 ("Kunsteg", "Palabra originante tradicional", "Kunst"),
-("Kunstajes", "Lit. 'Relativo a madera'", "Kunstaj");
+("Kunstajes", "Lit. 'Relativo a madera'", "Kunstaj"),
+("Franklàedenug", "De 'Frank' y 'Laedenug', lit. 'País de los francos'", "Frank"),
+("Kürkaj", "Palabra originante tradicional", "Kürk"),
+("Erjulàedenug", "De 'Erju' y 'Laedenug', lit. 'País de los ériu (fértiles)'", "Erju"),
+("Wjtrüsslàedenug", "De 'Wjteg', 'Rüss' y 'Laedenug', lit. 'País de los rus blancos'", "Wjt"),
+("Alämanlàedenug", "De 'Alämanni' y 'Laedenug', lit. 'País de los alemanes (los hombres, el pueblo)'", "Aläman"),
+("Ljuwar", "Palabra originante tradicional", "Ljuw"),
+("Ljuweg", "Palabra originante tradicional", "Ljuw"),
+("Ljuweges", "Lit. 'Relativo a unión'", "Ljuweg"),
+("Ljngeget", "Lit. 'Idioma pequeño'", "Ljngeg"),
+("Kürkajet", "Lit. 'Isla pequeña'", "Kürkaj"),
+("Gërtkrĵton", "De 'Gërtaj' y 'Krjton', lit. 'Ley de Gran Duquesa'", "Gërt"),
+("Kerjter", "Palabra originante tradicional", "Kerjt"),
+("Kerjtug", "Palabra originante tradicional", "Kerjt"),
+("Kerjtkèfjeg", "De 'Kerjter' y 'Kefjeg', lit. 'Persona que escapa'", "Kerjt");
 -- Käswej (adelante), auxiliar/salvar/rescatar/socorrer
 
 SELECT * FROM heroku_bf7cb810553a372.`word`;

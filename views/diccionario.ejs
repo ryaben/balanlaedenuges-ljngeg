@@ -1,7 +1,7 @@
 <%- include('./partials/global-variables.ejs') %>
-<section id='search-screen'>
-    <div id='search-box'>
-        <div id='special-characters'>
+<section id='searchScreen'>
+    <div id='searchBox'>
+        <div id='specialCharacters'>
             <label style='margin-left: 5px;' class='special-character'>à</label>
             <label class='special-character'>è</label>
             <label class='special-character'>ĵ</label>
@@ -12,7 +12,7 @@
             <label class='special-character'>ö</label>
             <label class='special-character'>ü</label>
             <label class='special-character'>ø</label>
-            <div id='language-selection'>
+            <div id='languageSelection'>
                 <input id='language-bal' class='language' name='language' type='radio' checked>
                 <label class='language-option' for='language-bal'>
                     <img src='/client/img/flag.png' alt='BAL' width='32' draggable="false">
@@ -23,19 +23,19 @@
                 </label>
             </div>
         </div>
-        <input id='word-search' type='text' placeholder="Buscar una palabra...">
-        <div id="perfect-match-container">
+        <input id='wordSearch' type='text' placeholder="Buscar una palabra...">
+        <div id="perfectMatchContainer">
             <label for="perfect-match">Resultado exacto</label>
             <input id="perfect-match" type="checkbox" name="perfect-match">
         </div>
-        <button id='search-button'>Buscar</button>
+        <button id='searchButton'>Buscar</button>
     </div>
-    <div id='search-result'>
+    <div id='searchResult'>
         
     </div>
     <% if (retrievedResults.length) { %>
-        <div id='result-stats'>
-            <p id='found-words'></p>
+        <div id='resultStats'>
+            <p id='foundWords'></p>
         </div>
     <% } %>
 </section>

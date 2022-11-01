@@ -1,29 +1,29 @@
 @media only screen and (max-width: 974px) {
-    #word-listing {
+    #wordListing {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
 @media only screen and (max-width: 860px) {
-    #listing-lowbar {
+    #listingLowbar {
         flex-direction: column;
     }
 
-    #search-box {
+    #searchBox {
         padding: 0.6em;
     }
 
-    #special-characters {
+    #specialCharacters {
         min-width: 108px;
         padding: 6px 6px 6px 2px;
         margin-right: 8px;
     }
 
-    #perfect-match-container {
+    #perfectMatchContainer {
         margin-right: 8px;
     }
 
-    #language-selection {
+    #languageSelection {
         border-left: none;
         margin-left: 0px;
     }
@@ -54,19 +54,19 @@
         min-width: 85px;
     }
 
-    #page-title {
+    #pageTitle {
         font-size: 24px;
     }
     
-    #page-subtitle {
+    #pageSubtitle {
         font-size: 15px;
     }
 
-    #word-listing {
+    #wordListing {
         grid-template-columns: 1fr 1fr;
     }
 
-    #listing-screen {
+    #listingScreen {
         min-width: 0;
     }
 
@@ -109,7 +109,7 @@
         width: auto;
     }
 
-    #options-tab {
+    #optionsTab {
         border-top-right-radius: 5px;
     }
 
@@ -127,11 +127,11 @@
         height: auto;
     }
 
-    #options-tab {
+    #optionsTab {
         display: none;
     }
 
-    #nav-links {
+    #navLinks {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -182,7 +182,7 @@
         font-weight: bold;
     }
 
-    #listing-screen, section {
+    #listingScreen, section {
         margin-bottom: 8px;
     }
 
@@ -204,11 +204,11 @@
         min-width: 135px;
     }
 
-    #search-box {
+    #searchBox {
         flex-wrap: wrap;
     }
 
-    #special-characters {
+    #specialCharacters {
         width: 100%;
         justify-content: center;
         padding: 5px 0 5px 0;
@@ -222,7 +222,7 @@
         margin: auto 4px auto 4px;
     }
 
-    #language-selection {
+    #languageSelection {
         border-left: 2px solid gray;
         margin-left: 3px;
     }
@@ -231,11 +231,11 @@
         width: 36px;
     }
 
-    #word-search {
+    #wordSearch {
         height: 37px;
     }
 
-    #perfect-match-container {
+    #perfectMatchContainer {
         width: 22%;
         margin-right: auto;
         justify-content: center;
@@ -257,7 +257,7 @@
         opacity: 0.2;
     }
 
-    #title-div {
+    #titleDiv {
         z-index: 2;
     }
 
@@ -265,8 +265,21 @@
         display: none;
     }
 
-    #home-title {
+    #homeTitle {
         text-align: center;
+    }
+
+    #datasheetScreen {
+        flex-direction: column-reverse;
+        justify-content: space-between;
+    }
+
+    .data-container, #dataText {
+        width: fit-content;
+    }
+
+    .data-container {
+        border-bottom: 2px solid black;
     }
 }
 

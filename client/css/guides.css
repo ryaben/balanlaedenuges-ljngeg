@@ -1,0 +1,39 @@
+/* General */
+
+.guide-polygon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    /* background: red; */
+}
+
+.guide-polygon:hover {
+    border: solid black 2px;
+}
+
+/* Household */
+
+.household-top-item {
+    z-index: 2;
+}
+
+#guide-bathroom {
+    width: 143px;
+    height: 120px;
+    transform: matrix(1, 0, 0, 1, 217, 70);
+}
+
+#guide-oven {
+    width: 48px;
+    height: 39px;
+    transform: matrix(1, 0, 0, 1, 138, 277);
+}
+#guide-fridge {
+    width: 47px;
+    height: 73px;
+    transform: matrix(1, 0, 0, 1, 185, 241);
+}
