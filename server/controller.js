@@ -1,6 +1,12 @@
 var mysql = require('mysql');
 const db_config = require('./mysql');
-var connection;
+var connection = mysql.createConnection(db_config);
+
+connection.connect(function(err) {
+    if(err) {
+      console.log('Error when connecting to DB:', err);
+    }
+});
 
 function handleDisconnect() {
   connection = mysql.createConnection(db_config);
@@ -48,7 +54,7 @@ function loadFullDictionary(req, res) {
 
     connection.query(query, function(error, result) {
         if (error) {
-            return console.log("Hubo un error al cargar el diccionario: " + error.message);
+            return console.log("Error while loading dictionary: " + error.message);
         } else {
             res.render(view, {
                 title: `Balanlàedenuges ljngeg - ${view.charAt(0).toUpperCase() + view.slice(1)}`,
@@ -147,5 +153,5 @@ function loadFilteredDictionary(req, res) {
 
 module.exports = {
     loadFullDictionary: loadFullDictionary,
-    loadFilteredDictionary: loadFilteredDictionary,
+    loadFilteredDictionary: loadFilteredDictionary
 };

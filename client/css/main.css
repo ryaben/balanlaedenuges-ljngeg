@@ -272,7 +272,7 @@ li .favorite-icon {
     cursor: pointer;
 }
 
-.listed-word:hover {
+.listed-word:hover, .searchable-word:hover {
     background-color: red;
     color: white;
 }
@@ -479,12 +479,20 @@ li .favorite-icon {
     text-decoration: underline;
 }
 
+.section-title.no-underline {
+    text-decoration: none;
+}
+
 #homeTitle {
     font-size: 1.85em;
 }
 
 .section-subtitle {
     font-size: 1.3em;
+}
+
+.section-subtitle.closer-bottom {
+    margin-bottom: 5px;
 }
 
 .section-example, .word-segmentation {
@@ -630,7 +638,60 @@ li .favorite-icon {
     margin-block-start: 0;
     margin-block-end: 0;
     overflow-y: scroll;
+}
 
+#homePage .section-title {
+    text-align: center;
+}
+
+#wavingFlagsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+}
+
+#homeWelcoming {
+    margin: 5px 0 5px 25px;
+}
+
+.waving-symbol {
+    width: 45%;
+    max-width: 380px;
+}
+
+#othersContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 25px auto 25px auto;
+}
+
+#visitorsCounterTitle {
+    margin: 0 0 5px 0;
+}
+
+a:has(#contactButton) {
+    width: 20%;
+}
+
+#contactButton {
+    width: 100%;
+    min-width: 96px;
+    min-height: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #FF0000;
+    color: white;
+    border: 2px solid black;
+    border-radius: 6px;
+}
+
+#contactButton:hover {
+    background: #CD5C5C;
 }
 
 #searchScreen {

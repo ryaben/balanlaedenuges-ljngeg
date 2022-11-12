@@ -1,6 +1,7 @@
 $(function() {
     class Handler {
         constructor() {
+            this.checkLocalStorage();
             this.pageView = window.location.pathname.split('/')[1]
             this.limitParam = this.loadParam('limit');
             this.listingParam = this.getConfig('listing');
@@ -8,22 +9,28 @@ $(function() {
 
         initialize(handler) {
             this.eventsListening(handler);
-            this.checkLocalStorage();
             this.setCurrentPage(this.pageView);
             this.setConfig("tooltip");
             this.setConfig("listing");
 
             switch (this.pageView) {
                 case "diccionario":
-                    this.setSearchDefaults('lang');
-                    this.setSearchDefaults('limit');
-                    this.displayDictionary(dictionary, this.limitParam, 'searchResult', 50, 200);
+                    if (this.loadParam('lang') && this.loadParam('limit')) {
+                        this.dictionarySearch = window.location.pathname.split('/')[2];
+                        this.setSearchDefaults('lang');
+                        this.setSearchDefaults('limit');
+                        this.displayDictionary(dictionary, this.limitParam, 'searchResult', 50, 200);
+                    } else {
+                        $("#resultStats").css("display", "none");
+                    }
                     break;
                 case "listado":
+                    let currentLetter = window.location.pathname.split('/')[2];
+                    dictionary = this.filterDictionary(dictionary, currentLetter);
                     this.listWords(dictionary, this.listingParam);
                     this.changeListingView(this.listingParam);
                     this.setCurrentListing(this.listingParam);
-                    this.setCurrentLetter(window.location.pathname.split('/')[2]);
+                    this.setCurrentLetter(currentLetter);
                     this.setCurrentTab(0);
                     break;
                 case "favoritos":
@@ -143,14 +150,14 @@ $(function() {
                 $(this).closest('.root-tree').find('.guide-container').toggle(200, 'linear');
             });
 
-            $('#wordListing').on('mouseenter', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
+            $('section').on('mouseenter', '.root-word-title label, .child-word label, .composed-word label, .listed-word, .searchable-word', function() {
                 let configStorage = JSON.parse(localStorage.getItem('config'));
                 if (configStorage.tooltip == 'true') {
                     handler.loadTooltip($(this).position(), $(this).css('width'), $(this).css('height'), $(this).html(), 'document');
                 }
             });
 
-            $('#wordListing').on('mouseleave', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
+            $('section').on('mouseleave', '.root-word-title label, .child-word label, .composed-word label, .listed-word, .searchable-word', function() {
                 $('#tooltipArrow').hide();
                 $('#wordTooltip').hide();
             });
@@ -319,7 +326,7 @@ $(function() {
             else if ($('.language:eq(1)').is(':checked')) { language = 'esp' }
 
             if ($('#perfect-match').is(':checked')) { limit = 1 }
-            else { limit = 0 }
+            else { limit = 0 }dictionary
 
             this.searchWord($('#wordSearch').val(), language, limit);
         }
@@ -329,7 +336,7 @@ $(function() {
             window.location = `/diccionario/${searchString}?lang=${language}&limit=${limit}`;
         }
 
-        //Obtiene todos los valroe actuales para determinada propiedad de un diccionario.
+        //Obtiene todos los valores actuales para determinada propiedad de un diccionario.
         getSearchValues(dictionary, category, parent) {
             function makeUnique(array) {
                 var seen = {};
@@ -460,12 +467,12 @@ $(function() {
             }
         }
 
-        //Busca el storage de favoritos y crea uno vacío si no lo encuentra.
+        //Busca el storage de favoritos y de configuración y crea uno vacío si no lo encuentra.
         checkLocalStorage() {
-            if (localStorage.getItem('favoritesStorage') == null) {
+            if (localStorage.getItem('favoritesStorage') === null) {
                 localStorage.setItem('favoritesStorage', '[]');
             }
-            if (localStorage.getItem('config') == null) {
+            if (localStorage.getItem('config') === null) {
                 localStorage.setItem('config', JSON.stringify({
                     tooltip: "true",
                     listing: "tree"
@@ -576,7 +583,7 @@ $(function() {
                     $('#favoritesListing').append(`
                         <div id="favorite-${fav.id}" class="favorite-entry">
                             <img class="favorite-icon" src="/client/img/favorite.png" alt="fav">
-                            <label class="favorite-title" onclick="handler.searchWord('${fav.name}', 'bal', 1); handler.switchScreen('diccionario')">${fav.name}</label>
+                            <label class="favorite-title" onclick="handler.searchWord('${fav.name}', 'bal', 1)">${fav.name}</label>
                         </div>
                     `);
                 });
@@ -587,9 +594,74 @@ $(function() {
             }
         }
 
+        //Filtra el diccionario completo según letra de listado.
+        filterDictionary(dictionary, initialLetter) {
+            let filteredDictionary = dictionary.filter(function(current) {
+                return handler.normalizeText(current.word_name.charAt(0)) === initialLetter;
+            });
+
+            return filteredDictionary;
+        } 
+
         //Renderiza los resultados de la query.
         displayDictionary(dictionary, limit, container, displayDelay, fadeDuration) {
             let dictionaryLimit = limit;
+
+            if (this.pageView === "diccionario") {
+                let searchLang = this.loadParam("lang");
+                let cleanedSearch = this.normalizeText(this.dictionarySearch);
+                let filteredDictionary;
+
+                if (searchLang === "bal" && dictionaryLimit === "0") {
+                    filteredDictionary = dictionary.filter(function(current) {
+                        let cleanedWordName = handler.normalizeText(current.word_name);
+
+                        return cleanedWordName.includes(cleanedSearch);
+                    });
+                } else if (searchLang === "bal" && dictionaryLimit === "1") {
+                    filteredDictionary = dictionary.find(function(current) {
+                        let cleanedWordName = handler.normalizeText(current.word_name);
+
+                        return cleanedWordName === cleanedSearch;
+                    });
+
+                    filteredDictionary = [filteredDictionary];
+                } else if (searchLang === "esp" && dictionaryLimit === "0") {
+                    filteredDictionary = dictionary.filter(function(current) {
+                        let cleanedDefinition1 = handler.normalizeText(current.word_definition1);
+                        let cleanedDefinition2 = handler.normalizeText(current.word_definition2);
+                        let cleanedDefinition3 = handler.normalizeText(current.word_definition3);
+                        let cleanedDefinition4 = handler.normalizeText(current.word_definition4);
+                        let cleanedDefinition5 = handler.normalizeText(current.word_definition5);
+
+                        return cleanedDefinition1.includes(cleanedSearch) ||
+                            cleanedDefinition2.includes(cleanedSearch) ||
+                            cleanedDefinition3.includes(cleanedSearch) ||
+                            cleanedDefinition4.includes(cleanedSearch) ||
+                            cleanedDefinition5.includes(cleanedSearch);
+                    });
+                } else if (searchLang === "esp" && dictionaryLimit === "1") {
+                    filteredDictionary = dictionary.find(function(current) {
+                        let cleanedDefinition1 = handler.normalizeText(current.word_definition1);
+                        let cleanedDefinition2 = handler.normalizeText(current.word_definition2);
+                        let cleanedDefinition3 = handler.normalizeText(current.word_definition3);
+                        let cleanedDefinition4 = handler.normalizeText(current.word_definition4);
+                        let cleanedDefinition5 = handler.normalizeText(current.word_definition5);
+
+                        return cleanedDefinition1 === cleanedSearch ||
+                            cleanedDefinition2 === cleanedSearch ||
+                            cleanedDefinition3 === cleanedSearch ||
+                            cleanedDefinition4 === cleanedSearch ||
+                            cleanedDefinition5 === cleanedSearch;
+                    });
+
+                    filteredDictionary = [filteredDictionary];
+                }
+
+                //Reemplaza el diccionario completo por las coincidencias.
+                if (filteredDictionary == undefined) { filteredDictionary = []; }
+                dictionary = filteredDictionary;
+            }
 
             if (dictionary.length > 0) {
                 if (limit == 0) {
@@ -663,7 +735,7 @@ $(function() {
                 case "list":
                     dictionary.forEach(function(word) {
                         $('#wordListing').append(`
-                            <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")' class='listed-word'>${word.word_name}</label>
+                            <label onclick='handler.searchWord("${word.word_name}", "bal", 1)' class='listed-word'>${word.word_name}</label>
                         `);
                     });
                     break;
@@ -673,7 +745,7 @@ $(function() {
                         if ($(`#root-${root}`).length === 0) {
                             $('#wordListing').append(`
                                 <ul class='root-tree' id='root-${root}' root-name='${root}'>
-                                    <li class='root-tree-title'><label class='root-tree-title-label' onclick='handler.searchWord("${root}", "bal", 0); handler.switchScreen("diccionario")'>${root}</label>
+                                    <li class='root-tree-title'><label class='root-tree-title-label' onclick='handler.searchWord("${root}", "bal", 0)'>${root}</label>
                                         <div class='root-extra'>
                                             <div class='root-amount-group'>
                                                 <label class='root-amount'>0</label>
@@ -728,7 +800,7 @@ $(function() {
                             $(`#root-${word.word_root} .compositions`).before(`
                                 <ul class='root-word' id='word-${word.word_name}' word-type='${JSON.stringify(currentType)}' word-name='${word.word_name}'>
                                     <li class='root-word-title'>
-                                        <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
+                                        <label onclick='handler.searchWord("${word.word_name}", "bal", 1)'>${word.word_name}</label>
                                     </li>
                                 </ul>
                             `);
@@ -740,7 +812,7 @@ $(function() {
                         } else if (((currentType.includes('Sustantivo') || currentType.includes('Verbo')) && (currentSubtype.includes('diminutivizado') || currentSubtype.includes('aumentativizado') || currentSubtype.includes('colectivizado') || currentSubtype.includes('ampliado') || currentSubtype.includes('invertido'))) || (currentType.includes('Adjetivo') && !currentSubtype.includes('compuesto'))) {
                             $(`#word-${word.word_root}`).append(`
                                 <li class='child-word'>
-                                    <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
+                                    <label onclick='handler.searchWord("${word.word_name}", "bal", 1)'>${word.word_name}</label>
                                 </li>
                             `);
                             $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
@@ -752,7 +824,7 @@ $(function() {
                         } else if (currentSubtype.includes('compuesto') && (currentSubtype.includes('diminutivizado') || currentSubtype.includes('aumentativizado') || currentSubtype.includes('colectivizado') || currentSubtype.includes('ampliado') || currentSubtype.includes('invertido'))) {
                             $(`#word-${word.word_root}`).append(`
                                 <li style='color: rgb(212, 16, 16);' class='child-word'>
-                                    <label onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")'>${word.word_name}</label>
+                                    <label onclick='handler.searchWord("${word.word_name}", "bal", 1)'>${word.word_name}</label>
                                 </li>
                             `);
                             
@@ -765,7 +837,7 @@ $(function() {
                             createRootTree(word.word_root);
 
                             $(`#root-${word.word_root}`).find('.compositions').append(`
-                                <li onclick='handler.searchWord("${word.word_name}", "bal", 1); handler.switchScreen("diccionario")' id='word-${word.word_name}' class='composed-word'>
+                                <li onclick='handler.searchWord("${word.word_name}", "bal", 1)' id='word-${word.word_name}' class='composed-word'>
                                     <label>${word.word_name}</label>
                                 </li>
                             `);
@@ -963,6 +1035,10 @@ $(function() {
             configStorage[prop] = value;
 
             localStorage.setItem('config', JSON.stringify(configStorage));
+        }
+
+        normalizeText(string) {
+            return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         }
     }
 

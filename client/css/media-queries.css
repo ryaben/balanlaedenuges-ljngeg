@@ -2,6 +2,18 @@
     #wordListing {
         grid-template-columns: 1fr 1fr 1fr;
     }
+
+    #wavingFlagsContainer {
+        flex-direction: column;
+    }
+
+    .waving-symbol {
+        width: 70%;
+    }
+
+    #homeWelcoming {
+        margin: 25px 0 5px 0;
+    }
 }
 
 @media only screen and (max-width: 860px) {

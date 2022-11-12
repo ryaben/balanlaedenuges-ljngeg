@@ -1,5 +1,6 @@
 <script>
     var rawDictionary = "<%= retrievedResults %>";
+    sessionStorage.setItem("dictionary", rawDictionary);
     var dictionary = JSON.parse(rawDictionary.replace(/&#34;/g, String.fromCharCode(34)).replace(/&#39;/g, String.fromCharCode(39)));
 
     //Palabras inexistentes pero necesarias para el árbol léxico.
