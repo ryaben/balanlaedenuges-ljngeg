@@ -871,6 +871,10 @@ a:has(#contactButton) {
     margin-bottom: 5vh;
 }
 
+.data-grey-container:last-of-type {
+    margin-bottom: 6px;
+}
+
 .data-main-title {
     font-size: 20px;
     font-weight: bold;

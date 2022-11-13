@@ -233,9 +233,6 @@ $(function() {
                     });
                 } else {
                     let tooltipWidth = $('#wordTooltip').width();
-                    console.log('position.left', position.left);
-                    console.log('tooltipWidth', tooltipWidth);
-                    console.log('width', width);
                         
                     $('#wordTooltip').css({
                         'left': `calc(${position.left}px - ${tooltipWidth}px - 12px)`,
@@ -610,6 +607,7 @@ $(function() {
             if (this.pageView === "diccionario") {
                 let searchLang = this.loadParam("lang");
                 let cleanedSearch = this.normalizeText(this.dictionarySearch);
+                let lowercasedSearch = this.dictionarySearch.toLowerCase();
                 let filteredDictionary;
 
                 if (searchLang === "bal" && dictionaryLimit === "0") {
@@ -621,7 +619,7 @@ $(function() {
                     
                 } else if (searchLang === "bal" && dictionaryLimit === "1") {
                     filteredDictionary = dictionary.find(function(current) {
-                        return current.word_name === handler.dictionarySearch;
+                        return current.word_name.toLowerCase() === lowercasedSearch;
                     });
 
                     if (filteredDictionary != undefined) {
@@ -644,12 +642,13 @@ $(function() {
                     });
 
                 } else if (searchLang === "esp" && dictionaryLimit === "1") {
+                    let 
                     filteredDictionary = dictionary.find(function(current) {
-                        return current.word_definition1 === handler.dictionarySearch ||
-                               current.word_definition2 === handler.dictionarySearch ||
-                               current.word_definition3 === handler.dictionarySearch ||
-                               current.word_definition4 === handler.dictionarySearch ||
-                               current.word_definition5 === handler.dictionarySearch;
+                        return current.word_definition1.toLowerCase() === lowercasedSearch ||
+                               current.word_definition2.toLowerCase() === lowercasedSearch ||
+                               current.word_definition3.toLowerCase() === lowercasedSearch ||
+                               current.word_definition4.toLowerCase() === lowercasedSearch ||
+                               current.word_definition5.toLowerCase() === lowercasedSearch;
                     });
 
                     if (filteredDictionary != undefined) {
@@ -659,7 +658,6 @@ $(function() {
 
                 //Reemplaza el diccionario completo por las coincidencias.
                 if (filteredDictionary == undefined) { filteredDictionary = []; }
-                console.log(filteredDictionary)
                 dictionary = filteredDictionary;
             }
 

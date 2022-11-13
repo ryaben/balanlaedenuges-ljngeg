@@ -1235,6 +1235,14 @@ VALUES
 ("compuesto","","","",""),
 ("común","","","",""),
 ("común","","","",""),
-("compuesto","","","","");
+("compuesto","","","",""),
+("relacional","","","",""),
+("relacional","","","",""),
+("relacional","","","",""),
+("relacional","","","",""),
+("compuesto","","","",""),
+("calificativo","","","",""),
+("relacional","","","",""),
+("calificativo","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`subtype`;

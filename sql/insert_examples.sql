@@ -1235,6 +1235,14 @@ VALUES
 ("Waej wänes gërtkrĵton göljkàj 'Fülw künk göljàlar tjl konegenes rjnlug wäld konegen göljwùjk'.","","","",""),
 ("Ölegen göljwùlasj-kerjter tjlaej grägajafon!","Göljkàj waej 17:00 wjl knaej wĵljndaj, kon följkèrjter?","","",""),
 ("Wjl kjaeuges kerjtug, kjae tröljgòwelajafar-tekler knaejteg tjl lujkaj.","","","",""),
-("Fransjsk göljtàg üke rëndegafen, fälòj kjaeug göljkàj knaej kerjtkèfjeg.","","","","");
+("Fransjsk göljtàg üke rëndegafen, fälòj kjaeug göljkàj knaej kerjtkèfjeg.","","","",""),
+("Kon üwlaed'al öl knaej gaelwajes wülejtug, tjsälk wlaejaj.","","","",""),
+("Kjaeug göljtàg knaej gaelwùlejtuges dönjlegaf.","","","",""),
+("Kjaej tröljknàler knaej gjldtòwlajuges kjgsègtaj faer waej öndkĵgeg!","","","",""),
+("Klaej jagaj göljtàg grüfuges golunaj.","Ragnar göljkàj üke grüfuges udaj!","","",""),
+("Öl följfèjfar knaej göwelfèjfeg faer fjaler jagaj trj üskugen för daj.","","","",""),
+("Kon änslar'al öl, tjsälk wlaejaj. Öl göljkàj üke göwelsfàejugafes...","","","",""),
+("Göljàw knaej jönuges laejreg wäld ölegen göljfèjregafer tjl jlaek klaej göljfrògael.","","","",""),
+("Kjaeuges söjwènslaj fjügulkàj jönugafes för waej wonajeges kefjegen.","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`example`;

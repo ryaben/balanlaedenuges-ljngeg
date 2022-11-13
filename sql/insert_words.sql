@@ -1235,7 +1235,15 @@ VALUES
 ("Gërtkrĵton", "De 'Gërtaj' y 'Krjton', lit. 'Ley de Gran Duquesa'", "Gërt"),
 ("Kerjter", "Palabra originante tradicional", "Kerjt"),
 ("Kerjtug", "Palabra originante tradicional", "Kerjt"),
-("Kerjtkèfjeg", "De 'Kerjter' y 'Kefjeg', lit. 'Persona que escapa'", "Kerjt");
+("Kerjtkèfjeg", "De 'Kerjter' y 'Kefjeg', lit. 'Persona que escapa'", "Kerjt"),
+("Gaelwajes", "Lit. 'Relativo a vuelo'", "Gaelwaj"),
+("Gaelwùlejtuges", "Lit. 'Relativo a animal que vuela'", "Gaelwùlejtug"),
+("Gjldtòwlajuges", "Lit. 'Relativo a metal dorado'", "Gjldtòwlajug"),
+("Grüfuges", "Lit. 'Relativo a café'", "Grüfug"),
+("Göwelfèjfeg", "De 'Göwelaj' y 'Fejfeg', lit. 'Palabra de memoria'", "Göwel"),
+("Göwelsfàejugafes", "Lit. 'Relativo a sin capacidad de recordar'", "Göwelsfàejug"),
+("Jönuges", "Lit. 'Relativo a continuación'", "Jönug"),
+("Jönugafes", "Lit. 'Relativo a sin continuación'", "Jönug");
 -- Käswej (adelante), auxiliar/salvar/rescatar/socorrer
 
 SELECT * FROM heroku_bf7cb810553a372.`word`;

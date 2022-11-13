@@ -1235,6 +1235,14 @@ VALUES
 ("Sustantivo","","","",""),
 ("Verbo","","","",""),
 ("Sustantivo","","","",""),
-("Sustantivo","","","","");
+("Sustantivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Sustantivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`type`;

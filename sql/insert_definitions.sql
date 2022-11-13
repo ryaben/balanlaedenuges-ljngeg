@@ -1235,6 +1235,14 @@ VALUES
 ("cult. Ley absoluta valeriana, tamb. mandato ducal (precepto normativo social impuesto por la Gran Duquesa que se antepone a la legislación).","","","",""),
 ("Huir, escapar, fugar.","coloq. Salir o abandonar una persona de un evento o circunstancia.","","",""),
 ("Huida, escapada, fuga.","","","",""),
-("coloq. Escapista (persona que elude responsabilidades y evade problemas).","","","","");
+("coloq. Escapista (persona que elude responsabilidades y evade problemas).","","","",""),
+("Volador (que vuela o tiene capacidad de ello).","","","",""),
+("Aviar, aviario (relativo a las aves).","","","",""),
+("Áureo, dorado (que es de oro o posee sus características).","","","",""),
+("Relativo o pertenenciente al café.","coloq. Acelerado, que tiene excitación o entusiasmo.","","",""),
+("Recordatorio, aviso (discurso para recordar algo).","","","",""),
+("Desmemoriado, olvidadizo, descuidado.","","","",""),
+("Continuo, constante, persistente, incesante.","","","",""),
+("Discontinuo, intermitente, entrecortado.","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`definition`;

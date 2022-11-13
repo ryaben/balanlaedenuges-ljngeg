@@ -175,7 +175,7 @@
     .nav-section::before {
         border-bottom: none;
         padding: 2px;
-        font-size: 1.05em;
+        font-size: 0.9em;
     }
 
     .nav-section:hover {
@@ -284,6 +284,10 @@
     #datasheetScreen {
         flex-direction: column-reverse;
         justify-content: space-between;
+    }
+
+    #dataText {
+        margin-right: 12px;
     }
 
     .data-container, #dataText {

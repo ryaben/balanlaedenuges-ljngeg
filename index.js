@@ -45,33 +45,29 @@ const query =
     INNER JOIN heroku_bf7cb810553a372.example ON word.id = example.id`;
 
 //Intenta obtener el diccionario si ya fue cargado en la sesión, sino llama a la DB.
-try {
-    dictionary = sessionStorage.getItem("dictionary");
-} catch {
-    connection.connect(function (err) {
-        if (err) {
-            console.log('Error when connecting to DB:', err);
-        } else {
-            connection.query(query, function(error, result) {
-                if (error) {
-                    return console.log("Error while loading dictionary: " + error.message);
-                } else {
-                    return dictionary = JSON.stringify(result);
-                }
-            });
-        }
-    });
+connection.connect(function (err) {
+    if (err) {
+        console.log('Error when connecting to DB:', err);
+    } else {
+        connection.query(query, function(error, result) {
+            if (error) {
+                return console.log("Error while loading dictionary: " + error.message);
+            } else {
+                return dictionary = JSON.stringify(result);
+            }
+        });
+    }
+});
 
-    //Cuando el servidor desconecte a la app, destruye la conexión (el diccionario ya está guardado en la sesión local)
-    connection.on('error', function(err) {
-        console.log('db error', err);
-        if(err.code === 'PROTOCOL_CONNECTION_LOST') {
-            connection.destroy();
-        } else {
-            throw err;
-        }
-    });
-}
+//Cuando el servidor desconecte a la app, destruye la conexión (el diccionario ya está guardado en la sesión local)
+connection.on('error', function(err) {
+    console.log('db error', err);
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+        connection.destroy();
+    } else {
+        throw err;
+    }
+});
 
 //Heroku stuff
 app.use(express.static(__dirname));
