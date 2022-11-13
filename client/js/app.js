@@ -16,7 +16,7 @@ $(function() {
             switch (this.pageView) {
                 case "diccionario":
                     if (this.loadParam('lang') && this.loadParam('limit')) {
-                        this.dictionarySearch = window.location.pathname.split('/')[2];
+                        this.dictionarySearch = this.decodeEntities(window.location.pathname.split('/')[2]);
                         this.setSearchDefaults('lang');
                         this.setSearchDefaults('limit');
                         this.displayDictionary(dictionary, this.limitParam, 'searchResult', 50, 200);
@@ -25,7 +25,7 @@ $(function() {
                     }
                     break;
                 case "listado":
-                    let currentLetter = window.location.pathname.split('/')[2];
+                    let currentLetter = this.decodeEntities(window.location.pathname.split('/')[2]);
                     dictionary = this.filterDictionary(dictionary, currentLetter);
                     this.listWords(dictionary, this.listingParam);
                     this.changeListingView(this.listingParam);
@@ -314,7 +314,7 @@ $(function() {
                     break;
             }
 
-            $('#wordSearch').val(window.location.pathname.split('/')[2]);
+            $('#wordSearch').val(this.dictionarySearch);
         }
 
         //Analiza variables que determinan una búsqueda en el diccionario.
@@ -618,14 +618,16 @@ $(function() {
 
                         return cleanedWordName.includes(cleanedSearch);
                     });
+                    
                 } else if (searchLang === "bal" && dictionaryLimit === "1") {
                     filteredDictionary = dictionary.find(function(current) {
-                        let cleanedWordName = handler.normalizeText(current.word_name);
-
-                        return cleanedWordName === cleanedSearch;
+                        return current.word_name === handler.dictionarySearch;
                     });
 
-                    filteredDictionary = [filteredDictionary];
+                    if (filteredDictionary != undefined) {
+                        filteredDictionary = [filteredDictionary];
+                    }
+                    
                 } else if (searchLang === "esp" && dictionaryLimit === "0") {
                     filteredDictionary = dictionary.filter(function(current) {
                         let cleanedDefinition1 = handler.normalizeText(current.word_definition1);
@@ -635,31 +637,29 @@ $(function() {
                         let cleanedDefinition5 = handler.normalizeText(current.word_definition5);
 
                         return cleanedDefinition1.includes(cleanedSearch) ||
-                            cleanedDefinition2.includes(cleanedSearch) ||
-                            cleanedDefinition3.includes(cleanedSearch) ||
-                            cleanedDefinition4.includes(cleanedSearch) ||
-                            cleanedDefinition5.includes(cleanedSearch);
+                               cleanedDefinition2.includes(cleanedSearch) ||
+                               cleanedDefinition3.includes(cleanedSearch) ||
+                               cleanedDefinition4.includes(cleanedSearch) ||
+                               cleanedDefinition5.includes(cleanedSearch);
                     });
+
                 } else if (searchLang === "esp" && dictionaryLimit === "1") {
                     filteredDictionary = dictionary.find(function(current) {
-                        let cleanedDefinition1 = handler.normalizeText(current.word_definition1);
-                        let cleanedDefinition2 = handler.normalizeText(current.word_definition2);
-                        let cleanedDefinition3 = handler.normalizeText(current.word_definition3);
-                        let cleanedDefinition4 = handler.normalizeText(current.word_definition4);
-                        let cleanedDefinition5 = handler.normalizeText(current.word_definition5);
-
-                        return cleanedDefinition1 === cleanedSearch ||
-                            cleanedDefinition2 === cleanedSearch ||
-                            cleanedDefinition3 === cleanedSearch ||
-                            cleanedDefinition4 === cleanedSearch ||
-                            cleanedDefinition5 === cleanedSearch;
+                        return current.word_definition1 === handler.dictionarySearch ||
+                               current.word_definition2 === handler.dictionarySearch ||
+                               current.word_definition3 === handler.dictionarySearch ||
+                               current.word_definition4 === handler.dictionarySearch ||
+                               current.word_definition5 === handler.dictionarySearch;
                     });
 
-                    filteredDictionary = [filteredDictionary];
+                    if (filteredDictionary != undefined) {
+                        filteredDictionary = [filteredDictionary];
+                    }
                 }
 
                 //Reemplaza el diccionario completo por las coincidencias.
                 if (filteredDictionary == undefined) { filteredDictionary = []; }
+                console.log(filteredDictionary)
                 dictionary = filteredDictionary;
             }
 
@@ -1039,6 +1039,44 @@ $(function() {
 
         normalizeText(string) {
             return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
+        convertCharactersToEntities(string) {
+            let strToEntities = string;
+            let characters = [
+                //Tildes graves
+                {char:"%C3%A0", entity:"&agrave"}, {char:"%C3%80", entity:"&Agrave"},
+                {char:"%C3%A8", entity:"&egrave"}, {char:"%C3%88", entity:"&Egrave"},
+                {char:"%C3%B2", entity:"&ograve"}, {char:"%C3%92", entity:"&Ograve"},
+                {char:"%C3%B9", entity:"&ugrave"}, {char:"%C3%99", entity:"&Ugrave"},
+                
+                //Diéresis
+                {char:"%C3%A4", entity:"&auml"}, {char:"%C3%84", entity:"&Auml"},
+                {char:"%C3%AB", entity:"&euml"}, {char:"%C3%8B", entity:"&Euml"},
+                {char:"%C3%B6", entity:"&ouml"}, {char:"%C3%96", entity:"&Ouml"},
+                {char:"%C3%BC", entity:"&uuml"}, {char:"%C3%9C", entity:"&Uuml"},
+
+                //I
+                {char:"%C4%B5", entity:"&jcirc"}, {char:"%C4%B4", entity:"&Jcirc"},
+                //O
+                {char:"%C3%B8", entity:"&oslash"}, {char:"%C3%98", entity:"&Oslash"}
+            ]
+
+            for (let i = 0; i < characters.length; i++) {
+                const element = characters[i];
+                let replaceVal = new RegExp(element.char, "g");
+                
+                strToEntities = strToEntities.replace(replaceVal, element.entity);
+            }
+
+            return strToEntities;
+        }
+
+        decodeEntities(string) {
+            let txt = document.createElement("textarea");
+            
+            txt.innerHTML = this.convertCharactersToEntities(string);
+            return txt.value;
         }
     }
 
