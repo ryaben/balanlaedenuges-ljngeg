@@ -185,12 +185,14 @@ footer a img {
 
 .word-meaning {
     margin: 12px auto 5px auto;
+    padding-left: 4px;
 }
 
 .word-example {
     margin: 0;
     font-style: italic;
     list-style: none;
+    padding-left: 4px;
 }
 
 .searched-word, .empty-search {
@@ -245,8 +247,16 @@ li .favorite-icon {
     margin-bottom: 12px;
 }
 
-.word-meanings {
+ol.word-meanings {
     margin-bottom: 0;
+    padding-inline-start: 1em;
+    list-style-type: decimal;
+}
+
+li.word-meaning::marker {
+    font-weight: bold;
+    color: red;
+    margin-right: 3px;
 }
 
 .letter-listing {
@@ -657,7 +667,7 @@ li .favorite-icon {
 }
 
 .waving-symbol {
-    width: 45%;
+    width: 380px;
     max-width: 380px;
 }
 
@@ -674,7 +684,7 @@ li .favorite-icon {
 }
 
 a:has(#contactButton) {
-    width: 20%;
+    width: 25%;
 }
 
 #contactButton {

@@ -1,4 +1,4 @@
-@media only screen and (max-width: 974px) {
+@media only screen and (max-width: 1120px) {
     #wordListing {
         grid-template-columns: 1fr 1fr 1fr;
     }
@@ -42,6 +42,24 @@
 
     .special-character {
         display: none;
+    }
+}
+
+@media only screen and (max-width: 810px) {
+    #othersContainer {
+        flex-direction: column;
+    }
+
+    #visitorsCounterContainer {
+        margin-bottom: 15px;
+    }
+
+    #visitorsCounterTitle {
+        text-align: center;
+    }
+
+    a:has(#contactButton) {
+        width: 55%;
     }
 }
 
@@ -175,7 +193,7 @@
     .nav-section::before {
         border-bottom: none;
         padding: 2px;
-        font-size: 0.9em;
+        font-size: 1.1em;
     }
 
     .nav-section:hover {
@@ -301,7 +319,7 @@
 
 @media only screen and (max-width: 425px) {
     .nav-section::before {
-        font-size: 0.9em;
+        font-size: 1em;
     }
 
     section {

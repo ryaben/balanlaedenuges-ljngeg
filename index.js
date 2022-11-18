@@ -38,7 +38,7 @@ const query =
     example.word_example5,
     word.word_root
     FROM
-	heroku_bf7cb810553a372.word
+    heroku_bf7cb810553a372.word
     INNER JOIN heroku_bf7cb810553a372.type ON word.id = type.id
     INNER JOIN heroku_bf7cb810553a372.subtype ON word.id = subtype.id
     INNER JOIN heroku_bf7cb810553a372.definition ON word.id = definition.id

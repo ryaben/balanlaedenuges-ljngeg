@@ -150,14 +150,14 @@ $(function() {
                 $(this).closest('.root-tree').find('.guide-container').toggle(200, 'linear');
             });
 
-            $('section').on('mouseenter', '.root-word-title label, .child-word label, .composed-word label, .listed-word, .searchable-word', function() {
+            $('section').on('mouseenter', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
                 let configStorage = JSON.parse(localStorage.getItem('config'));
                 if (configStorage.tooltip == 'true') {
                     handler.loadTooltip($(this).position(), $(this).css('width'), $(this).css('height'), $(this).html(), 'document');
                 }
             });
 
-            $('section').on('mouseleave', '.root-word-title label, .child-word label, .composed-word label, .listed-word, .searchable-word', function() {
+            $('section').on('mouseleave', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
                 $('#tooltipArrow').hide();
                 $('#wordTooltip').hide();
             });
@@ -203,8 +203,9 @@ $(function() {
         loadTooltip(position, width, height, name, parent) {
             if (window.innerWidth >= 660) {
                 $('#wordTooltip').html('');
+                let cleanedName = name.replace(/<\/?[^>]+(>|$)/g, "");
                 let retrievedWord = dictionary.find(function(word) {
-                    return word.word_name === name;
+                    return word.word_name.toLowerCase() === cleanedName.toLowerCase();
                 });
 
                 this.displayDictionary([retrievedWord], 1, 'wordTooltip', 0, 0);
@@ -235,11 +236,11 @@ $(function() {
                     let tooltipWidth = $('#wordTooltip').width();
                         
                     $('#wordTooltip').css({
-                        'left': `calc(${position.left}px - ${tooltipWidth}px - 12px)`,
+                        'left': `calc(${position.left}px - ${tooltipWidth}px + 12px)`,
                         'margin-right': `calc(${width})`
                     });
                     $('#tooltipArrow').css({
-                        'left': `calc(${position.left}px - 11px)`,
+                        'left': `calc(${position.left}px + 11px)`,
                         'margin-right': `calc(${width} - 3px)`,
                         'border-color': 'transparent transparent transparent black'
                     });
@@ -1057,7 +1058,9 @@ $(function() {
                 //I
                 {char:"%C4%B5", entity:"&jcirc"}, {char:"%C4%B4", entity:"&Jcirc"},
                 //O
-                {char:"%C3%B8", entity:"&oslash"}, {char:"%C3%98", entity:"&Oslash"}
+                {char:"%C3%B8", entity:"&oslash"}, {char:"%C3%98", entity:"&Oslash"},
+                //Espacio
+                {char:"%20", entity:"&nbsp;"}
             ]
 
             for (let i = 0; i < characters.length; i++) {
