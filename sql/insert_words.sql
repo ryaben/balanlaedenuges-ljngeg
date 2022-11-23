@@ -1267,7 +1267,37 @@ VALUES
 ("Kaenjagöndkĵgeg", "De 'Kaeneg', 'Jagaj', 'Öndug' y 'Kjgeg', lit. 'Lugar de vivienda de agua con frío'", "Kaen"),
 ("Knuwereges", "Lit. 'Relativo a número'", "Knuwereg"),
 ("Knöjajes", "Lit. 'Relativo a subida'", "Knöjaj"),
-("Kojweges", "Lit. 'Relativo a cielo'", "Kojweg");
+("Kojweges", "Lit. 'Relativo a cielo'", "Kojweg"),
+("Kojwjàgajes", "Lit. 'Relativo a agua del cielo'", "Kojwjàgaj"),
+("Kojwkèfjeges", "Lit. 'Relativo a persona del cielo'", "Kojwkèfjeg"),
+("Knüskugen", "De 'Knaej' y 'Üskug' (en plural)", "Knaej"),
+("Kojwlajtsònteges", "Lit. 'Relativo a punto de luz del cielo'", "Kojwlajtsònteg"),
+("Kojwlàedejuges", "Lit. 'Relativo a tierra del cielo'", "Kojwlàedejug"),
+("Kokolàtes", "Lit. 'Relativo a chocolate'", "Kokolàt"),
+("Kones", "Lit. 'Relativo a tú/vos'", "Kon"),
+("Konajnes", "Lit. 'Relativo a ustedes (todas mujeres)'", "Konajn"),
+("Konegenes", "Lit. 'Relativo a ustedes (géneros mixtos)'", "Konegen"),
+("Konugenes", "Lit. 'Relativo a ustedes (todos hombres)'", "Konugen"),
+("Krjtes", "Lit. 'Relativo a regla'", "Krjt"),
+("Krjtonkèfjeg", "De 'Krjton' y 'Kefjeg', lit. 'Persona de regla grande'", "Krjt"),
+("Krjtkèfjeg", "De 'Krjt' y 'Kefjeg', lit. 'Persona de regla'", "Krjt"),
+("Käjkuges", "Lit. 'Relativo a corte'", "Käjkug"),
+("Kördajes", "Lit. 'Relativo a cordura'", "Kördaj"),
+("Kördajafes", "Lit. 'Relativo a sin cordura'", "Kördaj"),
+("Kürkajes", "Lit. 'Relativo a isla'", "Kürkaj"),
+("Laedejuges", "Lit. 'Relativo a tierra'", "Laedejug"),
+("Dönjlkĵgeg", "De 'Dönjlaj' y 'Kjgeg', lit. 'Lugar de cura'", "Dönjl"),
+("Futegur", "Lit. 'Colectivo de cosas'", "Futeg"),
+("Laedenuges", "Lit. 'Relativo a país/Estado'", "Laedenug"),
+("Laedenkèfjegures", "Lit. 'Relativo a colectivo de personas de país'", "Laedenkèfjeg"),
+("Üntjeg", "Palabra originante tradicional", "Üntj"),
+("Üntjar", "Palabra originante tradicional", "Üntj"),
+("Üntjeges", "Lit. 'Relativo a liviandad'", "Üntjeg"),
+("Üntjegaf", "Lit. 'Sin liviandad'", "Üntjeg"),
+("Üntjegafes", "Lit. 'Relativo a sin liviandad'", "Üntjeg"),
+("Kröndwaj", "Palabra de patrimonio nacional", "Kröndw");
+-- comodidad e incomodidad
+-- relajar y tensionar
 -- Käswej (adelante), auxiliar/salvar/rescatar/socorrer
 
 SELECT * FROM heroku_bf7cb810553a372.`word`;

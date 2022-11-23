@@ -380,6 +380,8 @@ li.word-meaning::marker {
 
 .child-word {
     color: rgb(212, 16, 16);
+    padding: 0;
+    margin: 0;
 }
 
 .child-word::before {
@@ -654,6 +656,10 @@ li.word-meaning::marker {
     text-align: center;
 }
 
+.css-901oao.css-16my406.r-poiln3.r-bcqeeo.r-qvutc0 {
+    display: none;
+}
+
 #wavingFlagsContainer {
     display: flex;
     justify-content: center;
@@ -683,7 +689,7 @@ li.word-meaning::marker {
     margin: 0 0 5px 0;
 }
 
-a:has(#contactButton) {
+#contactButtonLink {
     width: 25%;
 }
 
@@ -1058,6 +1064,13 @@ p#dataTranslatedName {
 
 .data-image-container p {
     margin: 4px 0 8px 0;
+}
+
+p.no-search {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin: 12px 10% 8px 10%;
 }
 
 .favorite-entry {

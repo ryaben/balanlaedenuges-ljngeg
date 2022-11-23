@@ -22,6 +22,12 @@ $(function() {
                         this.displayDictionary(dictionary, this.limitParam, 'searchResult', 50, 200);
                     } else {
                         $("#resultStats").css("display", "none");
+                        $("#searchResult").append(`
+                            <p class='no-search'>
+                                En este diccionario libraterrense-español puede descubrir el significado de un vocablo en el idioma nacional, o buscar una palabra o frase en español para conocer una posible traducción.
+                                También <a onclick='handler.searchWord(handler.randomWord(dictionary), "bal", 1)'>podemos cargar una palabra al azar</a>.
+                            </p>
+                        `);
                     }
                     break;
                 case "listado":
@@ -863,6 +869,14 @@ $(function() {
             }
         }
 
+        //Busca un index aleatorio y devuelve el objeto de la palabra.
+        randomWord(dictionary) {
+            let max = dictionary.length - 1;
+            let randomIndex = Math.floor(Math.random() * (max - 0 + 1) + 0);
+
+            return dictionary[randomIndex].word_name;
+        }
+
         drawWorldMap() {
             var svgMapCountryNames = new svgMap({
                 targetElementID: 'svgMapCountryNames',
@@ -1056,7 +1070,7 @@ $(function() {
                 {char:"%C3%BC", entity:"&uuml"}, {char:"%C3%9C", entity:"&Uuml"},
 
                 //I
-                {char:"%C4%B5", entity:"&jcirc"}, {char:"%C4%B4", entity:"&Jcirc"},
+                {char:"%C4%B5", entity:"&jcirc;"}, {char:"%C4%B4", entity:"&Jcirc;"},
                 //O
                 {char:"%C3%B8", entity:"&oslash"}, {char:"%C3%98", entity:"&Oslash"},
                 //Espacio

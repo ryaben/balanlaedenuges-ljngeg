@@ -16,6 +16,25 @@
     }
 }
 
+@media only screen and (max-width: 910px) {
+    #othersContainer {
+        flex-direction: column;
+    }
+
+    #visitorsCounterContainer {
+        margin-bottom: 15px;
+    }
+
+    #visitorsCounterTitle {
+        text-align: center;
+    }
+
+    a:has(#contactButton) {
+        width: 55%;
+        margin-top: 10px;
+    }
+}
+
 @media only screen and (max-width: 860px) {
     #listingLowbar {
         flex-direction: column;
@@ -42,24 +61,6 @@
 
     .special-character {
         display: none;
-    }
-}
-
-@media only screen and (max-width: 810px) {
-    #othersContainer {
-        flex-direction: column;
-    }
-
-    #visitorsCounterContainer {
-        margin-bottom: 15px;
-    }
-
-    #visitorsCounterTitle {
-        text-align: center;
-    }
-
-    a:has(#contactButton) {
-        width: 55%;
     }
 }
 
