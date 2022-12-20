@@ -5,6 +5,8 @@ $(function() {
             this.pageView = window.location.pathname.split('/')[1]
             this.limitParam = this.loadParam('limit');
             this.listingParam = this.getConfig('listing');
+            this.vhMobile = window.innerHeight * 0.01;
+            this.vwMobile = window.innerWidth * 0.01;
         }
 
         initialize(handler) {
@@ -12,8 +14,30 @@ $(function() {
             this.setCurrentPage(this.pageView);
             this.setConfig("tooltip");
             this.setConfig("listing");
+            const sessionCookie = this.curateCookie("PortalCiudadano") || "";
+
+            document.documentElement.style.setProperty('--vh-mobile', `${this.vhMobile}px`);
+            document.documentElement.style.setProperty('--vw-mobile', `${this.vwMobile}px`);
 
             switch (this.pageView) {
+                case "portal-login":
+                    this.processPortalAlerts();
+                    break;
+                case "portal-principal":
+                    this.setCurrentPage('portal-login');
+                    this.renderPortal(sessionCookie);
+                    this.togglePortalSection($(".portal-navbar-button").eq(parseInt(this.loadParam('tab')) || 0));
+                    this.processPortalAlerts();
+                    break;
+                case "portal-registro":
+                    this.setCurrentPage('portal-login');
+                    this.renderCountries(countriesList, "portalRegisterCountry");
+                    this.processPortalAlerts();
+                    break;
+                case "restablecimiento":
+                    const token = window.location.pathname.split('/')[2]
+                    $(".portal-form").attr("action", `/restablecer/${token}`);
+                    break;
                 case "diccionario":
                     if (this.loadParam('lang') && this.loadParam('limit')) {
                         this.dictionarySearch = this.decodeEntities(window.location.pathname.split('/')[2]);
@@ -58,18 +82,78 @@ $(function() {
         }
 
         eventsListening(handler) {
-            $('#titleDiv').on('click', function() {
-                window.location = '/'
-            });
-
-            $('#searchButton').on('click', function() {
-                handler.customizeSearch();
+            window.addEventListener('resize', () => {
+                this.vhMobile = window.innerHeight * 0.01;
+                this.vwMobile = window.innerWidth * 0.01;
+                document.documentElement.style.setProperty('--vh-mobile', `${this.vhMobile}px`);
+                document.documentElement.style.setProperty('--vw-mobile', `${this.vwMobile}px`);
             });
 
             $('body').on('keypress', function(event) {
                 if (handler.pageView == 'diccionario' && event.keyCode == 13) {
                     handler.customizeSearch();
                 }
+            });
+
+            $('#portalRegister').on("submit", function() {
+                $(this).ajaxSubmit({
+                    error: function(xhr) {
+                        status('Error: ' + xhr.status);
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    }
+                });
+
+                return false;
+            });
+
+            $('#portalRegisterPassword, #portalRegisterPasswordRepeat').on('input', function() {
+                handler.compareInputs($('#portalRegisterPassword'), $('#portalRegisterPasswordRepeat'), $('#passwordStatus'), $('#portalRegisterSubmit'));
+            });
+
+            $('#portalChangePassword, #portalChangePasswordRepeat').on('input', function() {
+                handler.compareInputs($('#portalChangePassword'), $('#portalChangePasswordRepeat'), $('#passwordChangeStatus'), $('#portalChangePasswordSubmit'));
+            });
+
+            $("#portalLogoutLabel").on('click', function() {
+                $("#portalLogoutButton").click();
+            });
+
+            $(".portal-navbar-button").on("click", function() {
+                handler.togglePortalSection($(this));
+            });
+
+            $('.recovery-link').on('click', function() {
+                if ($(this).hasClass('link-selected')) {
+                    handler.toggleForms('.portal-recovery', '#portalStart', '.recovery-link');
+                } else {
+                    handler.toggleForms('#portalStart', '.portal-recovery', '.recovery-link');
+                }
+            });
+
+            $("#portalProfilePicture").on("input", function() {
+                handler.reloadProfilePicture();
+            });
+
+            $("#portalIdentityPicture").on("error", function() {
+                handler.handleProfilePictureError();
+            });
+
+            $("#portalIDCardPicture").on("error", function() {
+                $(this).attr("src", "/client/img/profile-pic.jpg");
+            });
+
+            $("#portalIDDownload").on("click", function() {
+                handler.downloadID();
+            });
+
+            $('#titleDiv').on('click', function() {
+                window.location = '/'
+            });
+
+            $('#searchButton').on('click', function() {
+                handler.customizeSearch();
             });
 
             $('#configMenuTitle label').on('click', function() {
@@ -101,6 +185,14 @@ $(function() {
                 } else {
                     window.location = `/${view}`
                 }
+            });
+
+            $('section').on('click', '.error-alert-close, .success-alert-close', function() {
+                let that = this;
+                $(this).parent('.error-alert, .success-alert').fadeOut(350);
+                setTimeout(function() {
+                    $(that).parent('.error-alert, .success-alert').remove();
+                }, 351);
             });
 
             $('.data-index-link').on('mouseenter', function() {
@@ -484,6 +576,32 @@ $(function() {
             }
         }
 
+        //Oculta una formulario para mostrar otro, y activa o no un link.
+        toggleForms(formHidden, formShown, linkSelector) {
+            $(`${formHidden}`).fadeOut(150);
+
+            setTimeout(() => {
+                $(`${formShown}`).fadeIn(150);
+                $(`${formShown}`).css('display', 'flex');
+            }, 140);
+
+            $(`${linkSelector}`).toggleClass('link-selected');
+        }
+
+        //Alterna la vista entre las secciones de Portal Ciudadano.
+        togglePortalSection(sectionButton) {
+            //Selecciona el botón clickeado.
+            $(".portal-navbar-button").removeClass("selected");
+            sectionButton.addClass("selected");
+
+            //Muestra la sección relativa al botón clickeado.
+            $('.portal-section').hide();
+            $(`.portal-section:eq(${sectionButton.index()})`).show();
+
+            //Cambia el valor del título de la tab (móvil).
+            $("#portalNavbarTitle").text(sectionButton.children(".portal-navbar-label").text());
+        }
+
         toggleMobileNav(sectionId) {
             if ($("nav").children(`.nav-${sectionId}`).length == 0) {
                 $("nav").children(".nav-mobile").remove();
@@ -674,7 +792,7 @@ $(function() {
                     dictionary.sort((a, b) => (a.word_name > b.word_name) ? 1 : -1);
                 }
     
-                $("#foundWords").text("Resultados obtenidos: " + dictionary.length);
+                $("#foundWords").html("Resultados obtenidos: " + `<b>${dictionary.length}</b>`);
     
                 for (let i = 0; i < dictionaryLimit; i++) {
                     const word = dictionary[i];
@@ -759,7 +877,6 @@ $(function() {
                                         </div>
                                     </li>
                                     <ul class='compositions'>
-
                                     </ul>
                                 </ul>
                             `);
@@ -877,6 +994,149 @@ $(function() {
             return dictionary[randomIndex].word_name;
         }
 
+        //Actualizan la imagen de perfil del Portal, y si no funciona pone la default.
+        reloadProfilePicture() {
+            $("#portalIdentityPicture").attr("src", $("#portalProfilePicture").val());
+            $("#portalProfilePicture").css("background-color", "white");
+        }
+        handleProfilePictureError() {
+            $("#portalIdentityPicture").attr("src", "/client/img/profile-pic.jpg");
+            $("#portalProfilePicture").css("background-color", "salmon");
+        }
+
+        //Carga los datos de usuario y los añade a la interfaz de Portal Ciudadano.
+        renderPortal(sessionInfo) {
+            let citizenshipMessage;
+            let genderMessage;
+            let profileGender;
+            let rankMessage;
+            let spanishRankMessage;
+
+            //Inicio
+            $("#portalWelcomeTitle").html(`¡Le damos la bienvenida, <b>${sessionInfo.fullName}</b>!`);
+            switch (sessionInfo.approvedCitizenship) {
+                case 0:
+                    citizenshipMessage = "<b>En revisión</b>";
+                    break;
+                case 1:
+                    citizenshipMessage = "<b style='color: green;'>Aprobada</b>";
+                    break;
+                default:
+                    break;
+            }
+            $("#portalCitizenshipStatus").html(`Estado de su ciudadanía digital: ${citizenshipMessage}`);
+            switch (sessionInfo.rank) {
+                case 'tourist':
+                    rankMessage = "Laedenljonkèfjeg";
+                    spanishRankMessage = "Turista"
+                    break;
+                case 'citizen':
+                    rankMessage = "Laedenkèfjeg";
+                    spanishRankMessage = "Ciudadano"
+                    break;
+                default:
+                    break;
+            }
+            $("#portalRankStatus").html(`Su estatus actual es: <b>${spanishRankMessage}</b>`);
+            $("#portalProfilePicture").val(sessionInfo.profileImage);
+            this.reloadProfilePicture();
+            $("#portalProfileName").val(sessionInfo.fullName);
+            switch (sessionInfo.gender) {
+                case 'man':
+                    genderMessage = "Sjonkèfjeg";
+                    profileGender = 0;
+                    break;
+                case 'woman':
+                    genderMessage = "Awalkèfjeg";
+                    profileGender = 1;
+                    break;
+                case 'nonbinary':
+                    genderMessage = "Knaejuj";
+                    profileGender = 2;
+                    break;
+                default:
+                    break;
+            }
+            $("#portalProfileGender").prop('selectedIndex', profileGender);
+            $("#portalProfileEmail").val(sessionInfo.email);
+            $("#portalProfileTwitter").val(sessionInfo.twitterUser);
+            $("#portalProfileDiscord").val(sessionInfo.discordUser);
+
+            //Documento.
+            $("#portalIDCardPicture").attr("src", sessionInfo.profileImage);
+            $("#portalIDCardName").html(`Talwug: <span class="portal-id-value">${sessionInfo.fullName}</span>`);
+            $("#portalIDCardGender").html(`Swejaeg: <span class="portal-id-value">${genderMessage}</span>`);
+            let birthdate = new Date(sessionInfo.birthdate);
+            console.log(sessionInfo.birthdate)
+            $("#portalIDCardBirthdate").html(`Wàjdaj: <span class="portal-id-value">${birthdate.getDate()}/${birthdate.getMonth() + 1}/${birthdate.getFullYear()}</span>`);
+            $("#portalIDCardCountry").html(`Laedenug: <span class="portal-id-value">${sessionInfo.country}</span>`);
+            $("#portalIDCardRank").html(`Status: <span class="portal-id-value">${rankMessage}</span>`);
+            let finalId = sessionInfo.id.toString().slice(0, -1);
+            let id0 = '0'.repeat(6 - finalId.length);
+            $("#portalIDCardNumber").html(`#${id0}${parseInt(finalId + 1)}`);
+        }
+
+        //Renderiza un cartel de alerta según valor de query param.
+        renderAlert(condition, sectionSelector, errorMessage) {
+            $(`${sectionSelector}`).prepend(`
+                <div class='${condition}-alert'>
+                    <label class='${condition}-alert-message'>${errorMessage}</label>
+                    <label class='${condition}-alert-close'>X</label>
+                </div>
+            `);
+            $(`${sectionSelector} .${condition}-alert`).hide().fadeIn(350)
+        }
+
+        downloadID() {
+            html2canvas(document.querySelector("#portalIDCard"), {useCORS: true}).then(canvas => {
+                canvas.toBlob(function(blob) {
+                    saveAs(blob, `ID${$("#portalIDCardNumber").text()}.png`);
+                });
+            });
+        }
+
+        compareInputs(input1, input2, inputStatus, button) {
+            if (input1.val() !== "" && input2.val() !== "") {
+                inputStatus.show();
+                if (input1.val() === input2.val()) {
+                    input1.css("background", "lightgreen");
+                    input2.css("background", "lightgreen");
+                    inputStatus.css("color", "green");
+                    inputStatus.text("Los campos coinciden.");
+                    button.prop("disabled", false);
+                } else {
+                    input1.css("background", "salmon");
+                    input2.css("background", "salmon");
+                    inputStatus.css("color", "red");
+                    inputStatus.text("Los campos no coinciden.");
+                    button.prop("disabled", true);
+                }
+            } else {
+                inputStatus.hide();
+                input1.css("background", "white");
+                input2.css("background", "white");
+                button.prop("disabled", true);
+            }
+        }
+
+        processPortalAlerts() {
+            if (this.loadParam('session') === 'false') { this.renderAlert("error", "section", "Debe iniciar sesión para ver esa página."); }
+            if (this.loadParam('captcha') === 'null') { this.renderAlert("error", "section", "El captcha no fue completado."); }
+            if (this.loadParam('captcha') === 'false') { this.renderAlert("error", "section", "Falló la verificación del captcha."); }
+            if (this.loadParam('database') === 'error') { this.renderAlert("error", "section", "Hubo un error de conexión con la base de datos."); }
+            if (this.loadParam('register') === 'success') { this.renderAlert("success", "section", "Se ha registrado la cuenta. Por favor, verifique su correo para iniciar sesión."); }
+            if (this.loadParam('password') === 'false') { this.renderAlert("error", "section", "La contraseña ingresada no es correcta."); }
+            if (this.loadParam('email') === 'null') { this.renderAlert("error", "section", "Ese correo electrónico no está registrado."); }
+            if (this.loadParam('verify') === 'false') { this.renderAlert("error", "section", "Hubo un error con el enlace de verificación (probablemente expiró o ya fue utilizado)."); }
+            if (this.loadParam('verify') === 'true') { this.renderAlert("success", "section", "La cuenta fue verificada exitosamente. Puede iniciar sesión."); }
+            if (this.loadParam('verified') === 'false') { this.renderAlert("error", "section", "El correo electrónico de la cuenta aún no fue verificado."); }
+            if (this.loadParam('database') === 'error') { this.renderAlert("error", "section", "Hubo un error de conexión con la base de datos."); }
+            if (this.loadParam('newlink') === 'success') { this.renderAlert("success", "section", "Se ha enviado un nuevo correo de verificación."); }
+            if (this.loadParam('recovery') === 'success') { this.renderAlert("success", "section", "Se ha enviado un correo de cambio de contraseña exitosamente."); }
+            if (this.loadParam('recovery') === 'true') { this.renderAlert("success", "section", "La contraseña fue actualizada exitosamente. Puede iniciar sesión."); }
+            if (this.loadParam('profile') === 'updated') { this.renderAlert("success", "#portalIdentitySection", "La información personal fue actualizada exitosamente."); }
+        }
+
         drawWorldMap() {
             var svgMapCountryNames = new svgMap({
                 targetElementID: 'svgMapCountryNames',
@@ -887,70 +1147,7 @@ $(function() {
                     }
                   },
                   applyData: 'librishNaming',
-                  values: {
-                    //Librish naming and full grammar
-                    AR: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Argentina
-                    AU: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Australia
-                    FI: { librishNaming: 1, librishGrammar: 1 }, // Finland
-                    JP: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Japan
-                    NL: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Netherlands
-                    KP: { librishNaming: 1, librishGrammar: 1 }, // North Korea
-                    NO: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Norway
-                    RU: { librishNaming: 1, librishGrammar: 1 }, // Russia
-                    KR: { librishNaming: 1, librishGrammar: 1 }, // South Korea
-                    SE: { librishNaming: 1, librishGrammar: 1 }, // Sweden
-                    FR: { librishNaming: 1, librishGrammar: 1 }, // France
-                    IE: { librishNaming: 1, librishGrammar: 1 }, // Ireland
-                    BY: { librishNaming: 1, librishGrammar: 1 }, // Belarus
-                    GL: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Greenland
-                    IS: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Iceland TODO: tierra de hielo
-                    CH: { librishNaming: 1, librishGrammar: 1 }, // Switzerland TODO: tierra de los swiss
-                    BE: { librishNaming: 1, librishGrammar: 1 }, // Belgium TODO: tierra de las Bélgicas
-                    UA: { librishNaming: 1, librishGrammar: 1, librishVocabulary: 1, color: '#072e04' }, // Ukraine TODO: tierra de las Bélgicas
-                    CZ: { librishNaming: 1, librishGrammar: 1 }, // Czech Republic TODO: tierra de los checos
-
-                    //Only librish full grammar
-                    GI: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Gibraltar
-                    TT: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Trinidad and Tobago
-                    WF: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Wallis and Futuna
-                    VA: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Vatican City
-                    GF: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // French Guiana
-                    TF: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // French Southern Territories
-                    CX: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Christmas Island
-                    CK: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Cook Islands
-                    CC: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Cocos Islands
-                    FO: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Faroe Islands
-                    TC: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Turks and Caicos Islands
-                    EH: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Western Sahara
-                    AI: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Anguilla
-                    KY: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Cayman Islands
-                    KI: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Kiribati
-                    NF: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Norfolk Island
-                    CA: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Canada
-                    GY: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Guyana
-                    US: { librishNaming: 0, librishGrammar: 1, librishVocabulary: 1, color: '#487a36' }, // USA TODO:
-                    CW: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Curacao
-                    RE: { librishNaming: 0, librishGrammar: 1, color: '#62f252' }, // Reunion
-
-                    //Only librish naming
-                    DE: { librishNaming: 1, librishGrammar: 0, color: '#62f252' }, // Germany
-                    HU: { librishNaming: 1, librishGrammar: 0, color: '#62f252' }, // Hungary TODO: tierra de los magiares
-                    PH: { librishNaming: 1, librishGrammar: 0, color: '#62f252' }, // Filipinas TODO: tierra de Felipe
-                    RO: { librishNaming: 1, librishGrammar: 0, color: '#62f252' }, // Romania TODO: tierra de los romanos
-
-                    //Neither librish naming nor full grammar, yet translated
-                    PF: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // French Polynesia
-                    IM: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Isle of Man
-                    MH: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Marshall Islands
-                    MP: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Northern Mariana Islands
-                    MQ: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Martinique
-                    YT: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Mayotte
-                    GU: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Guam
-                    FK: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Islas Malvinas
-                    SR: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Surinam
-                    AS: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // American Samoa
-                    PN: { librishNaming: 0, librishGrammar: 0, color: '#95f590' }, // Pitcairn Islands
-                  }
+                  values: worldMapValues
                 },
                 colorMin: '#E2E2E2',
                 colorMax: '#487a36',
@@ -1013,6 +1210,28 @@ $(function() {
                   return tooltipContentElement;
                 }
             });
+        }
+
+        getCurrentDate() {
+            const date = new Date();
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+
+            return `${year}-${month}-${day}`;
+        }
+
+        renderCountries(array, selectID) {
+            array.forEach(function(current) {
+                $(`#${selectID}`).append(`
+                    <option>${current}</option>
+                `);
+            });
+        }
+
+        curateCookie(cookieName) {
+            let cookie = $.cookie(cookieName);
+            return $.parseJSON(cookie.slice(2));
         }
 
         setCurrentPage(page) {

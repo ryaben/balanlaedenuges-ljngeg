@@ -16,6 +16,28 @@
     }
 }
 
+@media only screen and (max-width: 999px) {
+    .portal-navbar-button {
+        width: 45px;
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+
+    .portal-navbar-button.selected,
+    .portal-navbar-button:hover {
+        width: 97px;
+    }
+
+    .portal-navbar-button.selected .portal-navbar-label,
+    .portal-navbar-button:hover .portal-navbar-label {
+        display: block;
+    }
+
+    .portal-navbar-label {
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 910px) {
     #othersContainer {
         flex-direction: column;
@@ -125,9 +147,9 @@
 
     section {
         width: calc(100% - 4px);
-        height: calc(100vh - 14vh - 40px - 4px - 2px - 19px);
+        height: calc(calc(var(--vh-mobile, 1vh) * 100) - calc(var(--vh-mobile, 1vh) * 14) - 40px - 4px - 2px - 19px);
         position: absolute;
-        top: calc(14vh + 40px + 4px + 6px);
+        top: calc(calc(var(--vh-mobile, 1vh) * 14) + 40px + 4px + 6px);
         z-index: 1;
     }
 
@@ -194,7 +216,7 @@
     .nav-section::before {
         border-bottom: none;
         padding: 2px;
-        font-size: 1.1em;
+        font-size: 1em;
     }
 
     .nav-section:hover {
@@ -277,6 +299,19 @@
     header {
         position: relative;
         justify-content: center;
+        width: calc(calc(var(--vw-mobile, 1vw) * 99) - 8px);
+    }
+
+    nav {
+        width: calc(calc(var(--vw-mobile, 1vw) * 99) - 8px);
+    }
+
+    .nav-section::before {
+        font-size: 0.9em;
+    }
+
+    section {
+        width: calc(calc(var(--vw-mobile, 1vw) * 99) - 8px);
     }
 
     #flag {
@@ -316,16 +351,38 @@
     .data-container {
         border-bottom: 2px solid black;
     }
+
+    .data-grey-container:last-of-type {
+        margin-bottom: 0px;
+    }
+
+    .foreign-name, .foreign-status, .foreign-document {
+        font-size: 12px;
+    }
+
+    #portalNavbarTitle {
+        display: block;
+    }
+
+    .portal-navbar-button.selected,
+    .portal-navbar-button:hover {
+        width: 45px;
+    }
+
+    .portal-navbar-button.selected .portal-navbar-label,
+    .portal-navbar-button:hover .portal-navbar-label {
+        display: none;
+    }
+
+    .portal-navbar-label {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 425px) {
-    .nav-section::before {
-        font-size: 1em;
-    }
-
     section {
-        height: calc(100vh - 14vh - 40px - 4px - 2px - 15px);
-        top: calc(14vh + 40px + 4px + 2px);
+        height: calc(calc(var(--vh-mobile, 1vh) * 99) - calc(var(--vh-mobile, 1vh) * 14) - 40px - 4px - 2px - 15px);
+        top: calc(calc(var(--vh-mobile, 1vh) * 15) + 40px + 4px + 2px);
     }
 }
 
