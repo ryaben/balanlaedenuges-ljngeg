@@ -1402,6 +1402,7 @@ VALUES
 ("Knaej ësjl drjnug j öl följràwolar fülwuj waej lujkaj!","","","",""),
 ("Kjaejes drjnuges fejfegen tröljèwjd öl kulkeg.","","","",""),
 ("Öl jkë göljàlentar ësjl drjnugafen, wän ësjl j öl följwònajer.","","","",""),
-(".","","","","");
+("Kon tröljdrĵnugafer ükon üskugen, kon jönugafer'al.","","","",""),
+("Knadja göljtàg knaej drjnugafes lödewug.","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`example`;

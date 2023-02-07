@@ -1402,7 +1402,8 @@ VALUES
 ("Drjnug", "Palabra originante tradicional", "Drjn"),
 ("Drjnuges", "Lit. 'Relativo a acierto'", "Drjnug"),
 ("Drjnugaf", "Lit. 'Sin acierto'", "Drjnug"),
-("Drjnugafer", "Lit. 'Hacer sin acierto'", "Drjnug");
+("Drjnugafer", "Lit. 'Hacer sin acierto'", "Drjnug"),
+("Drjnugafes", "Lit. 'Relativo a sin acierto'", "Drjnug");
 -- traewflĵner = golpear
 -- más colores
 -- else/sino

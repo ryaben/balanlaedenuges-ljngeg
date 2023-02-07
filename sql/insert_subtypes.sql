@@ -1402,6 +1402,7 @@ VALUES
 ("común","","","",""),
 ("calificativo","","","",""),
 ("invertido","","","",""),
-("ampliado","","","","");
+("ampliado","","","",""),
+("calificativo","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`subtype`;

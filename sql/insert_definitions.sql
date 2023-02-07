@@ -1402,6 +1402,7 @@ VALUES
 ("Acierto, tino (acción de acertar).","","","",""),
 ("Acertado (que tiene o incluye acierto).","","","",""),
 ("Desacierto, equivocación, error, descuido, fallo.","","","",""),
-("Desacertar, errar, equivocar, fallar.","","","","");
+("Desacertar, errar, equivocar, fallar.","","","",""),
+("Desacertado (que tiene u obra con desacierto).","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`definition`;
