@@ -377,6 +377,10 @@
     .portal-navbar-label {
         display: none;
     }
+
+    .portal-directory-label {
+        font-size: 12px;
+    }
 }
 
 @media only screen and (max-width: 425px) {

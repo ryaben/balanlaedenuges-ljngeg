@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     class Handler {
         constructor() {
             this.checkLocalStorage();
@@ -14,7 +14,7 @@ $(function() {
             this.setCurrentPage(this.pageView);
             this.setConfig("tooltip");
             this.setConfig("listing");
-            const sessionCookie = this.curateCookie("PortalCiudadano") || "";
+            const sessionCookie = this.curateCookie("PortalCiudadano");
 
             document.documentElement.style.setProperty('--vh-mobile', `${this.vhMobile}px`);
             document.documentElement.style.setProperty('--vw-mobile', `${this.vwMobile}px`);
@@ -31,7 +31,7 @@ $(function() {
                     break;
                 case "portal-registro":
                     this.setCurrentPage('portal-login');
-                    this.renderCountries(countriesList, "portalRegisterCountry");
+                    this.renderSelect(countriesList, "portalRegisterCountry");
                     this.processPortalAlerts();
                     break;
                 case "restablecimiento":
@@ -89,18 +89,18 @@ $(function() {
                 document.documentElement.style.setProperty('--vw-mobile', `${this.vwMobile}px`);
             });
 
-            $('body').on('keypress', function(event) {
+            $('body').on('keypress', function (event) {
                 if (handler.pageView == 'diccionario' && event.keyCode == 13) {
                     handler.customizeSearch();
                 }
             });
 
-            $('#portalRegister').on("submit", function() {
+            $('#portalRegister').on("submit", function () {
                 $(this).ajaxSubmit({
-                    error: function(xhr) {
+                    error: function (xhr) {
                         status('Error: ' + xhr.status);
                     },
-                    success: function(response) {
+                    success: function (response) {
                         console.log(response);
                     }
                 });
@@ -108,23 +108,23 @@ $(function() {
                 return false;
             });
 
-            $('#portalRegisterPassword, #portalRegisterPasswordRepeat').on('input', function() {
+            $('#portalRegisterPassword, #portalRegisterPasswordRepeat').on('input', function () {
                 handler.compareInputs($('#portalRegisterPassword'), $('#portalRegisterPasswordRepeat'), $('#passwordStatus'), $('#portalRegisterSubmit'));
             });
 
-            $('#portalChangePassword, #portalChangePasswordRepeat').on('input', function() {
+            $('#portalChangePassword, #portalChangePasswordRepeat').on('input', function () {
                 handler.compareInputs($('#portalChangePassword'), $('#portalChangePasswordRepeat'), $('#passwordChangeStatus'), $('#portalChangePasswordSubmit'));
             });
 
-            $("#portalLogoutLabel").on('click', function() {
+            $("#portalLogoutLabel").on('click', function () {
                 $("#portalLogoutButton").click();
             });
 
-            $(".portal-navbar-button").on("click", function() {
+            $(".portal-navbar-button").on("click", function () {
                 handler.togglePortalSection($(this));
             });
 
-            $('.recovery-link').on('click', function() {
+            $('#portalRecoveryLink').on('click', function () {
                 if ($(this).hasClass('link-selected')) {
                     handler.toggleForms('.portal-recovery', '#portalStart', '.recovery-link');
                 } else {
@@ -132,52 +132,64 @@ $(function() {
                 }
             });
 
-            $("#portalProfilePicture").on("input", function() {
+            $("#portalProfilePicture").on("input", function () {
                 handler.reloadProfilePicture();
             });
 
-            $("#portalIdentityPicture").on("error", function() {
+            $("#portalIdentityPicture").on("error", function () {
                 handler.handleProfilePictureError();
             });
 
-            $("#portalIDCardPicture").on("error", function() {
+            $("#portalIDCardPicture").on("error", function () {
                 $(this).attr("src", "/client/img/profile-pic.jpg");
             });
 
-            $("#portalIDDownload").on("click", function() {
+            $("#portalIDDownload").on("click", function () {
                 handler.downloadID();
             });
 
-            $('#titleDiv').on('click', function() {
+            $('#portalWalletInstructions').on('click', function () {
+                if ($(this).hasClass('link-selected')) {
+                    handler.toggleForms('#portalWalletFalse', '', '.recovery-link');
+                } else {
+                    handler.toggleForms('', '#portalWalletFalse', '.recovery-link');
+                }
+            });
+
+            $("#portalLinkWallet").on("click", function () {
+                handler.linkAddress();
+            });
+
+            $('#titleDiv').on('click', function () {
                 window.location = '/'
             });
 
-            $('#searchButton').on('click', function() {
+            $('#searchButton').on('click', function () {
                 handler.customizeSearch();
             });
 
-            $('#configMenuTitle label').on('click', function() {
+            $('#configMenuTitle label').on('click', function () {
                 let arrow = $('#configMenuTitle label:eq(1)');
 
                 arrow.text(arrow.text() === '◀' ? '▼' : '◀');
                 $('#configMenu').slideToggle(200);
             });
 
-            $('.special-character').on('click', function() {
+            $('.special-character').on('click', function () {
                 $('#wordSearch').val($('#wordSearch').val() + $(this).text());
             });
 
-            $('nav').on('click', '.config-radio', function() {
+            $('nav').on('click', '.config-radio', function () {
                 handler.saveConfig($(this).attr("name"), $(this).val());
             });
 
-            $('nav').on('click', ".nav-section", function() {
+            $('nav').on('click', ".nav-section", function () {
                 if (window.innerWidth < 659) {
                     handler.toggleMobileNav($(this).attr('id').slice(8));
                 }
             });
 
-            $('nav').on('click', ".nav-link", function() {
+            $('nav').on('click', ".nav-link", function () {
                 let view = $(this).attr('id').slice(4);
 
                 if (view === "listado") {
@@ -187,42 +199,42 @@ $(function() {
                 }
             });
 
-            $('section').on('click', '.error-alert-close, .success-alert-close', function() {
+            $('section').on('click', '.error-alert-close, .success-alert-close', function () {
                 let that = this;
                 $(this).parent('.error-alert, .success-alert').fadeOut(350);
-                setTimeout(function() {
+                setTimeout(function () {
                     $(that).parent('.error-alert, .success-alert').remove();
                 }, 351);
             });
 
-            $('.data-index-link').on('mouseenter', function() {
+            $('.data-index-link').on('mouseenter', function () {
                 handler.hoverIndexLink($(this), 'red');
             });
 
-            $('.data-index-link').on('mouseleave', function() {
+            $('.data-index-link').on('mouseleave', function () {
                 handler.hoverIndexLink($(this), 'black');
             });
 
-            $('#searchResult').on('click', '.favorite-icon', function() {
+            $('#searchResult').on('click', '.favorite-icon', function () {
                 handler.toggleFavorite($(this).closest('.searched-word').attr('id').slice(5), $(this).siblings('.word-name').text(), 'word');
             });
 
-            $('#favoritesListing').on('click', '.favorite-icon', function() {
+            $('#favoritesListing').on('click', '.favorite-icon', function () {
                 handler.toggleFavorite($(this).closest('.favorite-entry').attr('id').slice(9), $(this).siblings('.favorite-title').text(), 'favorite');
             });
 
-            $('.letter-listing').on('click', function() {
+            $('.letter-listing').on('click', function () {
                 let letter = $(this).attr("id").slice(7);
                 window.location = `/listado/${letter}?listing=${handler.listingParam}`;
             });
 
-            $('.listing-view').on('change', function() {
+            $('.listing-view').on('change', function () {
                 var searchParams = new URLSearchParams(window.location.search);
                 searchParams.set("listing", $(this).val());
                 window.location.search = searchParams.toString();
             });
 
-            $('.tab-btn').on('click', function() {
+            $('.tab-btn').on('click', function () {
                 switch ($(this).index()) {
                     case 0:
                         window.location = `/listado/a?listing=tree`;
@@ -238,47 +250,47 @@ $(function() {
                 }
             });
 
-            $('#wordListing').on('click', '.root-tree-title', function() {
+            $('#wordListing').on('click', '.root-tree-title', function () {
                 $(this).closest('.root-tree').find('.root-word-title').toggle(200, 'linear');
                 $(this).closest('.root-tree').find('.child-word').toggle(200, 'linear');
                 $(this).closest('.root-tree').find('.composed-word').toggle(200, 'linear');
             });
 
-            $('#guidesScreen').on('click', '.root-tree-title.guide', function() {
+            $('#guidesScreen').on('click', '.root-tree-title.guide', function () {
                 $(this).closest('.root-tree').find('.guide-container').toggle(200, 'linear');
             });
 
-            $('section').on('mouseenter', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
+            $('section').on('mouseenter', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function () {
                 let configStorage = JSON.parse(localStorage.getItem('config'));
                 if (configStorage.tooltip == 'true') {
                     handler.loadTooltip($(this).position(), $(this).css('width'), $(this).css('height'), $(this).html(), 'document');
                 }
             });
 
-            $('section').on('mouseleave', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function() {
+            $('section').on('mouseleave', '.root-word-title label, .child-word label, .composed-word label, .listed-word', function () {
                 $('#tooltipArrow').hide();
                 $('#wordTooltip').hide();
             });
 
-            $('.guide-polygon').on('mouseenter', function() {
+            $('.guide-polygon').on('mouseenter', function () {
                 handler.loadTooltip($(this).position(), $(this).css('width'), $(this).css('height'), $(this).attr('guide-word'), $(this).closest('.guide-container').attr('id'));
             });
 
-            $('.guide-polygon').on('mouseleave', function() {
+            $('.guide-polygon').on('mouseleave', function () {
                 $('#tooltipArrow').hide();
                 $('#wordTooltip').hide();
             });
 
-            $("#listingStats").on("click", ".category-clickable", function() {
+            $("#listingStats").on("click", ".category-clickable", function () {
                 let parent = $(this).attr("id").slice(9);
                 handler.displaySearchStats(dictionary, "subtype", parent);
             });
 
-            $("#listingStats").on("click", ".category-back-button", function() {
+            $("#listingStats").on("click", ".category-back-button", function () {
                 handler.displaySearchStats(dictionary, "type", "Palabra", true);
             });
 
-            $("#listingStats").on("mouseenter", ".category-clickable", function() {
+            $("#listingStats").on("mouseenter", ".category-clickable", function () {
                 $(this).css({
                     "background-color": "black",
                     "color": "white"
@@ -287,7 +299,7 @@ $(function() {
                 $(this).children(".colorer").css("display", "none");
             });
 
-            $("#listingStats").on("mouseleave", ".category-clickable", function() {
+            $("#listingStats").on("mouseleave", ".category-clickable", function () {
                 $(this).css({
                     "background-color": "white",
                     "color": "black"
@@ -302,7 +314,7 @@ $(function() {
             if (window.innerWidth >= 660) {
                 $('#wordTooltip').html('');
                 let cleanedName = name.replace(/<\/?[^>]+(>|$)/g, "");
-                let retrievedWord = dictionary.find(function(word) {
+                let retrievedWord = dictionary.find(function (word) {
                     return word.word_name.toLowerCase() === cleanedName.toLowerCase();
                 });
 
@@ -332,7 +344,7 @@ $(function() {
                     });
                 } else {
                     let tooltipWidth = $('#wordTooltip').width();
-                        
+
                     $('#wordTooltip').css({
                         'left': `calc(${position.left}px - ${tooltipWidth}px + 12px)`,
                         'margin-right': `calc(${width})`
@@ -422,7 +434,7 @@ $(function() {
             else if ($('.language:eq(1)').is(':checked')) { language = 'esp' }
 
             if ($('#perfect-match').is(':checked')) { limit = 1 }
-            else { limit = 0 }dictionary
+            else { limit = 0 } dictionary
 
             this.searchWord($('#wordSearch').val(), language, limit);
         }
@@ -436,14 +448,14 @@ $(function() {
         getSearchValues(dictionary, category, parent) {
             function makeUnique(array) {
                 var seen = {};
-                return array.filter(function(item) {
+                return array.filter(function (item) {
                     return seen.hasOwnProperty(item) ? false : (seen[item] = true);
                 });
             }
 
             let values = [];
 
-            dictionary.forEach(function(word) {
+            dictionary.forEach(function (word) {
                 for (let i = 1; i <= 5; i++) {
                     let currentValue = word[`word_${category}${i}`];
                     let capitalizedValue = currentValue.charAt(0).toUpperCase() + currentValue.slice(1);
@@ -461,7 +473,7 @@ $(function() {
                             if (currentValue != "" && capitalizedParent.includes(parent)) {
                                 if (capitalizedValue.includes(",")) {
                                     let splittedSubtypes = capitalizedValue.split(", ");
-    
+
                                     for (let j = 0; j < splittedSubtypes.length; j++) {
                                         values.push(splittedSubtypes[j].charAt(0).toUpperCase() + splittedSubtypes[j].slice(1));
                                     }
@@ -483,7 +495,7 @@ $(function() {
         countSearchStats(dictionary, category, value, parent) {
             let counter = 0;
 
-            dictionary.forEach(function(word) {
+            dictionary.forEach(function (word) {
                 for (let i = 1; i <= 5; i++) {
                     let currentValue = word[`word_${category}${i}`];
                     let capitalizedValue = currentValue.charAt(0).toUpperCase() + currentValue.slice(1);
@@ -499,7 +511,7 @@ $(function() {
                         case "subtype":
                             if (capitalizedValue.includes(",")) {
                                 let splittedSubtypes = capitalizedValue.split(", ");
-    
+
                                 for (let j = 0; j < splittedSubtypes.length; j++) {
                                     let capitalizedSplitted = splittedSubtypes[j].charAt(0).toUpperCase() + splittedSubtypes[j].slice(1);
 
@@ -519,7 +531,7 @@ $(function() {
                 }
             });
 
-           return counter;
+            return counter;
         }
 
         //Agrega una entrada visual de estadísticas.
@@ -544,9 +556,9 @@ $(function() {
 
             this.appendEntry(["header", "header", "header"], "Tipo", "Cantidad", "Porcentaje");
             this.appendEntry(["title", "value", "percentage"], parent, totalWords, "100.00%");
-            $(`#category-${parent} .colorer`).css({"width": "100%", "border-bottom": "2px solid black"});
+            $(`#category-${parent} .colorer`).css({ "width": "100%", "border-bottom": "2px solid black" });
 
-            valuesArray.forEach(function(value) {
+            valuesArray.forEach(function (value) {
                 let countOp = this.countSearchStats(dictionary, category, value, parent);
                 let percentage = ((countOp * 100) / totalWords).toFixed(2) + "%";
 
@@ -598,10 +610,17 @@ $(function() {
             $('.portal-section').hide();
             $(`.portal-section:eq(${sectionButton.index()})`).show();
 
+            //Muestra u oculta la barra inferior según botón.
+            $('.results-bar').hide();
+            if (sectionButton.index() === 5) {
+                $('.results-bar').show();
+            }
+
             //Cambia el valor del título de la tab (móvil).
             $("#portalNavbarTitle").text(sectionButton.children(".portal-navbar-label").text());
         }
 
+        //Cambiar la interfaz según las dimensiones de la pantalla.
         toggleMobileNav(sectionId) {
             if ($("nav").children(`.nav-${sectionId}`).length == 0) {
                 $("nav").children(".nav-mobile").remove();
@@ -640,7 +659,7 @@ $(function() {
                         "opacity": "1",
                         "pointer-events": "all"
                     });
-                    
+
                     $("nav").children(".nav-mobile").remove();
                 }, 301);
             }
@@ -673,7 +692,7 @@ $(function() {
                     break;
             }
 
-            $(`#${parent}-${wordID}`).find('.favorite-icon').fadeOut(100, function() {
+            $(`#${parent}-${wordID}`).find('.favorite-icon').fadeOut(100, function () {
                 $(this).attr('src', `/client/img/${favoriteIcon}.png`);
                 $(this).fadeIn(100);
             });
@@ -686,7 +705,7 @@ $(function() {
             let status = false;
             let favoritesStorage = JSON.parse(localStorage.getItem('favoritesStorage'));
 
-            favoritesStorage.forEach(function(favorite) {
+            favoritesStorage.forEach(function (favorite) {
                 if (favorite.id == wordID) {
                     status = true;
                     return;
@@ -701,7 +720,7 @@ $(function() {
             let favoritesStorage = JSON.parse(localStorage.getItem('favoritesStorage'));
 
             if (favoritesStorage.length > 0) {
-                favoritesStorage.forEach(function(fav) {
+                favoritesStorage.forEach(function (fav) {
                     $('#favoritesListing').append(`
                         <div id="favorite-${fav.id}" class="favorite-entry">
                             <img class="favorite-icon" src="/client/img/favorite.png" alt="fav">
@@ -718,16 +737,19 @@ $(function() {
 
         //Filtra el diccionario completo según letra de listado.
         filterDictionary(dictionary, initialLetter) {
+            let that = this;
+
             let filteredDictionary = dictionary.filter(function(current) {
-                return handler.normalizeText(current.word_name.charAt(0)) === initialLetter;
+                return that.normalizeText(current.word_name.charAt(0)) === initialLetter;
             });
 
             return filteredDictionary;
-        } 
+        }
 
         //Renderiza los resultados de la query.
         displayDictionary(dictionary, limit, container, displayDelay, fadeDuration) {
             let dictionaryLimit = limit;
+            let that = this;
 
             if (this.pageView === "diccionario") {
                 let searchLang = this.loadParam("lang");
@@ -737,11 +759,11 @@ $(function() {
 
                 if (searchLang === "bal" && dictionaryLimit === "0") {
                     filteredDictionary = dictionary.filter(function(current) {
-                        let cleanedWordName = handler.normalizeText(current.word_name);
+                        let cleanedWordName = that.normalizeText(current.word_name);
 
                         return cleanedWordName.includes(cleanedSearch);
                     });
-                    
+
                 } else if (searchLang === "bal" && dictionaryLimit === "1") {
                     filteredDictionary = dictionary.find(function(current) {
                         return current.word_name.toLowerCase() === lowercasedSearch;
@@ -750,31 +772,31 @@ $(function() {
                     if (filteredDictionary != undefined) {
                         filteredDictionary = [filteredDictionary];
                     }
-                    
+
                 } else if (searchLang === "esp" && dictionaryLimit === "0") {
-                    filteredDictionary = dictionary.filter(function(current) {
-                        let cleanedDefinition1 = handler.normalizeText(current.word_definition1);
-                        let cleanedDefinition2 = handler.normalizeText(current.word_definition2);
-                        let cleanedDefinition3 = handler.normalizeText(current.word_definition3);
-                        let cleanedDefinition4 = handler.normalizeText(current.word_definition4);
-                        let cleanedDefinition5 = handler.normalizeText(current.word_definition5);
+                    filteredDictionary = dictionary.filter(function (current) {
+                        let cleanedDefinition1 = that.normalizeText(current.word_definition1);
+                        let cleanedDefinition2 = that.normalizeText(current.word_definition2);
+                        let cleanedDefinition3 = that.normalizeText(current.word_definition3);
+                        let cleanedDefinition4 = that.normalizeText(current.word_definition4);
+                        let cleanedDefinition5 = that.normalizeText(current.word_definition5);
 
                         return cleanedDefinition1.includes(cleanedSearch) ||
-                               cleanedDefinition2.includes(cleanedSearch) ||
-                               cleanedDefinition3.includes(cleanedSearch) ||
-                               cleanedDefinition4.includes(cleanedSearch) ||
-                               cleanedDefinition5.includes(cleanedSearch);
+                            cleanedDefinition2.includes(cleanedSearch) ||
+                            cleanedDefinition3.includes(cleanedSearch) ||
+                            cleanedDefinition4.includes(cleanedSearch) ||
+                            cleanedDefinition5.includes(cleanedSearch);
                     });
 
                 } else if (searchLang === "esp" && dictionaryLimit === "1") {
-                    let 
-                    filteredDictionary = dictionary.find(function(current) {
-                        return current.word_definition1.toLowerCase() === lowercasedSearch ||
-                               current.word_definition2.toLowerCase() === lowercasedSearch ||
-                               current.word_definition3.toLowerCase() === lowercasedSearch ||
-                               current.word_definition4.toLowerCase() === lowercasedSearch ||
-                               current.word_definition5.toLowerCase() === lowercasedSearch;
-                    });
+                    let
+                        filteredDictionary = dictionary.find(function (current) {
+                            return current.word_definition1.toLowerCase() === lowercasedSearch ||
+                                current.word_definition2.toLowerCase() === lowercasedSearch ||
+                                current.word_definition3.toLowerCase() === lowercasedSearch ||
+                                current.word_definition4.toLowerCase() === lowercasedSearch ||
+                                current.word_definition5.toLowerCase() === lowercasedSearch;
+                        });
 
                     if (filteredDictionary != undefined) {
                         filteredDictionary = [filteredDictionary];
@@ -791,23 +813,23 @@ $(function() {
                     dictionaryLimit = dictionary.length;
                     dictionary.sort((a, b) => (a.word_name > b.word_name) ? 1 : -1);
                 }
-    
-                $("#foundWords").html("Resultados obtenidos: " + `<b>${dictionary.length}</b>`);
-    
+
+                $(".results-text").html("Resultados obtenidos: " + `<b>${dictionary.length}</b>`);
+
                 for (let i = 0; i < dictionaryLimit; i++) {
                     const word = dictionary[i];
-    
+
                     let concatType = '';
                     let concatSubtype = '(';
                     let concatMeaning = '';
                     let favoriteStatus = this.getFavoriteStatus(word.id) ? 'favorite' : 'non-favorite';
-    
+
                     for (let i = 1; i <= 5; i++) {
                         const currentType = word[`word_type${i}`];
                         const currentSubtype = word[`word_subtype${i}`];
                         const currentDefinition = word[`word_definition${i}`];
                         const currentExample = word[`word_example${i}`];
-    
+
                         if (currentType != "") {
                             (i > 1) ? concatType += ',&nbsp;' : '';
                             concatType += currentType;
@@ -824,9 +846,9 @@ $(function() {
                             concatMeaning += `<ul style='padding: 0;'><li class='word-example'>${currentExample}</li></ul>`;
                         }
                     }
-    
+
                     concatSubtype += ')';
-    
+
                     setTimeout(function() {
                         $(`
                             <div id="word-${word.id}" class='searched-word' style='display: none;'>
@@ -839,10 +861,13 @@ $(function() {
                                 <p class='word-description'>${word.word_description}</p>
                                 <hr style='border-top: 1px solid black;'>
                                 <p style='font-weight: bold;'>Acepciones:</p>
-                                <ol class='word-meanings'>${concatMeaning}</ol>
+                                <ol id='meanings-${word.id}' class='word-meanings'>${concatMeaning}</ol>
                             </div>
                         `).appendTo(`#${container}`).fadeIn(fadeDuration);
+
+                        that.styleDefinitions($(`#meanings-${word.id}`));
                     }, displayDelay);
+
                     displayDelay += fadeDuration;
                 }
             } else if (dictionary.length === 0) {
@@ -856,7 +881,7 @@ $(function() {
 
             switch (listing) {
                 case "list":
-                    dictionary.forEach(function(word) {
+                    dictionary.forEach(function (word) {
                         $('#wordListing').append(`
                             <label onclick='handler.searchWord("${word.word_name}", "bal", 1)' class='listed-word'>${word.word_name}</label>
                         `);
@@ -883,15 +908,15 @@ $(function() {
                         }
                     }
 
-                    dummyWords.forEach(function(dummy) {
+                    dummyWords.forEach(function (dummy) {
                         if (dummy.word_name.charAt(0) == dictionary[0].word_name.charAt(0)) {
                             dictionary.push(dummy);
                         }
                     });
 
-                    dictionary.sort((a,b) => (a.word_name > b.word_name) ? 1 : ((b.word_name > a.word_name) ? -1 : 0));
+                    dictionary.sort((a, b) => (a.word_name > b.word_name) ? 1 : ((b.word_name > a.word_name) ? -1 : 0));
 
-                    dictionary.forEach(function(word) {
+                    dictionary.forEach(function (word) {
                         let currentType = [];
                         let currentSubtype = [];
 
@@ -926,7 +951,7 @@ $(function() {
                                     </li>
                                 </ul>
                             `);
-                            $(`#root-${word.word_root}`).find('.root-amount').text(function(i, val) {
+                            $(`#root-${word.word_root}`).find('.root-amount').text(function (i, val) {
                                 return parseInt(val) + 1;
                             });
 
@@ -937,7 +962,7 @@ $(function() {
                                     <label onclick='handler.searchWord("${word.word_name}", "bal", 1)'>${word.word_name}</label>
                                 </li>
                             `);
-                            $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
+                            $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function (i, val) {
                                 return parseInt(val) + 1;
                             });
 
@@ -949,8 +974,8 @@ $(function() {
                                     <label onclick='handler.searchWord("${word.word_name}", "bal", 1)'>${word.word_name}</label>
                                 </li>
                             `);
-                            
-                            $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function(i, val) {
+
+                            $(`#word-${word.word_root}`).closest('.root-tree').find('.root-amount').text(function (i, val) {
                                 return parseInt(val) + 1;
                             });
 
@@ -963,7 +988,7 @@ $(function() {
                                     <label>${word.word_name}</label>
                                 </li>
                             `);
-                            $(`#root-${word.word_root}`).find('.root-amount').text(function(i, val) {
+                            $(`#root-${word.word_root}`).find('.root-amount').text(function (i, val) {
                                 return parseInt(val) + 1;
                             });
 
@@ -979,7 +1004,6 @@ $(function() {
                         }
                     });
 
-                    
                     break;
                 default:
                     break;
@@ -994,6 +1018,21 @@ $(function() {
             return dictionary[randomIndex].word_name;
         }
 
+        //Aplica estilo a la parte de las definiciones que es paratexto.
+        styleDefinitions(string) {
+            let paratextualPieces = [
+                "coloq.", "obs.", "tamb.", "equiv. a",
+                "relig.", "despect.", "cult.", "neo.",
+                "tec.", "vulg.", "ling.", "lit."
+            ];
+
+            paratextualPieces.forEach(function(current) {
+                string.html(
+                    string.html().replace(current, `<span class='definition-paratext'>${current}</span>`)
+                )
+            });
+        }
+
         //Actualizan la imagen de perfil del Portal, y si no funciona pone la default.
         reloadProfilePicture() {
             $("#portalIdentityPicture").attr("src", $("#portalProfilePicture").val());
@@ -1005,14 +1044,14 @@ $(function() {
         }
 
         //Carga los datos de usuario y los añade a la interfaz de Portal Ciudadano.
-        renderPortal(sessionInfo) {
+        async renderPortal(sessionInfo) {
             let citizenshipMessage;
             let genderMessage;
             let profileGender;
             let rankMessage;
             let spanishRankMessage;
 
-            //Inicio
+            //Inicio.
             $("#portalWelcomeTitle").html(`¡Le damos la bienvenida, <b>${sessionInfo.fullName}</b>!`);
             switch (sessionInfo.approvedCitizenship) {
                 case 0:
@@ -1067,13 +1106,74 @@ $(function() {
             $("#portalIDCardName").html(`Talwug: <span class="portal-id-value">${sessionInfo.fullName}</span>`);
             $("#portalIDCardGender").html(`Swejaeg: <span class="portal-id-value">${genderMessage}</span>`);
             let birthdate = new Date(sessionInfo.birthdate);
-            console.log(sessionInfo.birthdate)
             $("#portalIDCardBirthdate").html(`Wàjdaj: <span class="portal-id-value">${birthdate.getDate()}/${birthdate.getMonth() + 1}/${birthdate.getFullYear()}</span>`);
             $("#portalIDCardCountry").html(`Laedenug: <span class="portal-id-value">${sessionInfo.country}</span>`);
             $("#portalIDCardRank").html(`Status: <span class="portal-id-value">${rankMessage}</span>`);
             let finalId = sessionInfo.id.toString().slice(0, -1);
             let id0 = '0'.repeat(6 - finalId.length);
             $("#portalIDCardNumber").html(`#${id0}${parseInt(finalId + 1)}`);
+
+            //Monedero.
+            $("#portalWalletFalse").hide();
+            $("#portalWalletTrue").hide();
+            $("#portalWalletInstructions").hide();
+            $("#walletLinkFalse").hide();
+            $("#walletLinkTrue").hide();
+            $("#portalWalletFalse").attr("hidden", true);
+            $("#portalWalletTrue").attr("hidden", true);
+            $("#portalWalletInstructions").attr("hidden", true);
+            $("#walletLinkFalse").attr("hidden", true);
+            $("#walletLinkTrue").attr("hidden", true);
+
+            if (typeof window.ethereum !== 'undefined') {
+                if (window.ethereum.isMetaMask) {
+                    $("#portalWalletTrue").show();
+                    $("#portalWalletInstructions").show();
+
+                    let account = await this.getAddress();
+                    let net = await this.checkNet();
+
+                    if (sessionInfo.walletAddress == '') {
+                        $("#walletLinkFalse").show();
+                    } else if (sessionInfo.walletAddress.toLowerCase() != account.toLowerCase()) {
+                        $("#walletLinkFalse").show();
+                        return this.renderAlert("error", "#portalWalletSection", "La instancia de MetaMask no coincide con el monedero guardado para su cuenta de Portal Ciudadano. Puede vincular esta instancia de MetaMask para continuar.");
+                    } else if (net !== "goerli") {
+                        $("#portalWalletTrue").append("<p class='section-content centered-text no-margin'>Error al cargar la información.</p>")
+                        return this.renderAlert("error", "#portalWalletSection", "MetaMask no está operando en la red de pruebas Goerli. Cambie de red desde la aplicación y actualice la página.");
+                    } else {
+                        $("#walletLinkTrue").show();
+
+                        let currencyFormat = new Intl.NumberFormat("es-ES", { minimumFractionDigits: 0 });
+                        $("#portalWalletBalance").html(`<b>BK$ ${currencyFormat.format(await this.getBalance(account))}</b>`);
+                        $("#portalWalletAddress").html(`<b>Dirección de monedero:</b><br>${account}<br><a href='https://goerli.etherscan.io/address/${account}' target='_blank'>Ver en Etherscan (ofrece código QR)</a>`);
+                        $("#walletPaymentButton").on("click", function () {
+                            handler.sendPayment(account, $("#walletReceiverInput").val(), $("#walletAmountInput").val());
+                        });
+                    }
+                } else {
+                    $("#portalWalletFalse").show();
+                    return this.renderAlert("error", "#portalWalletSection", "Hay un monedero activo pero no es MetaMask, por favor instálelo o actívelo.");
+                }
+            } else {
+                $("#portalWalletFalse").show();
+                this.renderAlert("error", "#portalWalletSection", "Debe realizar acciones antes de poder usar esta funcionalidad.");
+            }
+
+            //Directorio.
+            users.forEach(function (current) {
+                let finalId = current.id.toString().slice(0, -1);
+                let id0 = '0'.repeat(6 - finalId.length);
+
+                $("#portalDirectory").append(`
+                    <div class="portal-directory-entry">
+                        <label class="portal-directory-label">${`#${id0}${parseInt(finalId + 1)}`}</label>
+                        <label class="portal-directory-label">${current.full_name}</label>
+                        <label class="portal-directory-label">${current.email}</label>
+                    </div>
+                `);
+            });
+            $(".results-text").html(`Ciudadanos digitales: <b>${users.length}</b>`);
         }
 
         //Renderiza un cartel de alerta según valor de query param.
@@ -1084,12 +1184,95 @@ $(function() {
                     <label class='${condition}-alert-close'>X</label>
                 </div>
             `);
-            $(`${sectionSelector} .${condition}-alert`).hide().fadeIn(350)
+            $(`${sectionSelector} .${condition}-alert`).hide().fadeIn(350);
         }
 
+        //Se conecta con MetaMask y guarda el monedero en PC.
+        async linkAddress() {
+            let accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            let account = accounts[0];
+
+            if (account != undefined) {
+                $("#portalLinkAddress").val(account);
+                $("#portalWalletTrue").submit();
+            }
+        }
+
+        //Verifica la red a la que está conectada MetaMask.
+        async checkNet() {
+            try {
+                return web3.eth.net.getNetworkType();
+            } catch (e) {
+                return false;
+            }
+        }
+
+        //Se conecta con Web3.
+        async getAddress() {
+            try {
+                await ethereum.request({ method: 'eth_requestAccounts' });
+                let accounts = await web3.eth.getAccounts();
+                return accounts[0];
+            } catch (e) {
+                return false;
+            }
+        }
+
+        //Emite un modelo de pago en coronas libraterrenses para MetaMask.
+        async sendPayment(sender, receiver, amount) {
+            let hexAmount = web3.utils.toHex(web3.utils.toWei(amount));
+            const abi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"}];
+            const tokenAddress = "0xb9049397072707b504b80025AD149b2E5eaD93e9";
+            let contract = new web3.eth.Contract(abi, tokenAddress);
+            let data = contract.transfer.getData(receiver, hexAmount).encodeABI();
+
+            ethereum.request({
+                method: 'eth_sendTransaction',
+                params: [
+                    {
+                        data: data,
+                        from: sender,
+                        to: receiver
+                    },
+                ],
+            })
+            .then(async function (txHash) {
+                let currencyFormat = new Intl.NumberFormat("es-ES", { minimumFractionDigits: 0 });
+                $("#portalWalletBalance").html(`<b>BK$ ${currencyFormat.format(await this.getBalance(account))}</b>`);
+                this.renderAlert("success", "#portalWalletSection", `Operación <a href='https://goerli.etherscan.io/tx/${txHash}' target='_blank'>${txHash}</a> realizada con éxito.`);
+            })
+            .catch((error) => this.renderAlert("error", "#portalWalletSection", `No se pudo procesar: ${error.message}`));
+        }
+
+        //Obtiene balance de coronas libraterrenses.
+        async getBalance(account) {
+            const tokenInst = new web3.eth.Contract([{
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "balance",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "type": "function"
+            }], '0xb9049397072707b504b80025AD149b2E5eaD93e9');
+            const balance = await tokenInst.methods.balanceOf(account).call();
+            const cleanBalance = web3.utils.fromWei(balance, "ether");
+            return cleanBalance;
+        }
+
+        //Descarga el documento de ciudadanía como imagen.
         downloadID() {
-            html2canvas(document.querySelector("#portalIDCard"), {useCORS: true}).then(canvas => {
-                canvas.toBlob(function(blob) {
+            html2canvas(document.querySelector("#portalIDCard"), { useCORS: true }).then(canvas => {
+                canvas.toBlob(function (blob) {
                     saveAs(blob, `ID${$("#portalIDCardNumber").text()}.png`);
                 });
             });
@@ -1135,19 +1318,20 @@ $(function() {
             if (this.loadParam('recovery') === 'success') { this.renderAlert("success", "section", "Se ha enviado un correo de cambio de contraseña exitosamente."); }
             if (this.loadParam('recovery') === 'true') { this.renderAlert("success", "section", "La contraseña fue actualizada exitosamente. Puede iniciar sesión."); }
             if (this.loadParam('profile') === 'updated') { this.renderAlert("success", "#portalIdentitySection", "La información personal fue actualizada exitosamente."); }
+            if (this.loadParam('wallet') === 'success') { this.renderAlert("success", "#portalWalletSection", `Vinculación exitosa con MetaMask.`); }
         }
 
         drawWorldMap() {
             var svgMapCountryNames = new svgMap({
                 targetElementID: 'svgMapCountryNames',
                 data: {
-                  data: {
-                    librishNaming: {
-                        color: '#88e067'
-                    }
-                  },
-                  applyData: 'librishNaming',
-                  values: worldMapValues
+                    data: {
+                        librishNaming: {
+                            color: '#88e067'
+                        }
+                    },
+                    applyData: 'librishNaming',
+                    values: worldMapValues
                 },
                 colorMin: '#E2E2E2',
                 colorMax: '#487a36',
@@ -1156,58 +1340,58 @@ $(function() {
                 thresholdMin: 0,
                 initialZoom: 1,
                 initialPan: {
-                  x: 0,
-                  y: 0
+                    x: 0,
+                    y: 0
                 },
                 mouseWheelZoomEnabled: true,
                 mouseWheelZoomWithKey: true,
                 onGetTooltip: function (tooltipDiv, countryID, countryValues) {
-                  // Geting the list of countries
-                  var countries = svgMapCountryNames.countries;
-    
-                  // Create tooltip content element
-                  var tooltipContentElement = document.createElement('div');
-                  tooltipContentElement.style.padding = '16px 24px';
-    
-                  // Fill content
-                  var innerHTML =
-                    '<div style="margin: 0 0 10px; text-align: center"><img src="https://cdn.jsdelivr.net/gh/hjnilsson/country-flags@latest/svg/{0}.svg" alt="" style="height: 40px; width: auto; border: 2px solid #eee"></div>'.replace(
-                      '{0}',
-                      countryID.toLowerCase()
-                    );
-    
-                  innerHTML +=
-                    '<div style="min-width: 180px; font-weight: bold; margin: 0 0 15px; text-align: center">' +
-                    countries[countryID] +
-                    '</div>';
-    
-                  if (countryValues && countryValues.librishNaming == 1) {
-                    innerHTML +=
-                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Nomenclatura compuesta libraterrense</div>';
-                  } else {
-                    innerHTML +=
-                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Nomenclatura compuesta libraterrense</div>';
-                  }
-                  
-                  if (countryValues && countryValues.librishGrammar == 1) {
-                    innerHTML +=
-                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Gramática nativa libraterrense</div>';
-                  } else {
-                    innerHTML +=
-                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Gramática nativa libraterrense</div>';
-                  }
+                    // Geting the list of countries
+                    var countries = svgMapCountryNames.countries;
 
-                  if (countryValues && countryValues.librishVocabulary == 1) {
+                    // Create tooltip content element
+                    var tooltipContentElement = document.createElement('div');
+                    tooltipContentElement.style.padding = '16px 24px';
+
+                    // Fill content
+                    var innerHTML =
+                        '<div style="margin: 0 0 10px; text-align: center"><img src="https://cdn.jsdelivr.net/gh/hjnilsson/country-flags@latest/svg/{0}.svg" alt="" style="height: 40px; width: auto; border: 2px solid #eee"></div>'.replace(
+                            '{0}',
+                            countryID.toLowerCase()
+                        );
+
                     innerHTML +=
-                      '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Vocabulario nativo libraterrense</div>';
-                  } else {
-                    innerHTML +=
-                      '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Vocabulario nativo libraterrense</div>';
-                  }
-    
-                  // Return element with custom content
-                  tooltipContentElement.innerHTML = innerHTML;
-                  return tooltipContentElement;
+                        '<div style="min-width: 180px; font-weight: bold; margin: 0 0 15px; text-align: center">' +
+                        countries[countryID] +
+                        '</div>';
+
+                    if (countryValues && countryValues.librishNaming == 1) {
+                        innerHTML +=
+                            '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Nomenclatura compuesta libraterrense</div>';
+                    } else {
+                        innerHTML +=
+                            '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Nomenclatura compuesta libraterrense</div>';
+                    }
+
+                    if (countryValues && countryValues.librishGrammar == 1) {
+                        innerHTML +=
+                            '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Gramática nativa libraterrense</div>';
+                    } else {
+                        innerHTML +=
+                            '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Gramática nativa libraterrense</div>';
+                    }
+
+                    if (countryValues && countryValues.librishVocabulary == 1) {
+                        innerHTML +=
+                            '<div style="margin-bottom: 8px"><span style="color: #6d0; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✔</span>Vocabulario nativo libraterrense</div>';
+                    } else {
+                        innerHTML +=
+                            '<div style="margin-bottom: 8px; color: #aaa"><span style="color: #f03; display: inline-block; margin-right: 4px; width: 20px; text-align: center">✘</span>Vocabulario nativo libraterrense</div>';
+                    }
+
+                    // Return element with custom content
+                    tooltipContentElement.innerHTML = innerHTML;
+                    return tooltipContentElement;
                 }
             });
         }
@@ -1221,8 +1405,8 @@ $(function() {
             return `${year}-${month}-${day}`;
         }
 
-        renderCountries(array, selectID) {
-            array.forEach(function(current) {
+        renderSelect(array, selectID) {
+            array.forEach(function (current) {
                 $(`#${selectID}`).append(`
                     <option>${current}</option>
                 `);
@@ -1230,8 +1414,12 @@ $(function() {
         }
 
         curateCookie(cookieName) {
-            let cookie = $.cookie(cookieName);
-            return $.parseJSON(cookie.slice(2));
+            try {
+                let cookie = $.cookie(cookieName);
+                return $.parseJSON(cookie.slice(2));
+            } catch {
+                return "";
+            }
         }
 
         setCurrentPage(page) {
@@ -1277,29 +1465,29 @@ $(function() {
             let strToEntities = string;
             let characters = [
                 //Tildes graves
-                {char:"%C3%A0", entity:"&agrave"}, {char:"%C3%80", entity:"&Agrave"},
-                {char:"%C3%A8", entity:"&egrave"}, {char:"%C3%88", entity:"&Egrave"},
-                {char:"%C3%B2", entity:"&ograve"}, {char:"%C3%92", entity:"&Ograve"},
-                {char:"%C3%B9", entity:"&ugrave"}, {char:"%C3%99", entity:"&Ugrave"},
-                
+                { char: "%C3%A0", entity: "&agrave" }, { char: "%C3%80", entity: "&Agrave" },
+                { char: "%C3%A8", entity: "&egrave" }, { char: "%C3%88", entity: "&Egrave" },
+                { char: "%C3%B2", entity: "&ograve" }, { char: "%C3%92", entity: "&Ograve" },
+                { char: "%C3%B9", entity: "&ugrave" }, { char: "%C3%99", entity: "&Ugrave" },
+
                 //Diéresis
-                {char:"%C3%A4", entity:"&auml"}, {char:"%C3%84", entity:"&Auml"},
-                {char:"%C3%AB", entity:"&euml"}, {char:"%C3%8B", entity:"&Euml"},
-                {char:"%C3%B6", entity:"&ouml"}, {char:"%C3%96", entity:"&Ouml"},
-                {char:"%C3%BC", entity:"&uuml"}, {char:"%C3%9C", entity:"&Uuml"},
+                { char: "%C3%A4", entity: "&auml" }, { char: "%C3%84", entity: "&Auml" },
+                { char: "%C3%AB", entity: "&euml" }, { char: "%C3%8B", entity: "&Euml" },
+                { char: "%C3%B6", entity: "&ouml" }, { char: "%C3%96", entity: "&Ouml" },
+                { char: "%C3%BC", entity: "&uuml" }, { char: "%C3%9C", entity: "&Uuml" },
 
                 //I
-                {char:"%C4%B5", entity:"&jcirc;"}, {char:"%C4%B4", entity:"&Jcirc;"},
+                { char: "%C4%B5", entity: "&jcirc;" }, { char: "%C4%B4", entity: "&Jcirc;" },
                 //O
-                {char:"%C3%B8", entity:"&oslash"}, {char:"%C3%98", entity:"&Oslash"},
+                { char: "%C3%B8", entity: "&oslash" }, { char: "%C3%98", entity: "&Oslash" },
                 //Espacio
-                {char:"%20", entity:"&nbsp;"}
+                { char: "%20", entity: "&nbsp;" }
             ]
 
             for (let i = 0; i < characters.length; i++) {
                 const element = characters[i];
                 let replaceVal = new RegExp(element.char, "g");
-                
+
                 strToEntities = strToEntities.replace(replaceVal, element.entity);
             }
 
@@ -1308,7 +1496,7 @@ $(function() {
 
         decodeEntities(string) {
             let txt = document.createElement("textarea");
-            
+
             txt.innerHTML = this.convertCharactersToEntities(string);
             return txt.value;
         }
@@ -1316,4 +1504,5 @@ $(function() {
 
     handler = new Handler();
     handler.initialize(handler);
+    web3 = new Web3(window.ethereum);
 });

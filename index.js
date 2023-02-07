@@ -1,4 +1,5 @@
 //Requerimientos.
+require('dotenv').config({path:'./values.env'});
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const http = require('http');
@@ -16,11 +17,10 @@ const cookieParser = require('cookie-parser');
 const uuid = require('node-uuid');
 
 //Variables globales.
-const officialEmail = "balanlaedenug@gmail.com";
+const envVars = require('./server/environment-variables');
 
 //Express.
 const app = express();
-const port = 3000;
 
 //CookieParser.
 app.use(cookieParser());
@@ -32,6 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //Controller, cargar el diccionario indistintamente de la ruta.
 const connection = mysql.createConnection(db_config);
 var dictionary;
+var users;
 handleDisconnect();
 
 //Mantiene viva la conexión con la DB.
@@ -66,8 +67,8 @@ app.set('view engine', 'ejs');
 const transporter = nodemailer.createTransport({
     service: 'hotmail',
     auth: {
-        user: process.env.NODEMAILER_EMAIL,
-        pass: process.env.NODEMAILER_PASSWORD
+        user: envVars.nodemailerEmail,
+        pass: envVars.nodemailerPassword
     },
     tls: {
         rejectUnauthorized: false
@@ -109,6 +110,7 @@ app.get('/portal-principal', function (req, res) {
         res.render('portal-principal', {
             title: `Gërteg tjl Balanlàedenug - Portal Ciudadano`,
             retrievedResults: dictionary,
+            retrievedUsers: users
         });
     } else {
         //Sin sesión iniciada.
@@ -120,7 +122,7 @@ app.get('/verificar/:token', (req, res) => {
     const { token } = req.params;
 
     //Verificación del JWT token.
-    jwt.verify(token, process.env.JWT_KEY, function (err, decoded) {
+    jwt.verify(token, envVars.jwtKey, function (err, decoded) {
         if (err) {
             console.log(err);
             res.redirect('/portal-login?verify=false');
@@ -146,7 +148,7 @@ app.post('/restablecer/:token', (req, res) => {
     const { token } = req.params;
 
     //Verificación del JWT token.
-    jwt.verify(token, process.env.JWT_KEY, function (err, decoded) {
+    jwt.verify(token, envVars.jwtKey, function (err, decoded) {
         if (err) {
             console.log(err);
             res.redirect('/portal-login?verify=false');
@@ -232,7 +234,7 @@ app.post('/registrar', function (req, res) {
     }
 
     // Put your secret key here.
-    var secretKey = process.env.RECAPTCHA_SECRET;
+    var secretKey = envVars.recaptchaSecret;
     // req.connection.remoteAddress will provide IP address of connected user.
     var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
 
@@ -266,9 +268,7 @@ app.post('/registrar', function (req, res) {
                 return res.redirect('/portal-registro?database=error');
             } else {
                 //Si sale todo bien, envía el email de verificación.
-                sendEmail(email, fullname, "register");
-                //FIXME: Avisa a Balanlàedenug (error al enviarse más de un email).
-                // sendEmail(officialEmail, email, "officialEmail-register");
+                sendEmail([ email, envVars.officialEmail ], fullname, "register");
 
                 return res.redirect('/portal-login?register=success');
             }
@@ -284,7 +284,7 @@ app.post('/recuperar', function (req, res) {
     }
 
     // Put your secret key here.
-    var secretKey = process.env.RECAPTCHA_SECRET;
+    var secretKey = envVars.recaptchaSecret;
     // req.connection.remoteAddress will provide IP address of connected user.
     var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
 
@@ -373,15 +373,52 @@ app.post('/actualizar-perfil', function (req, res) {
     });
 });
 
+app.post('/vincular-monedero', function (req, res) {
+    let email = req.session.email;
+    let walletAddress = req.body.walletAddress;
+
+    let editQuery = `
+        UPDATE heroku_bf7cb810553a372.users 
+        SET 
+            wallet_address = ?
+        WHERE
+            email = ?;
+    `;
+
+    connection.query(editQuery, [walletAddress, email], function (error, results, fields) {
+        if (error) throw error;
+    });
+
+    connection.query('SELECT * FROM heroku_bf7cb810553a372.users WHERE email = ?;', [email], function (error, results, fields) {
+        if (error) throw error;
+
+        return res.cookie("PortalCiudadano", {
+            id: results[0].id,
+            email: req.session.email,
+            fullName: results[0].full_name,
+            gender: results[0].gender,
+            country: results[0].country,
+            birthdate: results[0].birthdate,
+            verifiedEmail: results[0].verified_email,
+            approvedCitizenship: results[0].approved_citizenship,
+            rank: results[0].rank,
+            walletAddress: results[0].wallet_address,
+            profileImage: results[0].profile_image,
+            twitterUser: results[0].twitter_user,
+            discordUser: results[0].discord_user
+        }).redirect('/portal-principal?wallet=success&tab=3');
+    });
+});
+
 //Agregado de process.env.PORT para Heroku.
-app.listen(process.env.PORT || port, () => {
-    console.log(`Now listening on port ${port}`);
+app.listen(envVars.port, () => {
+    console.log(`Now listening on port ${envVars.port}`);
 });
 
 //Funciones
 function sendEmail(email, fullname, option) {
     const token = jwt.sign(
-        { 'email': email }, process.env.JWT_KEY, { expiresIn: '15m' }
+        { 'email': email }, envVars.jwtKey, { expiresIn: '15m' }
     );
     let emailText;
     let emailSubject;
@@ -405,7 +442,7 @@ function sendEmail(email, fullname, option) {
     }
 
     const mailSettings = {
-        from: process.env.NODEMAILER_EMAIL,
+        from: envVars.nodemailerEmail,
         to: email,
         subject: emailSubject,
         text: emailText
@@ -432,12 +469,20 @@ function handleDisconnect() {
                     return dictionary = JSON.stringify(result);
                 }
             });
+
+            connection.query("SELECT * FROM heroku_bf7cb810553a372.users;", function (error, result) {
+                if (error) {
+                    return console.log("Error while loading dictionary: " + error.message);
+                } else {
+                    return users = JSON.stringify(result);
+                }
+            });
         }
     });
-    
+
     connection.on('error', function(err) {
         console.log(err);
-        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        if (err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR') {
             handleDisconnect();
         } else {
             throw err;

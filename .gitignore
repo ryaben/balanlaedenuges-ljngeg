@@ -6,3 +6,4 @@ npm-debug.log
 .history
 package-lock.json
 ./package-lock.json
+values.env

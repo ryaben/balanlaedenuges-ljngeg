@@ -23,7 +23,7 @@ body {
     font-size: 0.95em;
     height: 100%;
     overflow: hidden;
-    min-width: 400px;
+    min-width: 360px;
 }
 
 button, input, select {
@@ -196,6 +196,11 @@ footer a img {
 .word-meaning {
     margin: 12px auto 5px auto;
     padding-left: 4px;
+}
+
+.definition-paratext {
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .word-example {
@@ -494,6 +499,10 @@ li.word-meaning::marker {
 .section-content {
     font-size: 1.1em;
     text-align: justify;
+} .section-content.no-margin {
+    margin: 0;
+} .section-content.centered-text {
+    text-align: center;
 }
 
 .section-title {
@@ -781,6 +790,8 @@ li.word-meaning::marker {
 } .portal-form.wide {
     width: auto;
     max-width: none;
+} .portal-form.top {
+    margin-top: 0;
 }
 
 .portal-form input:not([type=submit]), .portal-form select {
@@ -866,6 +877,10 @@ li.word-meaning::marker {
     font-size: 14.5px;
     font-weight: bold;
     margin: 0;
+} .portal-link.margin-bottom {
+    margin-bottom: 10px;
+} .portal-link.centered {
+    text-align: center;
 }
 
 .recovery-link {
@@ -885,6 +900,9 @@ li.word-meaning::marker {
     border: 2px outset red;
     width: 100%;
     margin: 6px auto 12px auto;
+} .form-divider.special-margin {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 #passwordStatus, #passwordChangeStatus {
@@ -971,25 +989,27 @@ li.word-meaning::marker {
     overflow-y: auto;
     padding: 15px;
     height: 100%;
-}
+} 
 
 .portal-section.main .success-alert,
 .portal-section.main .error-alert {
     margin-top: 0;
 }
 
-#portalWelcomeTitle {
+.portal-title {
     font-size: 20px;
     text-align: center;
     margin: 0px;
+} .portal-title.smaller {
+    font-size: 16px;
+} .portal-title.larger {
+    font-size: 24px;
+} .portal-title.red {
+    color: red;
 }
 
 #portalProfile, #portalID {
     position: relative;
-}
-
-#portalIdentitySection .portal-form {
-    margin-top: 0;
 }
 
 #portalProfilePictureContainer {
@@ -1130,6 +1150,96 @@ li.word-meaning::marker {
 
 .portal-id-value {
     color: red;
+}
+
+#walletInstalationDescription {
+    margin-bottom: 20px;
+}
+
+.portal-steps-list {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 20px;
+    font-size: 16px;
+}
+
+.portal-steps-list li {
+    margin-bottom: 10px;
+}
+
+.wallet-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#portalLinkAddress {
+    display: none;
+    pointer-events: none;
+}
+
+#portalWalletBalance {
+    margin-bottom: 15px;
+}
+
+#walletPaymentContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wallet-subcontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+
+#walletPaymentButton {
+    width: 30%;
+    margin: 0;
+}
+
+#portalDirectory {
+    height: auto;
+}
+
+.portal-directory-entry {
+    display: flex;
+    justify-content: flex-start;
+    background-color: white;
+    color: black;
+    border-bottom: 1px dashed red;
+    border-radius: 0px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: ease-in 0.15s;
+    padding: 2px;
+    margin-bottom: 4px;
+}
+
+.portal-directory-entry:last-of-type {
+    margin-bottom: 0;
+}
+
+.portal-directory-entry label {
+    cursor: pointer;
+    width: 44%;
+}
+
+.portal-directory-entry label:first-of-type {
+    width: fit-content;
+    padding-right: 5px;
+    margin-right: 5px;
+    border-right: 1px solid black;
+}
+
+.portal-directory-entry:hover {
+    background-color: red;
+    color: white;
+    border-radius: 4px;
+}
+
+.portal-directory-label {
+    font-size: 15px;
 }
 
 .form-button {
@@ -1294,7 +1404,7 @@ li.word-meaning::marker {
     justify-content: space-between;
 }
 
-#resultStats {
+.results-bar {
     display: flex;
     align-items: center;
     background-color: lightgrey;
@@ -1305,7 +1415,8 @@ li.word-meaning::marker {
     border-bottom-left-radius: 6px;
 }
 
-#foundWords {
+.results-text {
+    font-size: 15px;
     margin: 0px;
 }
 
