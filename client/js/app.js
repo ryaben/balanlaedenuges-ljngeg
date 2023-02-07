@@ -1023,7 +1023,8 @@ $(function () {
             let paratextualPieces = [
                 "coloq.", "obs.", "tamb.", "equiv. a",
                 "relig.", "despect.", "cult.", "neo.",
-                "tec.", "vulg.", "ling.", "lit."
+                "tec.", "vulg.", "ling.", "lit.",
+                "voz ingl."
             ];
 
             paratextualPieces.forEach(function(current) {

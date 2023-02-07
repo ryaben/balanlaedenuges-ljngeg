@@ -1396,6 +1396,12 @@ VALUES
 ("común","","","",""),
 ("compuesto","","","",""),
 ("relacional","","","",""),
-("compuesto, extranjerismo, exceptuado","","","","");
+("compuesto, extranjerismo, exceptuado","","","",""),
+("calificativo","","","",""),
+("exceptuado","","","",""),
+("común","","","",""),
+("calificativo","","","",""),
+("invertido","","","",""),
+("ampliado","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`subtype`;

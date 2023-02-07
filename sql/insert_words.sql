@@ -1396,11 +1396,17 @@ VALUES
 ("Lënkug", "Palabra originante tradicional", "Lënk"),
 ("Jagegaflènkug", "De 'Jagegaf' y 'Lënkug', lit. 'Fruto sin agua'", "Jag"),
 ("Lënkuges", "Lit. 'Relativo a fruta'", "Lënkug"),
-("Kälakonpjùter", "De 'Kälaeg' y 'Konpjùter', lit. 'Computadora con movimiento'", "Käla");
+("Kälakonpjùter", "De 'Kälaeg' y 'Konpjùter', lit. 'Computadora con movimiento'", "Käla"),
+("Wjwjtajes", "Lit. 'Relativo a sal'", "Wjwjtaj"),
+("Drjn", "Palabra originante tradicional", "Drjn"),
+("Drjnug", "Palabra originante tradicional", "Drjn"),
+("Drjnuges", "Lit. 'Relativo a acierto'", "Drjnug"),
+("Drjnugaf", "Lit. 'Sin acierto'", "Drjnug"),
+("Drjnugafer", "Lit. 'Hacer sin acierto'", "Drjnug");
 -- traewflĵner = golpear
--- wjwjtajes
 -- más colores
--- errar =/= acertar
+-- else/sino
+-- errar =/= acertar drjn
 -- aparición =/= desaparición 
 -- duración
 -- relajar y tensionar

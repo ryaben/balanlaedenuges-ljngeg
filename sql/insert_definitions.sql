@@ -58,7 +58,7 @@ VALUES
 ("Sal (sustancia de sodio).","","","",""),
 ("Salar (aplicar sal a algo), sazonar.","","","",""),
 ("Sabor a sal.","","","",""),
-("Salado, salino, salobre.","","","",""),
+("Salado (con sabor a sal).","","","",""),
 ("Azúcar.","","","",""),
 ("Azucarado, acaramelado.","","","",""),
 ("Azucarar, endulzar, dulcificar.","","","",""),
@@ -1396,6 +1396,12 @@ VALUES
 ("Fruta, fruto (producto comestible de la planta).","coloq. Resultado de algo.","","",""),
 ("Fruto seco (composición menor a un 50% de agua).","","","",""),
 ("Frutal (perteneciente o relativo a la fruta).","","","",""),
-("neo. Computadora u ordenador portátil, voz ingl. laptop, notebook.","","","","");
+("neo. Computadora u ordenador portátil, voz ingl. laptop, notebook.","","","",""),
+("Salino, salobre (propio de la sal o que la contiene).","","","",""),
+("Acertar, atinar, tamb. adivinar.","","","",""),
+("Acierto, tino (acción de acertar).","","","",""),
+("Acertado (que tiene o incluye acierto).","","","",""),
+("Desacierto, equivocación, error, descuido, fallo.","","","",""),
+("Desacertar, errar, equivocar, fallar.","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`definition`;
