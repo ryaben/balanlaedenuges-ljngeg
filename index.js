@@ -144,30 +144,6 @@ app.get('/restablecimiento/:token', (req, res) => {
         retrievedResults: dictionary
     });
 });
-app.post('/restablecer/:token', (req, res) => {
-    const { token } = req.params;
-
-    //Verificación del JWT token.
-    jwt.verify(token, envVars.jwtKey, function (err, decoded) {
-        if (err) {
-            console.log(err);
-            res.redirect('/portal-login?verify=false');
-        } else {
-            let newPassword = req.body.password;
-            const salt = bcrypt.genSaltSync(10);
-            let hashedNewPassword = bcrypt.hashSync(newPassword, salt);
-
-            //Actualiza la info del usuario en la DB.
-            connection.query('UPDATE heroku_bf7cb810553a372.users SET password = ? WHERE email = ?', [hashedNewPassword, decoded.email], function (error, results, fields) {
-                if (error) {
-                    res.redirect('/portal-login?database=error');
-                } else {
-                    res.redirect('/portal-login?recovery=true');
-                }
-            });
-        }
-    });
-});
 app.get('/:name', (req, res) => {
     let capitalizedName = req.params.name.charAt(0).toUpperCase() + req.params.name.slice(1);
     res.render(req.params.name, {
@@ -273,6 +249,31 @@ app.post('/registrar', function (req, res) {
                 return res.redirect('/portal-login?register=success');
             }
         });
+    });
+});
+
+app.post('/restablecer/:token', (req, res) => {
+    const { token } = req.params;
+
+    //Verificación del JWT token.
+    jwt.verify(token, envVars.jwtKey, function (err, decoded) {
+        if (err) {
+            console.log(err);
+            res.redirect('/portal-login?verify=false');
+        } else {
+            let newPassword = req.body.password;
+            const salt = bcrypt.genSaltSync(10);
+            let hashedNewPassword = bcrypt.hashSync(newPassword, salt);
+
+            //Actualiza la info del usuario en la DB.
+            connection.query('UPDATE heroku_bf7cb810553a372.users SET password = ? WHERE email = ?', [hashedNewPassword, decoded.email], function (error, results, fields) {
+                if (error) {
+                    res.redirect('/portal-login?database=error');
+                } else {
+                    res.redirect('/portal-login?recovery=true');
+                }
+            });
+        }
     });
 });
 
@@ -462,21 +463,7 @@ function handleDisconnect() {
             console.log('Error when connecting to DB:', err);
             setTimeout(handleDisconnect, 2000);
         } else {
-            connection.query(dictionaryQuery, function (error, result) {
-                if (error) {
-                    return console.log("Error while loading dictionary: " + error.message);
-                } else {
-                    return dictionary = JSON.stringify(result);
-                }
-            });
-
-            connection.query("SELECT * FROM heroku_bf7cb810553a372.users;", function (error, result) {
-                if (error) {
-                    return console.log("Error while loading dictionary: " + error.message);
-                } else {
-                    return users = JSON.stringify(result);
-                }
-            });
+            requestDatabaseInfo();
         }
     });
 
@@ -486,6 +473,26 @@ function handleDisconnect() {
             handleDisconnect();
         } else {
             throw err;
+        }
+    });
+}
+
+function requestDatabaseInfo() {
+    console.log('Queried info to database.');
+
+    connection.query(dictionaryQuery, function (error, result) {
+        if (error) {
+            return console.log("Error while loading dictionary: " + error.message);
+        } else {
+            return dictionary = JSON.stringify(result);
+        }
+    });
+    
+    connection.query("SELECT * FROM heroku_bf7cb810553a372.users;", function (error, result) {
+        if (error) {
+            return console.log("Error while loading dictionary: " + error.message);
+        } else {
+            return users = JSON.stringify(result);
         }
     });
 }

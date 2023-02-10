@@ -1403,6 +1403,21 @@ VALUES
 ("calificativo","","","",""),
 ("invertido","","","",""),
 ("ampliado","","","",""),
-("calificativo","","","","");
+("calificativo","","","",""),
+("extranjerismo","","","",""),
+("propia","","","",""),
+("compuesto","","","",""),
+("compuesto","","","",""),
+("compuesto","","","",""),
+("compuesto","","","",""),
+("compuesto","","","",""),
+("compuesto","","","",""),
+("común","","","",""),
+("común","","","",""),
+("común","","","",""),
+("calificativo","","","",""),
+("diminutivizado","","","",""),
+("calificativo","","","",""),
+("ampliado","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`subtype`;

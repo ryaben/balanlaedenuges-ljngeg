@@ -1403,13 +1403,27 @@ VALUES
 ("Drjnuges", "Lit. 'Relativo a acierto'", "Drjnug"),
 ("Drjnugaf", "Lit. 'Sin acierto'", "Drjnug"),
 ("Drjnugafer", "Lit. 'Hacer sin acierto'", "Drjnug"),
-("Drjnugafes", "Lit. 'Relativo a sin acierto'", "Drjnug");
--- traewflĵner = golpear
--- más colores
--- else/sino
--- errar =/= acertar drjn
--- aparición =/= desaparición 
+("Drjnugafes", "Lit. 'Relativo a sin acierto'", "Drjnug"),
+("Käkerlass", "Palabra adoptada artificialmente del sueco 'Kackerlacka'", "Käkerlass"),
+("Oj", "Sonido con significado verbal", "Oj"),
+("Traewflĵner", "De 'Traewer' y 'Fljner', lit. 'Accionar la mano para atacar'", "Traew"),
+("Traewflĵnug", "De 'Traewer' y 'Fljnug', lit. 'Acción de la mano para atacar'", "Traew"),
+("Fljnòktrjeg", "De 'Fljnug' y 'Oktrjeg', lit. 'Cantidad de mano'", "Fljn"),
+("Wjtblùtbeg", "De 'Wjteg' y 'Blutbeg', lit. 'Azul con blanco'", "Wjt"),
+("Wjtròdeg", "De 'Wjteg' y 'Rödeg', lit. 'Rojo con blanco'", "Wjt"),
+("Wjtwàrteg", "De 'Wjteg' y 'Wärteg', lit. 'Negro con blanco'", "Wjt"),
+("Wälojeteg", "Palabra originante tradicional", "Wälojet"),
+("Egtaeg", "Palabra originante tradicional", "Egta"),
+("Egtaer", "Palabra originante tradicional", "Egta"),
+("Egtaeges", "Lit. 'Relativo a duración'", "Egtaeg"),
+("Egtaeget", "Lit. 'Duración pequeña'", "Egtaeg"),
+("Egtaegetes", "Lit. 'Relativo a duración pequeña'", "Egtaeg"),
+("Egtaegeter", "Lit. 'Hacer duración pequeña'", "Egtaeg");
 -- duración
+-- else/sino
+-- interés =/= desinterés
+-- diversión =/= aburrimiento
+-- aparición =/= desaparición 
 -- relajar y tensionar
 -- Käswej (adelante)
 
