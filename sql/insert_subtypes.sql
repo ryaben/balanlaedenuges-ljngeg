@@ -1418,6 +1418,17 @@ VALUES
 ("calificativo","","","",""),
 ("diminutivizado","","","",""),
 ("calificativo","","","",""),
+("ampliado","","","",""),
+("aumentativizado","","","",""),
+("calificativo","","","",""),
+("ampliado","","","",""),
+("copulativa, adversativa","","","",""),
+("común","","","",""),
+("común","","","",""),
+("común","","","",""),
+("invertido","","","",""),
+("calificativo","","","",""),
+("calificativo","","","",""),
 ("ampliado","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`subtype`;

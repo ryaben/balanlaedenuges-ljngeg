@@ -1418,6 +1418,17 @@ VALUES
 ("Adjetivo","","","",""),
 ("Sustantivo","","","",""),
 ("Adjetivo","","","",""),
+("Verbo","","","",""),
+("Sustantivo","","","",""),
+("Adjetivo","","","",""),
+("Verbo","","","",""),
+("Conjunción","","","",""),
+("Sustantivo","","","",""),
+("Sustantivo","","","",""),
+("Verbo","","","",""),
+("Sustantivo","","","",""),
+("Adjetivo","","","",""),
+("Adjetivo","","","",""),
 ("Verbo","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`type`;

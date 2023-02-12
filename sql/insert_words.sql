@@ -1418,11 +1418,19 @@ VALUES
 ("Egtaeges", "Lit. 'Relativo a duración'", "Egtaeg"),
 ("Egtaeget", "Lit. 'Duración pequeña'", "Egtaeg"),
 ("Egtaegetes", "Lit. 'Relativo a duración pequeña'", "Egtaeg"),
-("Egtaegeter", "Lit. 'Hacer duración pequeña'", "Egtaeg");
--- duración
--- else/sino
+("Egtaegeter", "Lit. 'Hacer duración pequeña'", "Egtaeg"),
+("Egtaegon", "Lit. 'Duración grande'", "Egtaeg"),
+("Egtaegones", "Lit. 'Relativo a duración grande'", "Egtaeg"),
+("Egtaegoner", "Lit. 'Hacer duración grande'", "Egtaeg"),
+("Öterwjss", "Palabra originante tradicional", "Öterwjss"),
+("Rëngleg", "Palabra originante tradicional", "Rëngl"),
+("Rënglaj", "Palabra originante tradicional", "Rëngl"),
+("Rënglar", "Palabra originante tradicional", "Rëngl"),
+("Rënglegaf", "Lit. 'Sin diversión'", "Rëngleg"),
+("Rëngleges", "Lit. 'Relativo a diversión'", "Rëngleg"),
+("Rënglegafes", "Lit. 'Relativo a sin diversión'", "Rëngleg"),
+("Rënglegafar", "Lit. 'Hacer sin diversión'", "Rëngleg");
 -- interés =/= desinterés
--- diversión =/= aburrimiento
 -- aparición =/= desaparición 
 -- relajar y tensionar
 -- Käswej (adelante)

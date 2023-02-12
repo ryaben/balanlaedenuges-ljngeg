@@ -977,7 +977,7 @@ VALUES
 ("Amanecer, alba, albor.","coloq. Esclarecimiento y esperanza, generalmente luego de condiciones adversas.","","",""),
 ("Noche.","Madrugada sin sol.","coloq. Epílogo de un acontecimiento.","",""),
 ("Atardecer, anochecer.","coloq. Corromper u ofuscar algo o alguien.","","",""),
-("Ocaso, crepúsculo.","coloq. Corrompimiento, desazón o desesperación.","","",""),
+("Ocaso, atardecer, crepúsculo.","coloq. Corrompimiento, desazón o desesperación.","","",""),
 ("Enfriar, refrescar.","Nevar (caer nieve).","coloq. Llevar algo a la heladera.","",""),
 ("Frío, baja temperatura.","","","",""),
 ("Calor, ardor, temperatura alta.","","","",""),
@@ -1270,7 +1270,7 @@ VALUES
 ("Celeste, cósmico, sideral.","","","",""),
 ("Lluvioso, pluvioso (relativo a la lluvia).","","","",""),
 ("Divino (perteneciente o relativo a Dios o los dioses).","","","",""),
-("equiv. a A veces.","","","",""),
+("equiv. a A veces, algunas veces.","","","",""),
 ("Estelar, tamb. astral (relativo o perteneciente a estrella).","","","",""),
 ("Celestial, paradisíaco, empíreo.","","","",""),
 ("Chocolatoso (que tiene o se relaciona con chocolate).","","","",""),
@@ -1418,6 +1418,17 @@ VALUES
 ("Duradero, durable, extenso, estable.","","","",""),
 ("Brevedad (corta duración o extensión de algo).","","","",""),
 ("Breve, corto, efímero.","","","",""),
-("Abreviar, acortar (específicamente duración de algo).","","","","");
+("Abreviar, acortar (específicamente duración de algo).","","","",""),
+("Perduración, persistencia (duración por largo tiempo).","","","",""),
+("Perdurable, persistente (característica de perdurar por largo tiempo).","","","",""),
+("Perdurar, persistir (durar por largo tiempo).","","","",""),
+("equiv. a Sino, por el contrario (resultado diferente con el incumplimiento de una premisa).","","","",""),
+("Diversión, recreación, entretención (concepto de acción de pasar bien el tiempo).","","","",""),
+("Divertimento, entretenimiento, recreo, pasatiempo (caso o evento específico que genera diversión).","","","",""),
+("Divertir, entretener, recrear.","","","",""),
+("Aburrimiento, tedio, hastío.","","","",""),
+("Divertido, entretenido, recreativo.","","","",""),
+("Aburrido, tedioso, hastioso.","","","",""),
+("Aburrir, hastiar (causar aburrimiento).","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`definition`;

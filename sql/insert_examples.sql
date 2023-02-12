@@ -1418,6 +1418,17 @@ VALUES
 ("Göljkàj knaej egtaeges wöjlegaf wäld göljàgnar wjl öl sjng traej daj.","","","",""),
 ("Knaej fejfug göljwùlasj egtaeget faer kaj löwjeges.","","","",""),
 ("Kjaejes söjwènslaj tröljkàj egtaegetes, kjaej fjügulkàj ertjegafes.","","","",""),
-("Ölegen göljklàsj-egtaegeter waej üskug ö waej kefjegen följègael tjl froj.","","","","");
+("Ölegen göljklàsj-egtaegeter waej üskug ö waej kefjegen följègael tjl froj.","","","",""),
+("Waej egtaegon tjl klaej ljoneg frät följwùnsaler waej futegen.","","","",""),
+("Waej towlajug göljkàj ësjl egtaegones wäld waej kunstaj.","","","",""),
+("Kones wastùrnugen följègtaegoner tjsälk knaej fändjlegafes göwelaj.","","","",""),
+("Öl göljklàsj-ökjler waej jagaurkĵgug, öterwjss waej kunstaj följòkjlugafer tejgün.","","","",""),
+("Waej rëngleg göljèwjd öl üke ljwkeg!","","","",""),
+("Ölugen göljklàsj-knäler waej rënglajen faer waej tujkneges wĵljndajen.","","","",""),
+("Klaej kälarĵgëlug göljrènglar kon?","","","",""),
+("Öl träsjl göljùstal rënglegaf trësjaw waej knöjàwalajen.","","","",""),
+("Kjaegen göljwùjk knaej rëngleges üskug.","","","",""),
+("Klaej göljkàj rënglegafes. Ölajn göljsfàej-alar knaejuj futeg?","","","",""),
+("Kjaeuges fejfegen göljrènglegafar öl...","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`example`;
