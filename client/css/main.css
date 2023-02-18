@@ -291,6 +291,16 @@ li.word-meaning::marker {
     color: white;
 }
 
+.letter-stats {
+    width: 100%;
+    text-align: center;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    margin: 0 auto 6px auto;
+    border-bottom: 1px solid black;
+    font-size: 15px;
+}
+
 .listed-word {
     font-size: 1.5em;
     text-align: start;

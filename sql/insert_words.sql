@@ -1198,8 +1198,8 @@ VALUES
 ("Jgjaegetes", "Lit. 'Relativo a año pequeño'", "Jgjaeg"),
 ("Kjltajes", "Lit. 'Relativo a leche'", "Kjltaj"),
 ("Klënuges", "Lit. 'Relativo a entendimiento'", "Klënug"),
-("Knjfajegaf", "Lit. 'Sin naturaleza'", "Knjfajeg"),
-("Knjfajegafes", "Lit. 'Relativo a sin naturaleza'", "Knjfajeg"),
+("Darteg", "Palabra originante tradicional", "Dart"),
+("Darteges", "Lit. 'Relativo a artificialidad'", "Darteg"),
 ("Flajkeg", "Palabra originante tradicional", "Flajk"),
 ("Flajkeges", "Lit. 'Relativo a anterioridad'", "Flajkeg"),
 ("Awalblòdug", "De 'Awalaj' y 'Blödug', lit. 'Sangre de luna'", "Awal"),
@@ -1313,7 +1313,7 @@ VALUES
 ("Drëleges", "Lit. 'Relativo a espera'", "Drëleg"),
 ("Fjsljwenkèfjeg", "De 'Fjsljeg', 'Wenkeg' y 'Kefjeg', lit. 'Persona con igualdad con cercanía'", "Fjslj"),
 ("Wasteges", "Lit. 'Relativo a mirada'", "Wasteg"),
-("Wastùrnuges", "De 'Wasteg' y 'Ürnug', lit. 'Relativo a órgano de vista'", "Wast"),
+("Wastùrnuges", "De 'Wasteg' y 'Ürnug', lit. 'Relativo a órgano de vista'", "Wastùrnug"),
 ("Jrtjseg", "Palabra originante tradicional", "Jrtjs"),
 ("Jrtjsar", "Palabra originante tradicional", "Jrtjs"),
 ("Jrtjseges", "Lit. 'Relativo a comodidad'", "Jrtjseg"),
@@ -1463,8 +1463,31 @@ VALUES
 ("Lössegafes", "Lit. 'Relativo a sin interés'", "Lösseg"),
 ("Gortug", "Palabra originante tradicional", "Gort"),
 ("Gortuget", "Lit. 'Roca pequeña'", "Gortug"),
-("Gortuges", "Lit. 'Relativo a roca'", "Gortug");
+("Gortuges", "Lit. 'Relativo a roca'", "Gortug"),
+("Kälakèfjeg", "De 'Kälaeg' y 'Kefjeg', lit. 'Persona con movimiento'", "Käla"),
+("Ewlänakon", "De 'Ewlän', 'Ä' y 'Kon'", "Ewlän"),
+("Öndjrtjsfúteg", "De 'Öndug', 'Jrtjseg' y 'Futeg', lit. 'Cosa con comodidad de hogar'", "Önd"),
+("Öndjrtjsfútegur", "De 'Öndug', 'Jrtjseg' y 'Futeg', lit. 'Colectivo de cosas con comodidad de hogar'", "Öndjrtjsfúteg"),
+("Kaenegon", "Lit. 'Frío grande'", "Kaeneg"),
+("Dartòwelugur", "De 'Darteg' y 'Öwelug', lit. 'Colectivo de cabellos con artificialidad'", "Dartòwelug"),
+("Darter", "Palabra originante tradicional", "Dart"),
+("Dartkèfjeg", "De 'Darteg' y 'Kefjeg', lit. 'Persona con artificialidad'", "Dart"),
+("Jgjaer", "Palabra originante tradicional", "Jgja"),
+("Ënskjsfàejug", "De 'Ënskj' y 'Sfaejug', lit. 'Capacidad de usar'", "Ënskj"),
+("Ënskjsfàejuges", "De 'Ënskj' y 'Sfaejug', lit. 'Relativo a capacidad de usar'", "Ënskjsfàejug"),
+("Wastsfàejugaf", "De 'Wast' y 'Sfaejug', lit. 'Sin capacidad de ver'", "Wastsfàejug"),
+("Wastsfàejugafes", "De 'Wast' y 'Sfaejug', lit. 'Relativo a sin capacidad de ver'", "Wastsfàejug"),
+("Ösjwastànördnug", "De 'Ösjwat', 'Wasteg' y 'Anördnug', lit. 'Aparato de vista de lejos'", "Ösjwat"),
+("Wastfútaj", "De 'Wasteg' y 'Futaj', lit. 'Herramienta de vista'", "Wast"),
+("Lajtwastfútaj", "De 'Lajteg', 'Wasteg' y 'Futaj', lit. 'Herramienta de vista para luz'", "Lajt"),
+("Rjltug", "Palabra originante tradicional", "Rjlt"),
+("Rjlter", "Palabra originante tradicional", "Rjlt"),
+("Rjltuges", "Lit. 'Relativo a juego'", "Rjltug"),
+("Rjltfútaj", "De 'Rjltug' y 'Futaj', lit. 'Herramienta de juego'", "Rjlt"),
+("Rjltkèfjeg", "De 'Rjlter' y 'Kefjeg', lit. 'Persona que juega'", "Rjlt");
 -- cansancio
+-- juego, jugar, juguete
+-- nuevo =/= viejo
 -- pileta = pozo o prisma de agua
 -- apreciar/valorar =/= despreciar/desestimar
 -- aparición =/= desaparición 

@@ -58,6 +58,7 @@ $(function () {
                     let currentLetter = this.decodeEntities(window.location.pathname.split('/')[2]);
                     dictionary = this.filterDictionary(dictionary, currentLetter);
                     this.listWords(dictionary, this.listingParam);
+                    this.listLetterStats(dictionary, currentLetter);
                     this.changeListingView(this.listingParam);
                     this.setCurrentListing(this.listingParam);
                     this.setCurrentLetter(currentLetter);
@@ -873,6 +874,13 @@ $(function () {
             } else if (dictionary.length === 0) {
                 $(`<div class="empty-search">La búsqueda no arrojó resultados.</div>`).appendTo(`#${container}`).fadeIn(fadeDuration);
             }
+        }
+
+        //Lista estadísticas de la letra.
+        listLetterStats(dictionary, letter) {
+            $('#wordListing').prepend(`
+                <p class='letter-stats'><b>${dictionary.length} palabras</b> comienzan con ${letter.toUpperCase()}, dentro de <b>${$("ul.root-tree").length} raíces</b>.</p>
+            `);
         }
 
         //Lista todas las palabras del diccionario.
