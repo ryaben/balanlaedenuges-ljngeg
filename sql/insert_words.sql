@@ -675,7 +675,7 @@ VALUES
 ("Bljuneg", "Palabra originante tradicional", "Bljun"),
 ("Bljunegaf", "Lit. 'Sin belleza'", "Bljuneg"),
 ("Bljunegafar", "Lit. 'Hacer sin belleza'", "Bljuneg"),
-("Bljunegafèjfeg", "De 'Bljunegaf' y 'Fejfeg', lit. 'Palabra sin hermosura'", "Bljun"),
+("Färalfèjfeg", "De 'Färaleg' y 'Fejfeg', lit. 'Palabra con mal modo'", "Färal"),
 ("Läjrar", "Palabra originante tradicional", "Läjr"),
 ("Läjraj", "Palabra originante tradicional", "Läjr"),
 ("Läjreg", "Palabra originante tradicional", "Läjr"),

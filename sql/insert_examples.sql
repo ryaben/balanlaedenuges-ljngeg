@@ -675,7 +675,7 @@ VALUES
 ("","","","",""),
 ("","","","",""),
 ("Waej blutbeges blaekaj tröljbljùnegafar kones rjgëlug!","","","",""),
-("Kjae gägulùwlaed üke bljunegafèjfegen, wäld färal!","","","",""),
+("Kjae gägulùwlaed üke färalfèjfegen, bäjgun färal!","","","",""),
 ("Öl göljwùlasj wäld kon udajlàjrar öl knuwerfèjregur, för wlaejaj.","Ölajn kängulàjrar kjae trësjaw knaej ësjl jgjaegen.","","",""),
 ("Klaej tröljkàj waej ësjl frejegafes läjraj tjl waej fülwuj jgjaeg!","","","",""),
 ("","","","",""),
