@@ -292,11 +292,11 @@ li.word-meaning::marker {
 }
 
 .letter-stats {
-    width: 100%;
+    width: auto;
     text-align: center;
     padding-top: 0px;
     padding-bottom: 5px;
-    margin: 0 auto 6px auto;
+    margin: 0 4px 8px 4px;
     border-bottom: 1px solid black;
     font-size: 15px;
 }

@@ -1484,10 +1484,47 @@ VALUES
 ("Rjlter", "Palabra originante tradicional", "Rjlt"),
 ("Rjltuges", "Lit. 'Relativo a juego'", "Rjltug"),
 ("Rjltfútaj", "De 'Rjltug' y 'Futaj', lit. 'Herramienta de juego'", "Rjlt"),
-("Rjltkèfjeg", "De 'Rjlter' y 'Kefjeg', lit. 'Persona que juega'", "Rjlt");
+("Rjltkèfjeg", "De 'Rjlter' y 'Kefjeg', lit. 'Persona que juega'", "Rjlt"),
+("Rewseg", "Palabra originante tradicional", "Rews"),
+("Rewser", "Palabra originante tradicional", "Rews"),
+("Rewseges", "Lit. 'Relativo a novedad'", "Rewseg"),
+("Rewsegaf", "Lit. 'Sin novedad'", "Rewseg"),
+("Rewsegafer", "Lit. 'Hacer sin novedad'", "Rewseg"),
+("Rewsegafes", "Lit. 'Relativo a sin novedad'", "Rewseg"),
+("Ëstrug", "Palabra originante tradicional", "Ëstr"),
+("Ëstrer", "Palabra originante tradicional", "Ëstr"),
+("Ëstruges", "Lit. 'Relativo a polvo'", "Ëstrug"),
+("Ëstrugafer", "Lit. 'Hacer sin polvo'", "Ëstrug"),
+("Ösjwatànsteg", "De 'Ösjwateg' y 'Tänsteg', lit. 'Trabajo con lejanía'", "Ösjwat"),
+("Ösjwatànstar", "De 'Ösjwateg' y 'Tänstar', lit. 'Trabajar con lejanía'", "Ösjwat"),
+("Swolkùrkaj", "De 'Swolug' y 'Kürkaj', lit. 'Isla de ciudad'", "Swol"),
+("Swolajtànördnug", "De 'Swolug', 'Lajteg' y 'Anördnug', lit. 'Dispositivo de luz de ciudad'", "Swol"),
+("Dalënkèfjeg", "De 'Dalënar' y 'Kefjeg', lit. 'Persona que camina'", "Dalën"),
+("Üntjegafar", "Lit. 'Hacer sin liviandad'", "Üntjeg"),
+("Dalënljònaj", "De 'Dalënar' y 'Ljonaj', lit. 'Camino para caminar'", "Dalën"),
+("Laedenlùndug", "De 'Laedenug' y 'Lündug', lit. 'Promesa de país'", "Laeden"),
+("Ürkraj", "Palabra originante tradicional", "Ürkr"),
+("Ürkrar", "Palabra originante tradicional", "Ürkr"),
+("Ürkrajes", "Lit. 'Relativo a consejo'", "Ürkraj"),
+("Säkteg", "Palabra originante tradicional", "Säkt"),
+("Säkter", "Palabra originante tradicional", "Säkt"),
+("Säkteges", "Lit. 'Relativo a anchura'", "Säkteg"),
+("Säkteget", "Lit. 'Anchura pequeña'", "Säkteg"),
+("Säktegeter", "Lit. 'Hacer anchura pequeña'", "Säkteg"),
+("Säktegetes", "Lit. 'Relativo a anchura pequeña'", "Säkteg"),
+("Säktegon", "Lit. 'Anchura grande'", "Säkteg"),
+("Säktegoner", "Lit. 'Hacer anchura grande'", "Säkteg"),
+("Säktegones", "Lit. 'Relativo a anchura grande'", "Säkteg"),
+("Läjrkĵgtànsteg", "De 'Läjreg', 'Kjgug' y 'Tänsteg', lit. 'Trabajo de edificio de educación'", "Läjr"),
+("Gjsleg", "Palabra originante tradicional", "Gjsl"),
+("Gjsler", "Palabra originante tradicional", "Gjsl"),
+("Gjsleges", "Lit. 'Relativo a perfección'", "Gjsleg"),
+("Gjslegaf", "Lit. 'Sin perfección'", "Gjsleg"),
+("Gjslegafer", "Lit. 'Hacer sin perfección'", "Gjsleg"),
+("Gjslegafes", "Lit. 'Relativo a sin perfección'", "Gjsleg"),
+("Ürnugur", "Lit. 'Colectivo de órganos'", "Ürnug");
 -- cansancio
--- juego, jugar, juguete
--- nuevo =/= viejo
+-- interesado
 -- pileta = pozo o prisma de agua
 -- apreciar/valorar =/= despreciar/desestimar
 -- aparición =/= desaparición 
