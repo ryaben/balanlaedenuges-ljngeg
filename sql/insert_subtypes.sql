@@ -1522,6 +1522,11 @@ VALUES
 ("invertido","","","",""),
 ("ampliado","","","",""),
 ("relacional","","","",""),
-("colectivizado","","","","");
+("colectivizado","","","",""),
+("común","indefinido","","",""),
+("común","indefinido","","",""),
+("compuesto","","","",""),
+("compuesto","","","",""),
+("compuesto, invertido","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`subtype`;

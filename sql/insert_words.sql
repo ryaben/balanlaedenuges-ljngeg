@@ -92,7 +92,7 @@ VALUES
 ("Wjkolaj", "Palabra originante tradicional", "Wjkol"),
 ("Wjkolajes", "Lit. 'Relativo a boca'", "Wjkolaj"),
 ("Wjkolar", "Palabra originante tradicional, lit. 'Accionar la boca'", "Wjkol"),
-("Bjselwĵkolaj", "De 'Bjseler' y 'Wjkolaj', lit. 'Acción de la boca para airear'", "Bjsel"),
+("Wjkolbĵseleg", "De 'Wjkolaj' y 'Bjseleg', lit. 'Aire de boca'", "Wjkol"),
 ("Jagwĵkolar", "De 'Jagar' y 'Wjkolar', lit. 'Accionar la boca para mojar'", "Jag"),
 ("Laekwĵkolar", "De 'Laeker' y 'Wjkolar', lit. 'Accionar la boca para comer'", "Laek"),
 ("Traewĵkolaj", "De 'Traewer' y 'Wjkolar', lit. 'Acción de la boca para atacar'", "Traew"),
@@ -730,7 +730,7 @@ VALUES
 ("Dönjlajaf", "Lit. 'Sin cura'", "Dönjlaj"),
 ("Dönjlajafar", "Lit. 'Hacer sin cura'", "Dönjlaj"),
 ("Dönjleg", "Palabra originante tradicional", "Dönjl"),
-("Dönjlegaf", "Palabra originante tradicional", "Dönjleg"),
+("Dönjlegaf", "Lit. 'Sin salud'", "Dönjleg"),
 ("Dönjlfèjregur", "De 'Dönjlaj' y 'Fëjregur', lit. 'Colectivo de conocimientos de curas'", "Dönjl"),
 ("Dönjlkèfjeg", "De 'Dönjlar' y 'Kefjeg', lit. 'Persona que cura'", "Dönjl"),
 ("Wjrus", "Palabra adoptada artificialmente del inglés 'Virus'", "Wjrus"),
@@ -1071,7 +1071,7 @@ VALUES
 ("Knaej", "Palabra originante tradicional", "Knaej"),
 ("Knaejuj", "Palabra originante tradicional", "Knaej"),
 ("Knaejteg", "De 'Knaej' y 'Futeg'", "Knaej"),
-("Knaejteged", "De 'Knaej' y 'Futeged'", "Knaej"),
+("Knaejteged", "De 'Knaej' y 'Futeg' (en número cero)", "Knaej"),
 ("Knaejfjeg", "De 'Knaej' y 'Kefjeg'", "Knaej"),
 ("Knaejfjeged", "De 'Knaej' y 'Kefjeged'", "Knaej"),
 ("Klaej", "Palabra originante tradicional", "Klaej"),
@@ -1522,7 +1522,12 @@ VALUES
 ("Gjslegaf", "Lit. 'Sin perfección'", "Gjsleg"),
 ("Gjslegafer", "Lit. 'Hacer sin perfección'", "Gjsleg"),
 ("Gjslegafes", "Lit. 'Relativo a sin perfección'", "Gjsleg"),
-("Ürnugur", "Lit. 'Colectivo de órganos'", "Ürnug");
+("Ürnugur", "Lit. 'Colectivo de órganos'", "Ürnug"),
+("Knaejgug", "De 'Knaej' y 'Kjgug'", "Knaej"),
+("Knaejguged", "De 'Knaej' y 'Kjgug' (en número cero)", "Knaej"),
+("Ulerwjkolbĵseleg", "De 'Ulerug', 'Wjkolaj' y 'Bjseleg', lit. 'Aire de boca con alcohol'", "Uler"),
+("Ulerdònjleg", "De 'Ulerug' y 'Dönjleg', lit. 'Salud de alcohol'", "Uler"),
+("Ulerdònjlegaf", "De 'Ulerug' y 'Dönjleg', lit. 'Sin salud de alcohol'", "Ulerdònjleg");
 -- cansancio
 -- interesado
 -- pileta = pozo o prisma de agua

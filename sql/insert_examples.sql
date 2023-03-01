@@ -92,7 +92,7 @@ VALUES
 ("Kones wjkolaj göljkàj üke bljuneges.","Knaej wülejtugen göljtàg waej gräjuges wjkolaj.","Kon jkë alar'al öl traej wjkolaj!","Waej daweglàedejug göljkàj knaej wjkolaj äej kojwlàedejug.",""),
 ("Jonatan göljtàg knaej wjkolajes wöjlegaf.","","","",""),
 ("","","","",""),
-("Öl göljglàs kones bjselwĵkolaj.","","","",""),
+("Öl göljglàs kones wjkolbĵseleg.","","","",""),
 ("","","","",""),
 ("","","","",""),
 ("","","","",""),
@@ -1522,6 +1522,11 @@ VALUES
 ("Waej gjslegaf göljkàj knaejteg wäld följàgnar träsjl.","","","",""),
 ("Kjaej tröljgĵslegafer waej laekug dëjwel kjaej tröljwĵwjtar klaej.","","","",""),
 ("Knaej gjslegafes knälug följsènsar drjnugafen.","","","",""),
-("Wünelar färaleges göljsfàej-dönjlajafar kones ürnugur.","Fülwuj waej ürnuguren göljwàjer j göljknàwar.","","","");
+("Wünelar färaleges göljsfàej-dönjlajafar kones ürnugur.","Fülwuj waej ürnuguren göljwàjer j göljknàwar.","","",""),
+("Öl göljwùlasj knaejgug jlaek täg kulkeg!","","","",""),
+("Knaejguged göljkàj loke bljuneges tjsälk klaej.","","","",""),
+("Fjügulkàj waej knjw tjlaej sjonkòjweg j Kamjla fjügultàg ulerwjkolbĵseleg.","","","",""),
+("Fülwuj öles fjsljwenkèfjegen göljtàg ulerdònjleg.","","","",""),
+("Wjlaej ulerdònjlegaf, knaej kefjeg göljfjàler ulerug ükon üskugen för daj.","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`example`;

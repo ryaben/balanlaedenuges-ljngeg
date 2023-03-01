@@ -1270,7 +1270,7 @@ VALUES
 ("Celeste, cósmico, sideral.","","","",""),
 ("Lluvioso, pluvioso (relativo a la lluvia).","","","",""),
 ("Divino (perteneciente o relativo a Dios o los dioses).","","","",""),
-("equiv. a A veces, algunas veces.","","","",""),
+("equiv. a A veces, algunas veces, en ocasiones.","","","",""),
 ("Estelar, tamb. astral (relativo o perteneciente a estrella).","","","",""),
 ("Celestial, paradisíaco, empíreo.","","","",""),
 ("Chocolatoso (que tiene o se relaciona con chocolate).","","","",""),
@@ -1392,7 +1392,7 @@ VALUES
 ("Diferenciar, desigualar, diferir.","","","",""),
 ("coloq. Atardecer u ocaso de fuerte tono rojizo o anaranjado.","coloq. Aire cubierto de fuegos artificiales.","","",""),
 ("tec. Sistema planetario (planetas y otros objetos orbitando en una o más estrellas).","","","",""),
-("tec. Meteoro, vulg. estrella fugaz.","","","",""),
+("tec. Meteoro, coloq. estrella fugaz.","","","",""),
 ("Fruta, fruto (producto comestible de la planta).","coloq. Resultado de algo.","","",""),
 ("Fruto seco (composición menor a un 50% de agua).","","","",""),
 ("Frutal (perteneciente o relativo a la fruta).","","","",""),
@@ -1522,6 +1522,11 @@ VALUES
 ("Imperfección (que no tiene todas las cualidades requeridas o deseables).","","","",""),
 ("Anular la condición de perfección a algo o alguien al estropearlo.","","","",""),
 ("Imperfecto, defectuoso.","","","",""),
-("tec. Organismo (conjunto de los órganos que constituyen un ser vivo).","tec. Ser vivo.","","","");
+("tec. Organismo (conjunto de los órganos que constituyen un ser vivo).","tec. Ser vivo.","","",""),
+("equiv. a Algún lugar o sitio.","","","",""),
+("equiv. a Ningún lugar o sitio.","","","",""),
+("Aliento con olor alcóholico producto de la ingesta de bebidas con este compuesto.","","","",""),
+("Condición de ingesta responsable y moderada de alcohol.","","","",""),
+("tec. Alcoholismo (deterioro en el funcionamiento a causa del alcohol).","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`definition`;
