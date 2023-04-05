@@ -1,18 +1,47 @@
+// Themes:
+
+// Links de navegación lateral:
+$navSectionColor: darkred;
+$hoveredNavLinkBackground: indianred;
+$hoveredNavLinkColor: white;
+$activeNavLinkBackground: red;
+$activeNavLinkColor: white;
+
+// Letras del listado de palabras:
+$letterBackground: transparent;
+$letterColor: black;
+$activeLetterBackground: black;
+$activeLetterColor: white;
+$hoveredLetterBackground: darkslategrey;
+$hoveredLetterColor: white;
+
+// Árboles de raíces y sus palabras, del listado:
+$rootTreeBorder: darkred;
+$rootTreeBackground: white;
+$rootTreeColor: black;
+$hoveredRootTreeBackground: black;
+$hoveredRootTreeColor: white;
+$hoveredRootTreeLabelBackground: red;
+
+// Scrollers:
+$scrollerBackground: white;
+$scrollerColor: darkgrey;
+
 /* Estilos de renderizado de navegadores */
 
-*::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-*::-webkit-scrollbar-track {
-    background: white;
-}
-  
-*::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    border-radius: 20px;
-    border: 2px solid white;
+* {
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px; 
+    }
+    &::-webkit-scrollbar-track {
+        background: $scrollerBackground;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: $scrollerColor;
+        border-radius: 20px;
+        border: 2px solid $scrollerBackground;
+    }
 }
 
 /* Estilos generales */
@@ -88,10 +117,9 @@ a {
     color: #0645ad;
     text-decoration: none;
     cursor: pointer;
-}
-
-a:hover {
-    text-decoration: underline;
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 footer a img {
@@ -102,19 +130,17 @@ footer a img {
     padding: 0;
     margin-top: 8px;
     pointer-events: none;
-}
-
-.nav-section:before {
-    display: block;
-    content: attr(label);
-    font-size: 1.5em;
-    font-weight: bold;
-    color: darkred;
-    border-bottom: 1px solid darkred;
-}
-
-.nav-section:nth-child(1) {
-    display: none;
+    &:before {
+        display: block;
+        content: attr(label);
+        font-size: 1.5em;
+        font-weight: bold;
+        color: $navSectionColor;
+        border-bottom: 1px solid $navSectionColor;
+    }
+    &:nth-child(1) {
+        display: none;
+    }
 }
 
 .nav-link {
@@ -123,18 +149,16 @@ footer a img {
     margin: 3px auto 3px auto;
     cursor: pointer;
     pointer-events: all;
-}
-
-.nav-link:hover {
-    background-color: indianred;
-    color: white;
-    transition: ease;
-    transition-duration: 100ms;
-}
-
-.nav-selected {
-    background-color: red;
-    color: white;
+    &:hover {
+        background-color: $hoveredNavLinkBackground;
+        color: $hoveredNavLinkColor;
+        transition: ease;
+        transition-duration: 100ms;
+    }
+    &.nav-selected {
+        background-color: $activeNavLinkBackground;
+        color: $activeNavLinkColor;
+    }
 }
 
 .nav-highlighted {
@@ -165,22 +189,21 @@ footer a img {
 .special-character {
     font-size: 1.2em;
     margin: auto 1.5px auto 1.5px;
-}
-
-.special-character:hover {
-    background-color: red;
-    color: white;
-    cursor: pointer;
+    &:hover {
+        background-color: red;
+        color: white;
+        cursor: pointer;
+    }
 }
 
 .language-option {
     display: flex;
     align-items: center;
     cursor: pointer;
-}
 
-.language-option img {
-    border-radius: 4px;
+    & img {
+        border-radius: 4px; 
+    }
 }
 
 .result-title {
@@ -279,16 +302,16 @@ li.word-meaning::marker {
     cursor: pointer;
     width: 4%;
     border-radius: 4px;
-}
-
-.letter-listing:hover {
-    background-color: darkslategray;
-    color: white;
-}
-
-.letter-selected {
-    background-color: black;
-    color: white;
+    background-color: $letterBackground;
+    color: $letterColor;
+    &:hover {
+        background-color: $hoveredLetterBackground;
+        color: $hoveredLetterColor;
+    }
+    &.letter-selected {
+        background-color: $activeLetterBackground;
+        color: $activeLetterColor;
+    }
 }
 
 .letter-stats {
@@ -314,17 +337,18 @@ li.word-meaning::marker {
 
 .root-tree {
     list-style: none;
-    border: 2px darkred solid;
+    border: 2px $rootTreeBorder solid;
+    background-color: $rootTreeBackground;
+    color: $rootTreeColor;
     border-radius: 4px;
     margin-block-end: 0;
     margin-block-start: 0;
     padding-inline-start: 0;
     margin: 4px;
-}
-
-.root-tree.guide {
-    margin-left: 25px;
-    margin-right: 25px;
+    &.guide {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
 }
 
 .root-tree-title {
@@ -335,27 +359,24 @@ li.word-meaning::marker {
     font-size: 1.2em;
     font-style: italic;
     font-weight: bold;
-}
-
-.root-tree-title.guide {
-    font-style: normal;
-}
-
-.root-tree-title:hover {
-    background-color: black;
-    color: white;
-    transition: 200ms;
-    cursor: pointer;
+    &.guide {
+        font-style: normal;
+    }
+    &:hover {
+        background-color: $hoveredRootTreeBackground;
+        color: $hoveredRootTreeColor;
+        transition: 200ms;
+        cursor: pointer;
+    }
 }
 
 .root-tree-title-label {
     display: flex;
     align-items: center;
     cursor: pointer;
-}
-
-.root-tree-title-label:not(.guide):hover {
-    background-color: red;
+    &:not(.guide):hover {
+        background-color: $hoveredRootTreeLabelBackground; 
+    }
 }
 
 .root-extra {
@@ -391,26 +412,27 @@ li.word-meaning::marker {
     color: darkslategrey;
 }
 
-.root-word-title label:hover, .child-word label:hover, .composed-word label:hover {
-    background-color: red;
-    color: white;
-    cursor: pointer;
-}
+.root-word-title, .child-word, .composed-word {
+    &::before {
+        content: "╟ ";
+        text-decoration: none;
+        color: black;
+    }
 
-.root-word-title::before, .child-word::before, .composed-word::before {
-    content: "╟ ";
-    text-decoration: none;
-    color: black;
+    & label:hover {
+        background-color: red;
+        color: white;
+        cursor: pointer; 
+    }
 }
 
 .child-word {
     color: rgb(212, 16, 16);
     padding: 0;
     margin: 0;
-}
-
-.child-word::before {
-    content: "║ ╟ ";
+    &::before {
+        content: "║ ╟ ";  
+    }
 }
 
 .dummy-word {
@@ -493,13 +515,12 @@ li.word-meaning::marker {
     font-size: 1.1em;
     background-color: white;
     width: 125px;
-}
-
-.tab-btn:hover, .tab-selected {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
-    cursor: pointer;
+    &:hover, &.tab-selected {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+        cursor: pointer;
+    }
 }
 
 .section-content, .section-title, #homeTitle, .section-subtitle, .section-minor-title, .section-table, .word-type-example {
@@ -509,19 +530,20 @@ li.word-meaning::marker {
 .section-content {
     font-size: 1.1em;
     text-align: justify;
-} .section-content.no-margin {
-    margin: 0;
-} .section-content.centered-text {
-    text-align: center;
+    &.no-margin {
+        margin: 0;
+    }
+    &.centered-text {
+        text-align: center;
+    }
 }
 
 .section-title {
     font-size: 1.7em;
     text-decoration: underline;
-}
-
-.section-title.no-underline {
-    text-decoration: none;
+    &.no-underline {
+        text-decoration: none;
+    }
 }
 
 #homeTitle {
@@ -530,20 +552,21 @@ li.word-meaning::marker {
 
 .section-subtitle {
     font-size: 1.4em;
+    &.closer-bottom {
+        margin-bottom: 5px;
+    }
 }
 
 .section-minor-title {
     font-size: 1.2em;
-} .section-minor-title.left {
-    margin-left: 0;
-} .section-minor-title.less-margin {
-    margin-top: 0;
-    margin-right: 15px;
-    margin-bottom: 15px;
-}
-
-.section-subtitle.closer-bottom {
-    margin-bottom: 5px;
+    &.left {
+        margin-left: 0; 
+    }
+    &.less-margin {
+        margin-top: 0;
+        margin-right: 15px;
+        margin-bottom: 15px;
+    }
 }
 
 .section-example, .word-segmentation {
@@ -561,15 +584,14 @@ li.word-meaning::marker {
     border: 1px solid darkred;
     border-bottom: none;
     max-height: 25px;
-}
 
-.word-segment legend {
-    margin: auto;
-    max-height: 13px;
-}
-
-.word-segment h3 {
-    margin: 0;
+    & legend {
+        margin: auto;
+        max-height: 13px;
+    }
+    & h3 {
+        margin: 0; 
+    }
 }
 
 .segment-description {
@@ -578,42 +600,39 @@ li.word-meaning::marker {
     margin-block-start: 0;
     margin-block-end: 0;
     padding-inline-start: 0;
-}
 
-.segment-description li {
-    counter-increment: contador;
-}
-
-.segment-description li::before {
-    content: counter(contador) "—> ";
-    color: darkred;
-    font-weight: bold;
+    & li {
+        counter-increment: contador;
+    }
+    & li::before {
+        content: counter(contador) "—> ";
+        color: darkred;
+        font-weight: bold;
+    }
 }
 
 .section-table {
     border-spacing: 0px;
     width: 75%;
-}
 
-.section-table th {
-    background-color: lightgray;
-    border: 1px solid darkred;
-    padding: 3px;
-}
-
-.section-table td {
-    background-color: antiquewhite;
-    border: 1px solid darkred;
-    text-align: center;
-    padding: 2px;
+    & th {
+        background-color: lightgray;
+        border: 1px solid darkred;
+        padding: 3px;
+    }
+    & td {
+        background-color: antiquewhite;
+        border: 1px solid darkred;
+        text-align: center;
+        padding: 2px; 
+    }
 }
 
 .guide-container {
     display: none;
-}
-
-.guide-container:nth-of-type(1) {
-    display: block;
+    &:nth-of-type(1) {
+        display: block;  
+    }
 }
 
 .error-alert, .success-alert {
@@ -641,11 +660,10 @@ li.word-meaning::marker {
     padding: 2px 7px 2px 7px;
     border-radius: 50%;
     cursor: pointer;
-}
-
-.error-alert-close:hover, .success-alert-close:hover {
-    background: black;
-    color: white;
+    &:hover {
+        background: black;
+        color: white;
+    }
 }
 
 .error-alert {
@@ -703,16 +721,18 @@ li.word-meaning::marker {
     font-weight: bold;
     width: 100%;
     border-radius: 6px;
-} #configMenuTitle:hover {
-    background-color: darkslategray;
-    color: white;
-}
+    &:hover {
+        background-color: darkslategray;
+        color: white;
+    }
 
-#configMenuTitle label {
-    cursor: pointer;
-    padding: 3px;
-} #configMenuTitle label:nth-child(1) {
-    width: 100%;
+    & label {
+        cursor: pointer;
+        padding: 3px; 
+    }
+    & label:nth-child(1) {
+        width: 100%;
+    }
 }
 
 #configMenu {
@@ -782,10 +802,9 @@ li.word-meaning::marker {
     color: white;
     border: 2px solid black;
     border-radius: 6px;
-}
-
-#contactButton:hover {
-    background: #CD5C5C;
+    &:hover {
+        background: #CD5C5C;
+    }
 }
 
 .portal-form {
@@ -797,32 +816,33 @@ li.word-meaning::marker {
     padding: 20px;
     border: 2px groove darkgray;
     border-radius: 10px;
-} .portal-form.wide {
-    width: auto;
-    max-width: none;
-} .portal-form.top {
-    margin-top: 0;
-}
+    &.wide {
+        width: auto;
+        max-width: none;
+    }
+    &.top {
+        margin-top: 0;
+    }
+    &.portal-recovery {
+        display: none;
+    }
 
-.portal-form input:not([type=submit]), .portal-form select {
-    border: 1px solid black;
-    margin-bottom: 12px;
-}
-
-.portal-form.portal-recovery {
-    display: none;
+    & input:not([type=submit]), & select {
+        border: 1px solid black;
+        margin-bottom: 12px;
+    }
 }
 
 .portal-label {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 2px;
-}
 
-.portal-label .greyed {
-    color: darkgray;
-    font-size: 14px;
-    font-weight: normal;
+    & .greyed {
+        color: darkgray;
+        font-size: 14px;
+        font-weight: normal;
+    }
 }
 
 .portal-label-info {
@@ -842,29 +862,25 @@ li.word-meaning::marker {
     border: 2px solid black;
     border-radius: 6px;
     margin: 22px auto 0 auto;
-}
-
-.portal-submit.upper-corner {
-    position: absolute;
-    margin: 0;
-    top: 10px;
-    right: 10px;
-    width: 25%;
-    min-width: 128px;
-    min-height: 38px;
-}
-
-.portal-submit:hover {
-    background: #CD5C5C;
-}
-
-.portal-submit[disabled] {
-    background: #a19c9c;
-    cursor: default;
-}
-
-.portal-submit[disabled]:hover {
-    background: #a19c9c;
+    &.upper-corner {
+        position: absolute;
+        margin: 0;
+        top: 10px;
+        right: 10px;
+        width: 25%;
+        min-width: 128px;
+        min-height: 38px;
+    }
+    &:hover {
+        background: #CD5C5C; 
+    }
+    &[disabled] {
+        background: #a19c9c;
+        cursor: default;
+    }
+    &[disabled]:hover {
+        background: #a19c9c;
+    }
 }
 
 .portal-other-options {
@@ -877,20 +893,21 @@ li.word-meaning::marker {
 
 .portal-input {
     width: auto;
-}
-
-.portal-input:not([type=submit]).bottom {
-    margin-bottom: 0;
+    &:not([type=submit]).bottom {
+        margin-bottom: 0;
+    }
 }
 
 .portal-link {
     font-size: 14.5px;
     font-weight: bold;
     margin: 0;
-} .portal-link.margin-bottom {
-    margin-bottom: 10px;
-} .portal-link.centered {
-    text-align: center;
+    &.margin-bottom {
+        margin-bottom: 10px;
+    }
+    &.centered {
+        text-align: center;
+    }
 }
 
 .recovery-link {
@@ -910,9 +927,10 @@ li.word-meaning::marker {
     border: 2px outset red;
     width: 100%;
     margin: 6px auto 12px auto;
-} .form-divider.special-margin {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    &.special-margin {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
 }
 
 #passwordStatus, #passwordChangeStatus {
@@ -968,16 +986,14 @@ li.word-meaning::marker {
     width: 97px;
     cursor: pointer;
     transition: ease-in 0.2s;
-}
-
-.portal-navbar-button:hover {
-    background: rgb(248, 231, 133);
-    transition: ease-in 0.2s;
-}
-
-.portal-navbar-button.selected {
-    background: gold;
-    transition: ease-in 0.2s;
+    &.selected {
+        background: gold;
+        transition: ease-in 0.2s;
+    }
+    &:hover {
+        background: rgb(248, 231, 133);
+        transition: ease-in 0.2s;  
+    }
 }
 
 .portal-navbar-icon {
@@ -1010,12 +1026,15 @@ li.word-meaning::marker {
     font-size: 20px;
     text-align: center;
     margin: 0px;
-} .portal-title.smaller {
-    font-size: 16px;
-} .portal-title.larger {
-    font-size: 24px;
-} .portal-title.red {
-    color: red;
+    &.smaller {
+        font-size: 16px; 
+    }
+    &.larger {
+        font-size: 24px; 
+    }
+    &.red {
+        color: red;
+    }
 }
 
 #portalProfile, #portalID {
@@ -1034,13 +1053,15 @@ li.word-meaning::marker {
     max-width: 90px;
     max-height: 90px;
     border: 1px solid black;
-} .portal-identity-picture.flex {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} .portal-identity-picture.no-border {
-    border: none;
+    &.flex {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &.no-border {
+        border: none;
+    }
 }
 
 #portalProfilePictureInputContainer {
@@ -1144,18 +1165,21 @@ li.word-meaning::marker {
 .portal-home-label {
     font-size: 16px;
     margin-bottom: 15px;
-} .portal-home-label:last-child {
-    margin-bottom: 0;
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .id-card-label {
     font-size: 17px;
     font-weight: bold;
     margin-bottom: 5px;
-} .id-card-label.small {
-    font-size: 14px;
-} .id-card-label.centered {
-    text-align: center;
+    &.small {
+        font-size: 14px; 
+    }
+    &.centered {
+        text-align: center; 
+    }
 }
 
 .portal-id-value {
@@ -1171,10 +1195,10 @@ li.word-meaning::marker {
     margin-block-end: 0;
     padding-inline-start: 20px;
     font-size: 16px;
-}
 
-.portal-steps-list li {
-    margin-bottom: 10px;
+    & li {
+        margin-bottom: 10px;
+    }
 }
 
 .wallet-container {
@@ -1224,28 +1248,25 @@ li.word-meaning::marker {
     transition: ease-in 0.15s;
     padding: 2px;
     margin-bottom: 4px;
-}
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+    &:hover {
+        background-color: red;
+        color: white;
+        border-radius: 4px;
+    }
 
-.portal-directory-entry:last-of-type {
-    margin-bottom: 0;
-}
-
-.portal-directory-entry label {
-    cursor: pointer;
-    width: 44%;
-}
-
-.portal-directory-entry label:first-of-type {
-    width: fit-content;
-    padding-right: 5px;
-    margin-right: 5px;
-    border-right: 1px solid black;
-}
-
-.portal-directory-entry:hover {
-    background-color: red;
-    color: white;
-    border-radius: 4px;
+    & label {
+        cursor: pointer;
+        width: 44%;
+    }
+    & label:first-of-type {
+        width: fit-content;
+        padding-right: 5px;
+        margin-right: 5px;
+        border-right: 1px solid black;
+    }
 }
 
 .portal-directory-label {
@@ -1300,10 +1321,10 @@ li.word-meaning::marker {
     font-size: 15px;
     grid-template-columns: 4% 28% 28% 40%;
     grid-column-gap: 5px;
-}
 
-#lawsContainer p {
-    margin: 3px 0 3px 0;
+    & p {
+        margin: 3px 0 3px 0;  
+    }
 }
 
 .law-number {
@@ -1312,11 +1333,10 @@ li.word-meaning::marker {
 
 .law-bal {
     text-align: center;
-}
-
-.law-bal:not(.header) {
-    font-style: italic;
-    font-weight: bold;
+    &:not(.header) {
+        font-style: italic;
+        font-weight: bold;
+    }
 }
 
 .law-spa {
@@ -1327,12 +1347,13 @@ li.word-meaning::marker {
     text-align: justify;
 }
 
-#lawsContainer .bordered {
-    border-bottom: 1px solid black;
-}
-
-#lawsContainer .centered {
-    text-align: center;
+#lawsContainer {
+    & .bordered {
+        border-bottom: 1px solid black;
+    }
+    & .centered {
+        text-align: center;
+    }
 }
 
 #searchScreen, #portalDashboard {
@@ -1388,10 +1409,10 @@ li.word-meaning::marker {
     border-left: 1px dashed darkgray;
     margin-right: 15px;
     padding-right: 5px;
-}
 
-#perfectMatchContainer label {
-    font-size: 0.7em;
+    & label {
+        font-size: 0.7em;
+    }
 }
 
 #searchButton {
@@ -1494,11 +1515,11 @@ li.word-meaning::marker {
     font-weight: bold;
     letter-spacing: 3px;
     cursor: pointer;
-}
 
-.data-index-link a {
-    color: black;
-    text-decoration: none;
+    & a {
+        color: black;
+        text-decoration: none;
+    }
 }
 
 #dataText {
@@ -1514,10 +1535,9 @@ li.word-meaning::marker {
     border: 1px solid grey;
     background: #e9e2e2;
     margin-bottom: 5vh;
-}
-
-.data-grey-container:last-of-type {
-    margin-bottom: 6px;
+    &:last-of-type {
+        margin-bottom: 6px;
+    }
 }
 
 .data-main-title {
@@ -1530,12 +1550,12 @@ li.word-meaning::marker {
 .data-main-text {
     margin: 5px 5px 5px 0;
     font-size: 16px;
-}
 
-.data-main-text br {
-    content: "";
-    display: block;
-    margin-bottom: 8px;
+    & br {
+        content: "";
+        display: block;
+        margin-bottom: 8px;
+    }
 }
 
 .data-container {
@@ -1564,25 +1584,24 @@ li.word-meaning::marker {
     display: flex;
     justify-content: space-between;
     margin: 4px 2px 4px 2px;
-}
 
-.data-table-fact p {
-    margin: 0;
-}
-
-.data-table-fact p:nth-child(1) {
-    font-weight: bold;
+    & p {
+        margin: 0;
+    }
+    & p:nth-child(1) {
+        font-weight: bold;
+    }
 }
 
 #dataName {
     text-align: center;
     margin-top: 0;
-}
 
-#dataName p {
-    margin-bottom: 0;
-    margin-top: 0;
-    font-weight: bold;
+    & p {
+        margin-bottom: 0;
+        margin-top: 0;
+        font-weight: bold;
+    }
 }
 
 p#dataTranslatedName {
@@ -1616,36 +1635,31 @@ p#dataTranslatedName {
     width: 35%;
 }
 
-#dataFlag p, #dataBanner p {
-    margin: 3px 0 0 0;
-    font-size: 12px;
-}
-
-#dataFlag img {
-    width: 100%;
-}
-
-#dataBanner img {
-    width: 100%;
+#dataFlag, #dataBanner {
+    & p {
+        margin: 3px 0 0 0;
+        font-size: 12px;
+    }
+    & img {
+        width: 100%;
+    }
 }
 
 #dataMotto, #dataAnthem {
     text-align: center;
-}
 
-#dataMotto p, #dataAnthem p {
-    margin-bottom: 0;
-    margin-top: 0;
-    font-style: italic;
-    font-size: 15px;
-}
-
-#dataMotto p:nth-child(2), #dataAnthem p:nth-child(2) {
-    font-style: normal;
-}
-
-#dataMotto p span, #dataAnthem p span {
-    font-style: normal;
+    & p {
+        margin-bottom: 0;
+        margin-top: 0;
+        font-style: italic;
+        font-size: 15px;  
+    }
+    & p:nth-child(2) {
+        font-style: normal;
+    }
+    & p span {
+        font-style: normal;
+    }
 }
 
 #dataFacts {
@@ -1671,10 +1685,10 @@ p#dataTranslatedName {
     padding: 8px 8px 0 8px;
     height: fit-content;
     text-align: center;
-}
 
-.data-image-container img {
-    width: 100%;
+    & img {
+        width: 100%;
+    }
 }
 
 .double-image-container {
@@ -1683,16 +1697,16 @@ p#dataTranslatedName {
     width: 100%;
 }
 
-.data-image-container .double-image-container img.double-image {
-    width: 50%;
-}
-
-.data-image-container.coat img {
-    max-width: 185px;
-}
-
-.data-image-container p {
-    margin: 4px 0 8px 0;
+.data-image-container {
+    &.coat img {
+        max-width: 185px;
+    }
+    & .double-image-container img.double-image {
+        width: 50%;
+    }
+    & p {
+        margin: 4px 0 8px 0;
+    }
 }
 
 p.no-search {
@@ -1710,12 +1724,11 @@ p.no-search {
 
 .favorite-title {
     margin: 2px;
-}
-
-.favorite-title:hover {
-    background-color: red;
-    color: white;
-    cursor: pointer;
+    &:hover {
+        background-color: red;
+        color: white;
+        cursor: pointer;
+    }
 }
 
 #footerDescription {

@@ -1527,6 +1527,13 @@ VALUES
 ("común","indefinido","","",""),
 ("compuesto","","","",""),
 ("compuesto","","","",""),
-("compuesto, invertido","","","","");
+("compuesto, invertido","","","",""),
+("compuesto","","","",""),
+("compuesto","","","",""),
+("compuesto","","","",""),
+("común","impropia","","",""),
+("común","","","",""),
+("común","","","",""),
+("calificativo","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`subtype`;

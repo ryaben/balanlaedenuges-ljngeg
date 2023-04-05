@@ -142,7 +142,7 @@ $(function () {
             });
 
             $("#portalIDCardPicture").on("error", function () {
-                $(this).attr("src", "/client/img/profile-pic.jpg");
+                $(this).attr("src", "/public/img/profile-pic.jpg");
             });
 
             $("#portalIDDownload").on("click", function () {
@@ -694,7 +694,7 @@ $(function () {
             }
 
             $(`#${parent}-${wordID}`).find('.favorite-icon').fadeOut(100, function () {
-                $(this).attr('src', `/client/img/${favoriteIcon}.png`);
+                $(this).attr('src', `/public/img/${favoriteIcon}.png`);
                 $(this).fadeIn(100);
             });
 
@@ -724,7 +724,7 @@ $(function () {
                 favoritesStorage.forEach(function (fav) {
                     $('#favoritesListing').append(`
                         <div id="favorite-${fav.id}" class="favorite-entry">
-                            <img class="favorite-icon" src="/client/img/favorite.png" alt="fav">
+                            <img class="favorite-icon" src="/public/img/favorite.png" alt="fav">
                             <label class="favorite-title" onclick="handler.searchWord('${fav.name}', 'bal', 1)">${fav.name}</label>
                         </div>
                     `);
@@ -855,7 +855,7 @@ $(function () {
                             <div id="word-${word.id}" class='searched-word' style='display: none;'>
                                 <div class='result-title'>
                                     <h2 class='word-name'>${word.word_name}</h2>
-                                    <img class='favorite-icon' src='/client/img/${favoriteStatus}.png' alt='Favorite'>
+                                    <img class='favorite-icon' src='/public/img/${favoriteStatus}.png' alt='Favorite'>
                                 </div>
                                 <p class='word-root'>(en raíz&nbsp;<i>${word.word_root}</i>)</p>
                                 <p class='word-type'>${concatType}&nbsp;${concatSubtype}</p>
@@ -1048,7 +1048,7 @@ $(function () {
             $("#portalProfilePicture").css("background-color", "white");
         }
         handleProfilePictureError() {
-            $("#portalIdentityPicture").attr("src", "/client/img/profile-pic.jpg");
+            $("#portalIdentityPicture").attr("src", "/public/img/profile-pic.jpg");
             $("#portalProfilePicture").css("background-color", "salmon");
         }
 

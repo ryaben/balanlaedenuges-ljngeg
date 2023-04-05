@@ -1366,7 +1366,7 @@ VALUES
 ("Lugar, sitio, espacio.","","","",""),
 ("Situar, ubicar, localizar, emplazar.","","","",""),
 ("Ubicación, emplazamiento, localización.","","","",""),
-("Localizador (aparato para localizar un punto u objeto en el espacio).","","","",""),
+("neo. Localizador (aparato para localizar un punto u objeto en el espacio).","","","",""),
 ("Colocar, poner, agregar.","","","",""),
 ("Colocación, puesta (acción de colocar).","","","",""),
 ("Quite, retiro (acción de quitar o sacar).","","","",""),
@@ -1527,6 +1527,13 @@ VALUES
 ("equiv. a Ningún lugar o sitio.","","","",""),
 ("Aliento con olor alcóholico producto de la ingesta de bebidas con este compuesto.","","","",""),
 ("Condición de ingesta responsable y moderada de alcohol.","","","",""),
-("tec. Alcoholismo (deterioro en el funcionamiento a causa del alcohol).","","","","");
+("tec. Alcoholismo (deterioro en el funcionamiento a causa del alcohol).","","","",""),
+("neo. Matafuego, extintor (aparato portátil para apagar incendios).","","","",""),
+("Piscina, pileta, alberca.","","","",""),
+("Desaguadero, desagüe (conducto para sacar agua).","","","",""),
+("cult. Saludo de despedida entre personas de vínculo cercano, de amistad, familia o principalmente amoroso, que expresa un deseo por volver a cruzarse en la vida dado que el contexto no lo sugiere prontamente.","","","",""),
+("equiv. a Santidad, consagración (pero con dedicación a la mitología libraterrense).","","","",""),
+("equiv. a Santificar, consagrar, canonizar (como profesante de la mitología libraterrense).","","","",""),
+("equiv. a Santo, sagrado, sacro (pero con dedicación a la mitología libraterrense).","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`definition`;

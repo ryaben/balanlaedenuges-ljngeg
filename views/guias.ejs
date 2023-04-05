@@ -1,5 +1,5 @@
 <%- include('./partials/global-variables.ejs') %>
-<script src='../client/res/data/worldMapValues.js'></script>
+<script src='../public/res/data/worldMapValues.js'></script>
 <section id='guidesScreen'>
     <h1 class='section-title'>Guías de vocabulario</h1>
     <p class="section-content">
@@ -14,8 +14,8 @@
 
         <div id="map-container" class="guide-container">
             <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
-            <link href="../client/res/map/svgMap.css" rel="stylesheet" />
-            <script src="../client/res/map/svgMap.js"></script>
+            <link href="../public/res/map/svgMap.css" rel="stylesheet" />
+            <script src="../public/res/map/svgMap.js"></script>
     
             <div id="svgMapCountryNames"></div>
         </div>
@@ -26,9 +26,9 @@
 
         <div id="householdContainer" class="guide-container">
             <%- include('./partials/tooltip.ejs') %>
-            <link href="/client/css/guides.css" rel="stylesheet" />
+            <link href="/public/css/guides.css" rel="stylesheet" />
 
-            <img id='householdImage' src="/client/img/household-guide.jpg" alt="Composición del hogar">
+            <img id='householdImage' src="/public/img/household-guide.jpg" alt="Composición del hogar">
             <div id="guide-oven" class="guide-polygon household-top-item" guide-word="Laektajklànördnug"></div>
             <div id="guide-fridge" class="guide-polygon household-top-item" guide-word="Laekaenànördnug"></div>
             <div id="guide-bathroom" class="guide-polygon" guide-word="Jagaurkĵgeg"></div>

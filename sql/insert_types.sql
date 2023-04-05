@@ -1527,6 +1527,13 @@ VALUES
 ("Contracción","pronombre","","",""),
 ("Sustantivo","","","",""),
 ("Sustantivo","","","",""),
-("Sustantivo","","","","");
+("Sustantivo","","","",""),
+("Sustantivo","","","",""),
+("Sustantivo","","","",""),
+("Sustantivo","","","",""),
+("Contracción","interjección","","",""),
+("Sustantivo","","","",""),
+("Verbo","","","",""),
+("Adjetivo","","","","");
 
 SELECT * FROM heroku_bf7cb810553a372.`type`;

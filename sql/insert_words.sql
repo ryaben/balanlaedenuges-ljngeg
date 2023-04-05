@@ -1527,10 +1527,17 @@ VALUES
 ("Knaejguged", "De 'Knaej' y 'Kjgug' (en número cero)", "Knaej"),
 ("Ulerwjkolbĵseleg", "De 'Ulerug', 'Wjkolaj' y 'Bjseleg', lit. 'Aire de boca con alcohol'", "Uler"),
 ("Ulerdònjleg", "De 'Ulerug' y 'Dönjleg', lit. 'Salud de alcohol'", "Uler"),
-("Ulerdònjlegaf", "De 'Ulerug' y 'Dönjleg', lit. 'Sin salud de alcohol'", "Ulerdònjleg");
+("Ulerdònjlegaf", "De 'Ulerug' y 'Dönjleg', lit. 'Sin salud de alcohol'", "Ulerdònjleg"),
+("Tajkfändjlànördnug", "De 'Tajkleg', 'Fändjlar' y 'Anördnug', lit. 'Dispositivo para finalizar fuego'", "Tajkl"),
+("Jagfjrlĵneg", "De 'Jagaj', 'Fjr' y 'Ljneg', lit. 'Cuatro líneas de agua'", "Jag"),
+("Jagkèngtug", "De 'Jagaj' y 'Këngtug', lit. 'Salida de agua'", "Jag"),
+("Dëjwaejfatjgeg", "De 'Dëjwel', 'Waej' y 'Fatjgeg'", "Dëjwel"),
+("Urjeg", "Palabra originante tradicional", "Urj"),
+("Urjer", "Palabra originante tradicional", "Urj"),
+("Urjeges", "Lit. 'Relativo a santidad'", "Urjeg");
+-- san patricio
 -- cansancio
 -- interesado
--- pileta = pozo o prisma de agua
 -- apreciar/valorar =/= despreciar/desestimar
 -- aparición =/= desaparición 
 -- relajar y tensionar

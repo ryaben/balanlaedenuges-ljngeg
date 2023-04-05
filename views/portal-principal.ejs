@@ -4,13 +4,13 @@
     <div id="portalNavbar">
         <h3 id="portalNavbarTitle" class="section-minor-title less-margin"></h3>
         <div id="portalIcons">
-            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../client/img/home.png" alt="Inicio"><label class="portal-navbar-label">Inicio</label></button>
-            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../client/img/id-card.png" alt="Documento"><label class="portal-navbar-label">Identidad</label></button>
-            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../client/img/activity.png" alt="Actividad"><label class="portal-navbar-label">Actividad</label></button>
-            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../client/img/wallet.png" alt="Monedero"><label class="portal-navbar-label">Monedero</label></button>
-            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../client/img/messages.png" alt="Mensajes"><label class="portal-navbar-label">Mensajes</label></button>
-            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../client/img/directory.png" alt="Directorio"><label class="portal-navbar-label">Directorio</label></button>
-            <form class="form-button" action="/cerrar-sesion" method="post"><button id="portalLogoutButton" class="portal-navbar-button" type="submit"><img class="portal-navbar-icon" src="../client/img/logout.png" alt="Salir"><label id="portalLogoutLabel" class="portal-navbar-label">Salir</label></button></form>
+            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../public/img/home.png" alt="Inicio"><label class="portal-navbar-label">Inicio</label></button>
+            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../public/img/id-card.png" alt="Documento"><label class="portal-navbar-label">Identidad</label></button>
+            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../public/img/activity.png" alt="Actividad"><label class="portal-navbar-label">Actividad</label></button>
+            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../public/img/wallet.png" alt="Monedero"><label class="portal-navbar-label">Monedero</label></button>
+            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../public/img/messages.png" alt="Mensajes"><label class="portal-navbar-label">Mensajes</label></button>
+            <button class="portal-navbar-button"><img class="portal-navbar-icon" src="../public/img/directory.png" alt="Directorio"><label class="portal-navbar-label">Directorio</label></button>
+            <form class="form-button" action="/cerrar-sesion" method="post"><button id="portalLogoutButton" class="portal-navbar-button" type="submit"><img class="portal-navbar-icon" src="../public/img/logout.png" alt="Salir"><label id="portalLogoutLabel" class="portal-navbar-label">Salir</label></button></form>
         </div>
     </div>
 
@@ -56,7 +56,7 @@
             <button id="portalIDDownload" class="portal-submit upper-corner">Descargar</button>
             <h3 class="section-minor-title less-margin left">Documento de Identidad</h3>
             <div id="portalIDCard">
-                <img id="portalIDCardFlag" src="../client/img/flag.png" alt="Bandera">
+                <img id="portalIDCardFlag" src="../public/img/flag.png" alt="Bandera">
                 <p id="portalIDCardTitle">Gërteg tjl Balanlàedenug | Kefjeg ID</p>
                 <div id="portalIDCardData">
                     <div id="portalIDCardPictureContainer">
@@ -73,10 +73,10 @@
                 </div>
                 <div id="portalIDCardExtra">
                     <div class="portal-identity-picture flex no-border">
-                        <img id="portalIDCardBanner" src="../client/img/banner-transparent.png" alt="Estandarte">
+                        <img id="portalIDCardBanner" src="../public/img/banner-transparent.png" alt="Estandarte">
                         <label id="portalIDCardNote" class="id-card-label">Alentaj<br>tjlaej<br>Gërtaj</label>
                     </div>
-                    <img id="portalIDCardBarcode" src="../client/img/barcode.gif" alt="Barras">
+                    <img id="portalIDCardBarcode" src="../public/img/barcode.gif" alt="Barras">
                     <label id="portalIDCardNumber" class="id-card-label"></label>
                 </div>
             </div>
@@ -128,12 +128,12 @@
             <ol class="portal-steps-list">
                 <li>Si aún no lo hizo, instale MetaMask en su navegador a través del siguiente enlace: <a href="https://metamask.io/download/" target="_blank">https://metamask.io/download/</a></li>
                 <li>Siga los pasos que le indique la tienda de su navegador y permita la ejecución de la aplicación web.</li>
-                <li>Una vez que MetaMask esté iniciado, creará un nuevo monedero seleccionando la opción <b>"Crear una cartera"</b>:<br><img src="../client/img/create-wallet.png" alt="Crear monedero"></li>
-                <li>Ingrese una contraseña de su elección, acepte los términos y haga clic en <b>"Crear"</b>:<br><img src="../client/img/create-password.png" alt="Elegir contraseña"></li>
-                <li>La frase de recuperación le permite recargar su monedero en caso de no tener más acceso a MetaMask. Revélela y asegúrese de guardarla en un lugar seguro:<br><img src="../client/img/reveal-key.png" alt="Frase secreta"></li>
-                <li>Una vez dentro del monedero, cambie de red en Ethereum seleccionando el recuadro que indica la red actual, presione <b>"Mostrar/ocultar redes de prueba"</b> y en la sección que se abre active la opción correspondiente:<br><img src="../client/img/testnets.png" alt="Redes de prueba"><br><img src="../client/img/activate-option.png" alt="Activar"></li>
-                <li>Ahora que está activada, remítase a la <b>red de pruebas Goerli</b>:<br><img src="../client/img/change-net.png" alt="Goerli"></li>
-                <li>(Opcional, recomendado) Añada la criptomoneda <a href="https://goerli.etherscan.io/address/0xb9049397072707b504b80025AD149b2E5eaD93e9" target="_blank">Corona libraterrense (BK$)</a> en su monedero con la dirección <b>0xb9049397072707b504b80025AD149b2E5eaD93e9</b>:<br><img src="../client/img/import-token.png" alt="Añadir criptomoneda"><br><img src="../client/img/token-info.png" alt="Información de criptomoneda"></li>
+                <li>Una vez que MetaMask esté iniciado, creará un nuevo monedero seleccionando la opción <b>"Crear una cartera"</b>:<br><img src="../public/img/create-wallet.png" alt="Crear monedero"></li>
+                <li>Ingrese una contraseña de su elección, acepte los términos y haga clic en <b>"Crear"</b>:<br><img src="../public/img/create-password.png" alt="Elegir contraseña"></li>
+                <li>La frase de recuperación le permite recargar su monedero en caso de no tener más acceso a MetaMask. Revélela y asegúrese de guardarla en un lugar seguro:<br><img src="../public/img/reveal-key.png" alt="Frase secreta"></li>
+                <li>Una vez dentro del monedero, cambie de red en Ethereum seleccionando el recuadro que indica la red actual, presione <b>"Mostrar/ocultar redes de prueba"</b> y en la sección que se abre active la opción correspondiente:<br><img src="../public/img/testnets.png" alt="Redes de prueba"><br><img src="../public/img/activate-option.png" alt="Activar"></li>
+                <li>Ahora que está activada, remítase a la <b>red de pruebas Goerli</b>:<br><img src="../public/img/change-net.png" alt="Goerli"></li>
+                <li>(Opcional, recomendado) Añada la criptomoneda <a href="https://goerli.etherscan.io/address/0xb9049397072707b504b80025AD149b2E5eaD93e9" target="_blank">Corona libraterrense (BK$)</a> en su monedero con la dirección <b>0xb9049397072707b504b80025AD149b2E5eaD93e9</b>:<br><img src="../public/img/import-token.png" alt="Añadir criptomoneda"><br><img src="../public/img/token-info.png" alt="Información de criptomoneda"></li>
                 <li>Actualice la página para hacer efectivos los cambios en Portal Ciudadano.</li>
             </ol>
         </div>
