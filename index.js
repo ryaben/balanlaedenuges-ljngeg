@@ -3,6 +3,7 @@ require('dotenv').config({path:'./values.env'});
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const http = require('http');
+const telegramBot = require("node-telegram-bot-api");
 const bodyParser = require('body-parser');
 const request = require('request');
 const mysql = require('mysql');
@@ -74,6 +75,9 @@ const transporter = nodemailer.createTransport({
         rejectUnauthorized: false
     }
 });
+
+//Constante para invocar al bot de Telegram.
+const bot = new telegramBot(envVars.telegramToken, { polling: true });
 
 //Rutas/routing.
 app.get('/', (req, res) => {
@@ -416,7 +420,77 @@ app.listen(envVars.port, () => {
     console.log(`Now listening on port ${envVars.port}`);
 });
 
+//Comandos del bot de Telegram:
+bot.onText(/\/start/, (message) => {
+    bot.sendMessage(
+        message.chat.id,
+        `¡Hola, ${message.from.first_name}! Soy Libra, y estoy para ayudarte a interactuar con el diccionario del idioma libraterrense (o balanlàedenuges). Escribe /ayuda si no sabes cómo proceder.`
+    );
+});
+
+bot.onText(/\/ayuda/, (message) => {
+    bot.sendMessage(
+        message.chat.id,
+        `Los comandos que puedes usar son:\n\n/buscar: Busca el significado en español de una palabra en libraterrense (solo resultados exactos).\n/azar: Escoge aleatoriamente una palabra del diccionario y la describe.\n\nSin embargo, solo proveo una funcionalidad limitada con respecto al sitio web oficial de Balanlàedenug, que ofrece listado de palabras, guías de aprendizaje y más. Puedes ver todo el contenido en: http://balanlaedenug.net.ar/`
+    )
+});
+
+bot.onText(/\/buscar/, async (message) => {
+    let listenerReply;
+
+    let commandMessage = await bot.sendMessage(
+        message.chat.id,
+        `Ingresa a continuación una palabra en libraterrense para conocer su significado traducido (no son obligatorios carácteres especiales).`,
+        {"reply_markup": { "force_reply": true }}
+    );
+
+    listenerReply = (async (replyHandler) => {
+        bot.removeReplyListener(listenerReply);
+
+        var matchingWord = JSON.parse(dictionary).find(function(word) {
+            return normalizeText(word.word_name) === normalizeText(replyHandler.text); 
+        });
+
+        if (matchingWord == undefined) {
+            await bot.sendMessage(
+                replyHandler.chat.id, 
+                `Tu solicitud no ha arrojado resultados exactos.`,
+                {"reply_markup": { "force_reply": false, "parse_mode": "MarkdownV2" }}
+            );     
+        } else {
+            await bot.sendMessage(
+                replyHandler.chat.id, 
+                composeSearchResult(matchingWord),
+                {"reply_markup": { "force_reply": false, "parse_mode": "MarkdownV2" }}
+            ); 
+        }
+    });
+    bot.onReplyToMessage(
+        commandMessage.chat.id,
+        commandMessage.message_id,
+        listenerReply
+    );
+});
+
+bot.onText(/\/azar/, (message) => {
+    let parsedDictionary = JSON.parse(dictionary);
+    let max = parsedDictionary.length - 1;
+    let randomIndex = Math.floor(Math.random() * (max - 0 + 1) + 0);
+    let randomWord = parsedDictionary[randomIndex];
+    let composedMessage = composeSearchResult(randomWord);
+
+    bot.sendMessage(
+        message.chat.id, 
+        composedMessage,
+        {"reply_markup": { "force_reply": false, "parse_mode": "MarkdownV2" }}
+    ); 
+});
+
 //Funciones
+function normalizeText(string) {
+    return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
 function sendEmail(email, fullname, option) {
     const token = jwt.sign(
         { 'email': email }, envVars.jwtKey, { expiresIn: '15m' }
@@ -495,4 +569,37 @@ function requestDatabaseInfo() {
             return users = JSON.stringify(result);
         }
     });
+}
+
+//Confecciona un texto ordenado con toda la info de la palabra coincidente.
+function composeSearchResult(matchingWord) {
+    let typesSegment = "";
+    let subtypesSegment = "(";
+    let meaningsSegment = "";
+
+    for (let i = 1; i <= 5; i++) {
+        if (matchingWord[`word_type${i}`] != "") {
+            if (i === 1 || i === 5) {
+                typesSegment += matchingWord[`word_type${i}`];
+            } else {
+                typesSegment += `, ${matchingWord[`word_type${i}`]}`;
+            }
+        }
+
+        if (matchingWord[`word_subtype${i}`] != "") {
+            if (i === 1 || i === 5) {
+                subtypesSegment += matchingWord[`word_subtype${i}`];
+            } else {
+                subtypesSegment += `, ${matchingWord[`word_subtype${i}`]}`;
+            }
+        }
+
+        if (matchingWord[`word_definition${i}`] != "") {
+            meaningsSegment += `${i}. ${matchingWord[`word_definition${i}`]}\n${matchingWord[`word_example${i}`]}\n`
+        }
+    }
+
+    subtypesSegment += ")";
+
+    return `${matchingWord.word_name}\n(en raíz ${matchingWord.word_root})\n\n${typesSegment} ${subtypesSegment}\n${matchingWord.word_description}\n\nAcepciones:\n${meaningsSegment}`;
 }
