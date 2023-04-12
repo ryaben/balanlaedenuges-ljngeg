@@ -744,6 +744,31 @@ li.word-meaning::marker {
   margin: 25px auto 25px auto;
 }
 
+#socialMediaContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#telegramBotButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #54A9EB;
+  width: 177px;
+  height: 26px;
+  border-radius: 14px;
+  margin-top: 4px;
+  cursor: pointer;
+}
+#telegramBotButton label {
+  text-decoration: none;
+  color: white;
+  width: 150px;
+  height: 20px;
+  cursor: pointer;
+}
+
 #visitorsCounterTitle {
   margin: 0 0 5px 0;
 }
