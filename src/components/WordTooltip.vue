@@ -1,4 +1,6 @@
 <script setup>
+import FavoriteStar from './FavoriteStar.vue';
+
 defineProps({
   wordData: {
     type: Object,
@@ -13,6 +15,11 @@ defineProps({
       x: 0
     }
   },
+  favoriteSimpleMode: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 })
 </script>
 
@@ -20,7 +27,7 @@ defineProps({
   <div class='word-tooltip searched-word' :style="tooltipStyles">
     <div class='result-title'>
       <h2 class='word-name'>{{ wordData.word }}</h2>
-      <img class='favorite-icon' :src='checkFavoriteStatus' alt='Favorite' @click="toggleFavorite(wordData)">
+      <FavoriteStar :word-data="wordData" :simple-mode="favoriteSimpleMode" />
     </div>
     <p class='word-root'>(en la raíz <i>{{ wordData.root }}</i>)</p>
     <p class='word-type'>{{ writeArray(wordData.types) }} ({{ writeArray(wordData.subtypes) }})</p>
@@ -40,6 +47,9 @@ defineProps({
 
 <script>
 export default {
+  components: {
+    FavoriteStar
+  },
   data() {
     return {
 
@@ -50,19 +60,6 @@ export default {
       return {
         '--tooltip-top': `${this.position.y}px`,
         '--tooltip-left': `${this.position.x}px`
-      }
-    },
-    checkFavoriteStatus() {
-      try {
-        const storage = JSON.parse(localStorage.getItem('favoritesStorage'));
-
-        if (storage.find(el => el.id === this.wordData.id) === undefined) {
-          return '/img/non-favorite.png';
-        } else {
-          return '/img/favorite.png';
-        }
-      } catch {
-        return '/img/non-favorite.png';
       }
     }
   },
@@ -81,21 +78,6 @@ export default {
       }
 
       return wordArray;
-    },
-    toggleFavorite(word) {
-      let storage = JSON.parse(localStorage.getItem('favoritesStorage'));
-
-      if (storage.find(el => el.id === word.id) === undefined) {
-        storage.push({
-          id: word.id,
-          word: word.word
-        });
-      } else {
-        let filteredStorage = storage.filter(function(element) {
-          return element.id !== word.id;
-        });
-        localStorage.setItem('favoritesStorage', JSON.stringify(filteredStorage));
-      }
     }
   }
 }
@@ -106,7 +88,6 @@ export default {
   position: absolute;
   background-color: white;
   border: solid 1px black;
-  position: absolute;
   z-index: 1;
   width: 500px;
   padding: 0;

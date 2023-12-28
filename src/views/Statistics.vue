@@ -19,7 +19,7 @@ import store from '../store';
                 <p class="category-percentage">100.00%</p>
             </div>
 
-            <TypeStat v-for="(type, i) in countTypes" :key="i" :type-name="type.name" :type-count="type.count" />
+            <TypeStat v-for="(type, i) in countTypes" :key="i" :type-name="type.name" :type-count="type.count" :subtypes-data="type.subtypes" />
         </div>
         <ListingBottombar />
     </section>
@@ -48,12 +48,28 @@ export default {
                     if (types.find(el => el.name.charAt(0).toUpperCase() + el.name.slice(1) === type.charAt(0).toUpperCase() + type.slice(1)) === undefined) {
                         types.push({
                             name: type.charAt(0).toUpperCase() + type.slice(1),
-                            count: 1
+                            count: 1,
+                            subtypes: []
                         });
                     } else {
                         types[types.findIndex(e => e.name.charAt(0).toUpperCase() + e.name.slice(1) === type.charAt(0).toUpperCase() + type.slice(1))].count++;
                     }
                 });
+
+                // word.subtypes.forEach(function (subtype, index) {
+                //     let cleanedSubtypes = subtype.split(", ");
+
+                //     cleanedSubtypes.forEach(function(cleanedSubtype) {
+                //         if (types[types.findIndex(e => e.name.charAt(0).toUpperCase() + e.name.slice(1) === word.types[index].charAt(0).toUpperCase() + word.types[index].slice(1))].subtypes.find(el => el.name.charAt(0).toUpperCase() + el.name.slice(1) === cleanedSubtype.charAt(0).toUpperCase() + cleanedSubtype.slice(1)) === undefined) {
+                //             types[types.findIndex(e => e.name.charAt(0).toUpperCase() + e.name.slice(1) === word.types[index].charAt(0).toUpperCase() + word.types[index].slice(1))].subtypes.push({
+                //                 name: cleanedSubtype,
+                //                 count: 1
+                //             });
+                //     } else {
+                //         types[types.findIndex(e => e.name.charAt(0).toUpperCase() + e.name.slice(1) === word.types[index].charAt(0).toUpperCase() + word.types[index].slice(1))].subtypes.find(el => el.name.charAt(0).toUpperCase() + el.name.slice(1) === cleanedSubtype.charAt(0).toUpperCase() + cleanedSubtype.slice(1)).count++;
+                //     }
+                //     });
+                // });
             });
 
             types.sort();

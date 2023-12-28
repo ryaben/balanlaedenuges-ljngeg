@@ -11,16 +11,28 @@ defineProps({
     type: Number,
     required: true,
     default: 0
-  }
+  },
+  subtypesData: {
+    type: Array,
+    required: false,
+    default: []
+  },
 })
 </script>
 
 <template>
-  <div :id="'category-' + typeName" class="category-entry category-clickable">
+  <div :id="'category-' + typeName" class="category-entry category-clickable" @click="toggleSubtypesDisplay">
     <div class="colorer" :style="{ 'width': ((typeCount * 100) / wordsDictionary.length).toFixed(2) + '%' }"></div>
     <p class="category-title">{{ typeName }}</p>
     <p class="category-value">{{ typeCount }}</p>
     <p class="category-percentage">{{ ((typeCount * 100) / wordsDictionary.length).toFixed(2) + "%" }}</p>
+  </div>
+
+  <div v-show="displaySubtypes" v-for="(subtype, i) in subtypesData" :key="i" :id="'category-' + subtype.name" class="category-entry category-nonclickable">
+    <div class="colorer" :style="{ 'width': ((subtype.count * 100) / wordsDictionary.length).toFixed(2) + '%' }"></div>
+    <p class="category-title">{{ subtype.name }}</p>
+    <p class="category-value">{{ subtype.count }}</p>
+    <p class="category-percentage">{{ ((subtype.count * 100) / wordsDictionary.length).toFixed(2) + "%" }}</p>
   </div>
 </template>
 
@@ -31,7 +43,7 @@ export default {
   ],
   data() {
     return {
-
+      displaySubtypes: false
     }
   },
   computed: {
@@ -40,11 +52,8 @@ export default {
     },
   },
   methods: {
-    toggleTooltipDisplay(value) {
-      this.$emit('toggle-tooltip', value);
-    },
-    sendTooltipData() {
-      this.$emit('tooltip-data', this.wordData);
+    toggleSubtypesDisplay() {
+      this.displaySubtypes = !this.displaySubtypes;
     }
   }
 }

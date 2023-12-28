@@ -19,7 +19,7 @@ import store from '../store';
         </div>
 
         <div class='info-listing' id='wordListing' v-show="wordsDictionary.length > 0">
-            <WordTooltip v-if="tooltipDisplay" :word-data="tooltipWordData" :position="{ y: mousePosY, x: mousePosX }" />
+            <WordTooltip v-if="tooltipDisplay" :word-data="tooltipWordData" :position="{ y: mousePosY, x: mousePosX }" :favorite-simple-mode="true" />
 
             <p class='letter-stats'><b>{{ activeLetterRoots.length }} palabras</b> comienzan con {{ activatedLetter }},
                 dentro de <b>{{ filteredVisibleRoots.length }} raíces</b>.</p>

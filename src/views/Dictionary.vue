@@ -1,53 +1,105 @@
-<template>
-    <section id='searchScreen'>
-        <div id='searchBox'>
-            <div id='specialCharacters'>
-                <label style='margin-left: 5px;' class='special-character'>à</label>
-                <label class='special-character'>è</label>
-                <label class='special-character'>ĵ</label>
-                <label class='special-character'>ò</label>
-                <label class='special-character'>ù</label>
-                <label class='special-character'>ä</label>
-                <label class='special-character'>ë</label>
-                <label class='special-character'>ö</label>
-                <label class='special-character'>ü</label>
-                <label class='special-character'>ø</label>
-                <div id='languageSelection'>
-                    <input id='language-bal' class='language' name='language' type='radio' checked>
-                    <label class='language-option' for='language-bal'>
-                        <img src='/img/flag.png' alt='BAL' width='32' draggable="false">
-                    </label>
-                    <input id='language-esp' class='language' name='language' type='radio'>
-                    <label class='language-option' for='language-esp'>
-                        <img src='/img/flag2.png' alt='ESP' width='32' draggable="false">
-                    </label>
-                </div>
-            </div>
-            <input id='wordSearch' type='text' placeholder="Buscar una palabra...">
-            <div id="perfectMatchContainer">
-                <label for="perfect-match">Resultado exacto</label>
-                <input id="perfect-match" type="checkbox" name="perfect-match">
-            </div>
-            <button id='searchButton'>Buscar</button>
-        </div>
-        <div id='searchResult'>
+<script setup>
+import WordTooltip from "../components/WordTooltip.vue";
+import store from "../store";
+</script>
 
+<template>
+  <section id="searchScreen">
+    <div id="searchBox">
+      <div id="specialCharacters">
+        <label style="margin-left: 5px" class="special-character">à</label>
+        <label class="special-character">è</label>
+        <label class="special-character">ĵ</label>
+        <label class="special-character">ò</label>
+        <label class="special-character">ù</label>
+        <label class="special-character">ä</label>
+        <label class="special-character">ë</label>
+        <label class="special-character">ö</label>
+        <label class="special-character">ü</label>
+        <label class="special-character">ø</label>
+        <div id="languageSelection">
+          <input
+            id="language-bal"
+            class="language"
+            name="language"
+            type="radio"
+            checked
+          />
+          <label class="language-option" for="language-bal">
+            <img src="/img/flag.png" alt="BAL" width="32" draggable="false" />
+          </label>
+          <input
+            id="language-esp"
+            class="language"
+            name="language"
+            type="radio"
+          />
+          <label class="language-option" for="language-esp">
+            <img src="/img/flag2.png" alt="ESP" width="32" draggable="false" />
+          </label>
         </div>
-        <div id='resultStats' class="results-bar">
-            <p class="results-text"></p>
-            <p class="last-update-text"></p>
-        </div>
-    </section>
+      </div>
+      <input
+        id="wordSearch"
+        v-model="searchString"
+        type="text"
+        placeholder="Buscar una palabra..."
+      />
+      <div id="perfectMatchContainer">
+        <label for="perfect-match">Resultado exacto</label>
+        <input id="perfect-match" type="checkbox" name="perfect-match" />
+      </div>
+      <button id="searchButton" @click="search">Buscar</button>
+    </div>
+    <div id="searchResult">
+      <p v-if="searchString == ''" class="no-search">
+        En este diccionario libraterrense-español puede descubrir el significado
+        de un vocablo en el idioma nacional, o buscar una palabra o frase en
+        español para conocer una posible traducción. También podemos
+        <span class="random-search-text">cargar una palabra al azar.</span>
+      </p>
+
+      <WordTooltip
+        v-for="(word, i) in searchResult"
+        :key="i"
+        :position="{ y: 0, x: 0 }"
+        :word-data="word"
+        :favorite-simple-mode="true"
+      />
+    </div>
+    <div v-show="searchString != ''" id="resultStats" class="results-bar">
+      <p class="results-text"></p>
+      <p class="last-update-text"></p>
+    </div>
+  </section>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-
-        }
+  components: {
+    WordTooltip,
+  },
+  data() {
+    return {
+      searchString: "",
+      searchResult: [],
+    };
+  },
+  computed: {
+    wordsDictionary() {
+      return store.getters.dictionary;
     },
-}
+  },
+  methods: {
+    search() {
+      const that = this;
+
+      this.searchResult = this.wordsDictionary.filter(function (word) {
+        return word.word.toLowerCase().includes(that.searchString.toLowerCase());
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -140,5 +192,17 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+p.no-search {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  margin: 12px 10% 8px 10%;
+}
+
+.random-search-text {
+  color: red;
+  cursor: pointer;
 }
 </style>
