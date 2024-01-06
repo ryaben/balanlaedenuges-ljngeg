@@ -21,14 +21,16 @@ defineProps({
 </script>
 
 <template>
-  <div :id="'category-' + typeName" class="category-entry category-clickable" @click="toggleSubtypesDisplay">
+  <div :id="'category-' + typeName" class="category-entry category-clickable" :class="{ 'displayed': displaySubtypes }"
+    @click="toggleSubtypesDisplay">
     <div class="colorer" :style="{ 'width': ((typeCount * 100) / wordsDictionary.length).toFixed(2) + '%' }"></div>
     <p class="category-title">{{ typeName }}</p>
     <p class="category-value">{{ typeCount }}</p>
     <p class="category-percentage">{{ ((typeCount * 100) / wordsDictionary.length).toFixed(2) + "%" }}</p>
   </div>
 
-  <div v-show="displaySubtypes" v-for="(subtype, i) in subtypesData" :key="i" :id="'category-' + subtype.name" class="category-entry category-nonclickable">
+  <div v-show="displaySubtypes" v-for="(subtype, i) in subtypesData" :key="i" :id="'category-' + subtype.name"
+    class="category-entry category-nonclickable" :class="{ 'last-entry': i === subtypesData.length - 1 }">
     <div class="colorer" :style="{ 'width': ((subtype.count * 100) / wordsDictionary.length).toFixed(2) + '%' }"></div>
     <p class="category-title">{{ subtype.name }}</p>
     <p class="category-value">{{ subtype.count }}</p>
@@ -38,9 +40,7 @@ defineProps({
 
 <script>
 export default {
-  emits: [
-
-  ],
+  emits: [],
   data() {
     return {
       displaySubtypes: false

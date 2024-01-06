@@ -84,6 +84,14 @@ export default {
                     relation: 'Tratado de Relaciones Diplomáticas',
                     accessText: 'Descargar',
                     accessLink: 'http://balanlaedenug.net.ar/public/doc/ANG001.pdf'
+                },
+                {
+                    flag: 'amestris.jpg',
+                    partnerName: 'Reino Iluminado de Amestris',
+                    partnerLink: 'https://reinoiluminadodeamestris.com/',
+                    relation: 'Tratado de Amistad, Colaboración y Reconocimiento Mutuo',
+                    accessText: 'Descargar',
+                    accessLink: 'http://balanlaedenug.net.ar/public/doc/AME001.pdf'
                 }
             ]
         }

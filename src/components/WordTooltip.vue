@@ -19,12 +19,13 @@ defineProps({
     type: Boolean,
     required: false,
     default: false,
-  },
-})
+  }
+});
 </script>
 
 <template>
-  <div class='word-tooltip searched-word' :style="tooltipStyles">
+  <div class='word-tooltip searched-word' :class="{ 'absolute-position': position.x !== 0 && position.y !== 0 }"
+    :style="tooltipStyles">
     <div class='result-title'>
       <h2 class='word-name'>{{ wordData.word }}</h2>
       <FavoriteStar :word-data="wordData" :simple-mode="favoriteSimpleMode" />
@@ -32,7 +33,7 @@ defineProps({
     <p class='word-root'>(en la raíz <i>{{ wordData.root }}</i>)</p>
     <p class='word-type'>{{ writeArray(wordData.types) }} ({{ writeArray(wordData.subtypes) }})</p>
     <p class='word-description'>{{ wordData.description }}</p>
-    <hr style='border-top: 1px solid black;'>
+    <hr>
     <p style='font-weight: bold;'>Acepciones:</p>
     <ol class='word-meanings'>
       <div v-for="i in wordData.definitions.length" :key="i">
@@ -85,12 +86,15 @@ export default {
 
 <style scoped>
 .word-tooltip {
-  position: absolute;
   background-color: white;
   border: solid 1px black;
   z-index: 1;
   width: 500px;
   padding: 0;
+}
+
+.word-tooltip.absolute-position {
+  position: absolute;
   top: var(--tooltip-top);
   left: var(--tooltip-left);
 }

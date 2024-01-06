@@ -1,6 +1,7 @@
 import './assets/main.css';
 import './assets/fonts.css';
 import './assets/media-queries.css';
+import "vue-connect-wallet/dist/style.css";
 
 import { createApp } from 'vue';
 import App from './App.vue';

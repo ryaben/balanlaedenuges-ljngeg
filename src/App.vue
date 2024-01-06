@@ -39,6 +39,7 @@ export default {
   },
   async mounted() {
     await store.dispatch('getDictionary');
+    await store.dispatch('getUsers');
   }
 }
 </script>

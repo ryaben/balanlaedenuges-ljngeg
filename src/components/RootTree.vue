@@ -123,7 +123,7 @@ export default {
     const that = this;
 
     this.$nextTick(function () {
-      const thisRoot = document.getElementById('root-' + this.rootTitle);
+      const thisRoot = document.getElementById('root-' + that.rootTitle);
       const rootWords = thisRoot.getElementsByClassName('root-word');
       const childWords = thisRoot.getElementsByClassName('child-word');
       const composedWords = thisRoot.getElementsByClassName('composed-word');
@@ -145,7 +145,7 @@ export default {
   margin-block-end: 0;
   margin-block-start: 0;
   padding-inline-start: 0;
-  margin: 4px;
+  margin: 5px;
 }
 
 .root-tree.guide {

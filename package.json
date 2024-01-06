@@ -10,13 +10,18 @@
   },
   "dependencies": {
     "@kyvg/vue3-notification": "^3.0.1",
+    "@vuepic/vue-datepicker": "^6.1.0",
+    "file-saver": "^2.0.5",
     "firebase": "^10.1.0",
     "html2canvas": "^1.4.1",
-    "language-list": "^0.0.3",
     "vue": "^3.3.11",
+    "vue-connect-wallet": "^0.1.7",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.0.13",
-    "vuex": "^4.0.2"
+    "vue-select2": "^0.2.6",
+    "vue-twitter-timeline": "^1.0.2",
+    "vuex": "^4.0.2",
+    "web3": "^1.8.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",

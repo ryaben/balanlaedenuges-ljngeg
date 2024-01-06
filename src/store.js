@@ -4,17 +4,24 @@ import { db } from './firebase/init.js';
 
 const store = createStore({
     state: {
-        dictionary: []
+        dictionary: [],
+        users: []
     },
     getters: {
         dictionary(state) {
             return state.dictionary;
+        },
+        users(state) {
+            return state.users;
         },
     },
     mutations: {
         SET_WORDS(state, value) {
             state.dictionary = value;
         },
+        SET_USERS(state, value) {
+            state.users = value;
+        }
     },
     actions: {
         async getDictionary(context) {
@@ -27,6 +34,17 @@ const store = createStore({
             });
 
             context.commit('SET_WORDS', dictionaryArray);
+        },
+        async getUsers(context) {
+            const q = query(collection(db, "users"));
+            let usersArray = [];
+
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                usersArray.push({ id: doc.id, ...doc.data()});
+            });
+
+            context.commit('SET_USERS', usersArray);
         }
     }
 });

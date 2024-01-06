@@ -19,7 +19,7 @@ const navbarElements = [
             },
             {
                 linkLabel: "Portal Ciudadano",
-                linkRoute: "PortalMain",
+                linkRoute: "PortalLogin",
                 highlighted: true
             }
         ]
@@ -68,8 +68,18 @@ const navbarElements = [
                 highlighted: false
             },
             {
+                linkLabel: "Adverbios",
+                linkRoute: "Adverbs",
+                highlighted: false
+            },
+            {
                 linkLabel: "Pronombres y artículos",
                 linkRoute: "Pronouns",
+                highlighted: false
+            },
+            {
+                linkLabel: "Adposiciones",
+                linkRoute: "Appositions",
                 highlighted: false
             },
             {
@@ -78,8 +88,18 @@ const navbarElements = [
                 highlighted: false
             },
             {
+                linkLabel: "Sintaxis y ortografía",
+                linkRoute: "Syntax",
+                highlighted: false
+            },
+            {
                 linkLabel: "Fonética",
                 linkRoute: "Phonetics",
+                highlighted: false
+            },
+            {
+                linkLabel: "Etimología",
+                linkRoute: "Ethymology",
                 highlighted: false
             },
             {

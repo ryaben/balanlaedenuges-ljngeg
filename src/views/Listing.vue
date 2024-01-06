@@ -19,11 +19,12 @@ import store from '../store';
         </div>
 
         <div class='info-listing' id='wordListing' v-show="wordsDictionary.length > 0">
-            <WordTooltip v-if="tooltipDisplay" :word-data="tooltipWordData" :position="{ y: mousePosY, x: mousePosX }" :favorite-simple-mode="true" />
+            <WordTooltip v-if="tooltipDisplay" :word-data="tooltipWordData" :position="{ y: mousePosY, x: mousePosX }"
+                :favorite-simple-mode="true" />
 
             <p class='letter-stats'><b>{{ activeLetterRoots.length }} palabras</b> comienzan con {{ activatedLetter }},
                 dentro de <b>{{ filteredVisibleRoots.length }} raíces</b>.</p>
-            <RootTree v-for="(root, i) in filteredVisibleRoots" :key="i" :root-title="root" :displayed="false"
+            <RootTree v-for="(root, i) in filteredVisibleRoots" :key="componentKey" :root-title="root" :displayed="false"
                 :active-letter="activatedLetter" @toggle-tooltip="toggleTooltipDisplay" @tooltip-data="sendTooltipData" />
         </div>
         <ListingBottombar />
@@ -44,10 +45,12 @@ export default {
                 word: 'Placeholder', root: 'Placeholder', description: 'Placeholder',
                 types: [''], subtypes: [''], definitions: [''], examples: ['']
             },
+            filteredVisibleRoots: [],
             tooltipDisplay: false,
             windowHeight: window.innerHeight,
             mousePosX: 0,
-            mousePosY: 0
+            mousePosY: 0,
+            componentKey: 0
         }
     },
     computed: {
@@ -55,29 +58,31 @@ export default {
             return store.getters.dictionary;
         },
         activeLetterRoots() {
-            return this.wordsDictionary.filter(el => this.normalizeString(el.root.charAt(0)) === this.activatedLetter).sort();
-        },
-        filteredVisibleRoots() {
+            return this.wordsDictionary.filter(el => this.normalizeString(el.root.charAt(0)) === this.activatedLetter);
+        }
+    },
+    methods: {
+        filterVisibleRoots() {
             const that = this;
             let visibleRoots = [];
 
-            this.wordsDictionary.forEach(function (word) {
+            this.activeLetterRoots.forEach(function (word) {
                 let wordTypes = that.writeArray(word.types);
                 let wordSubtypes = that.writeArray(word.subtypes);
 
-                if (visibleRoots.find(el => el === word.root) === undefined && that.normalizeString(word.root.charAt(0)) === that.activatedLetter) {
+                if (visibleRoots.find(el => el === word.root) === undefined) {
                     if ((wordTypes.includes('Adverbio') || wordTypes.includes('Interjección') || wordTypes.includes('Adposición') || wordTypes.includes('Pronombre') || wordTypes.includes('Artículo') || wordTypes.includes('Conjunción') || wordTypes.includes('Contracción') || wordSubtypes.includes('común') || wordSubtypes.includes('exceptuado') || wordSubtypes.includes('extranjerismo') || (wordSubtypes.includes('compuesto') && word.hasParent === false)) && !wordTypes.includes('Adjetivo')) {
                         visibleRoots.push(word.root);
                     }
                 }
             });
 
-            return visibleRoots.sort();
-        }
-    },
-    methods: {
+            return this.filteredVisibleRoots = visibleRoots.sort((a, b) => (a > b) ? 1 : -1);
+        },
         activateLetter(newLetter) {
             this.activatedLetter = newLetter;
+            this.filterVisibleRoots();
+            this.forceRerender();
         },
         normalizeString(string) {
             return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -100,15 +105,15 @@ export default {
         onResize() {
             this.windowHeight = window.innerHeight;
         },
-        displayTooltip(incomingWordData) {
-            this.tooltipWordData = incomingWordData;
-        },
         toggleTooltipDisplay(incomingTooltipDisplayValue) {
             this.tooltipDisplay = incomingTooltipDisplayValue;
         },
         sendTooltipData(incomingWordData) {
             this.tooltipWordData = incomingWordData;
         },
+        forceRerender() {
+            this.componentKey += 1;
+        }
     },
     mounted() {
         document.addEventListener("mousemove", (event) => {
@@ -116,6 +121,8 @@ export default {
             this.mousePosY = event.clientY;
         });
         window.addEventListener('resize', this.onResize);
+
+        this.filterVisibleRoots();
     },
 }
 </script>
@@ -182,20 +189,5 @@ export default {
     margin: 0 4px 8px 4px;
     border-bottom: 1px solid black;
     font-size: 15px;
-}
-
-.loading-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.loading-container img {
-    width: 120px;
-    margin-bottom: 10px;
-}
-
-.loading-container label {
-    font-size: 18px;
 }
 </style>

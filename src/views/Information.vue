@@ -316,7 +316,7 @@
           </div>
           <div id="dataCurrency" class="data-table-fact">
             <p id="dataCurrencyTitle" class="fact-title">Moneda</p>
-            <p id="dataCurrencyValue" class="fact-value">Corona libraterrense (BK$)</p>
+            <p id="dataCurrencyValue" class="fact-value"><a href="https://goerli.etherscan.io/token/0xb9049397072707b504b80025ad149b2e5ead93e9" target="_blank">Corona libraterrense (BK$)</a></p>
           </div>
           <div id="dataTimezone" class="data-table-fact">
             <p id="dataTimezoneTitle" class="fact-title"><a href="https://es.wikipedia.org/wiki/Huso_horario"

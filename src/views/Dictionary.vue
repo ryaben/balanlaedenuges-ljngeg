@@ -1,75 +1,65 @@
 <script setup>
 import WordTooltip from "../components/WordTooltip.vue";
 import store from "../store";
+import { notify } from "@kyvg/vue3-notification";
 </script>
 
 <template>
-  <section id="searchScreen">
-    <div id="searchBox">
+  <section id="searchScreen" :class="{ 'vertical-center': wordsDictionary.length === 0 }">
+    <div class="loading-container" v-show="wordsDictionary.length === 0">
+      <img src="/img/loading.gif" alt="Loading">
+      <label>Cargando base de datos, por favor espere...</label>
+    </div>
+
+    <div v-if="wordsDictionary.length > 0" id="searchBox">
       <div id="specialCharacters">
-        <label style="margin-left: 5px" class="special-character">à</label>
-        <label class="special-character">è</label>
-        <label class="special-character">ĵ</label>
-        <label class="special-character">ò</label>
-        <label class="special-character">ù</label>
-        <label class="special-character">ä</label>
-        <label class="special-character">ë</label>
-        <label class="special-character">ö</label>
-        <label class="special-character">ü</label>
-        <label class="special-character">ø</label>
+        <label style="margin-left: 5px" class="special-character" @click="writeCharacter">à</label>
+        <label class="special-character" @click="writeCharacter">è</label>
+        <label class="special-character" @click="writeCharacter">ĵ</label>
+        <label class="special-character" @click="writeCharacter">ò</label>
+        <label class="special-character" @click="writeCharacter">ù</label>
+        <label class="special-character" @click="writeCharacter">ä</label>
+        <label class="special-character" @click="writeCharacter">ë</label>
+        <label class="special-character" @click="writeCharacter">ö</label>
+        <label class="special-character" @click="writeCharacter">ü</label>
+        <label class="special-character" @click="writeCharacter">ø</label>
         <div id="languageSelection">
-          <input
-            id="language-bal"
-            class="language"
-            name="language"
-            type="radio"
-            checked
-          />
+          <input v-model="searchLanguage" id="language-bal" class="language" name="language" type="radio"
+            value="balanlaedenuges" />
           <label class="language-option" for="language-bal">
             <img src="/img/flag.png" alt="BAL" width="32" draggable="false" />
           </label>
-          <input
-            id="language-esp"
-            class="language"
-            name="language"
-            type="radio"
-          />
+          <input v-model="searchLanguage" id="language-esp" class="language" name="language" type="radio"
+            value="spanish" />
           <label class="language-option" for="language-esp">
             <img src="/img/flag2.png" alt="ESP" width="32" draggable="false" />
           </label>
         </div>
       </div>
-      <input
-        id="wordSearch"
-        v-model="searchString"
-        type="text"
-        placeholder="Buscar una palabra..."
-      />
+      <input id="wordSearch" v-model="searchString" type="text" placeholder="Buscar una palabra..." />
       <div id="perfectMatchContainer">
         <label for="perfect-match">Resultado exacto</label>
-        <input id="perfect-match" type="checkbox" name="perfect-match" />
+        <input v-model="perfectMatch" id="perfect-match" type="checkbox" name="perfect-match" />
       </div>
       <button id="searchButton" @click="search">Buscar</button>
     </div>
-    <div id="searchResult">
-      <p v-if="searchString == ''" class="no-search">
+    <div v-if="wordsDictionary.length > 0" id="searchResult">
+      <p v-show="!searchPerformed" class="no-search">
         En este diccionario libraterrense-español puede descubrir el significado
         de un vocablo en el idioma nacional, o buscar una palabra o frase en
         español para conocer una posible traducción. También podemos
-        <span class="random-search-text">cargar una palabra al azar.</span>
+        <span class="random-search-text" @click="randomSearch">cargar una palabra al azar.</span>
       </p>
+      <div v-show="searchPerformed && searchResult.length === 0" class="empty-search">
+        La búsqueda no arrojó resultados.
+      </div>
 
-      <WordTooltip
-        v-for="(word, i) in searchResult"
-        :key="i"
-        :position="{ y: 0, x: 0 }"
-        :word-data="word"
-        :favorite-simple-mode="true"
-      />
+      <WordTooltip v-for="(word, i) in searchResult" :key="i" :position="{ y: 0, x: 0 }" :word-data="word"
+        :favorite-simple-mode="true" />
     </div>
-    <div v-show="searchString != ''" id="resultStats" class="results-bar">
-      <p class="results-text"></p>
-      <p class="last-update-text"></p>
+    <div v-show="searchPerformed" id="resultStats" class="results-bar">
+      <p class="results-text">Resultados obtenidos: <b>{{ searchResult.length }}</b></p>
+      <button id="randomWord" class="portal-submit" @click="randomSearch">Palabra al azar</button>
     </div>
   </section>
 </template>
@@ -81,8 +71,11 @@ export default {
   },
   data() {
     return {
+      searchPerformed: false,
       searchString: "",
       searchResult: [],
+      searchLanguage: 'balanlaedenuges',
+      perfectMatch: false
     };
   },
   computed: {
@@ -92,11 +85,70 @@ export default {
   },
   methods: {
     search() {
-      const that = this;
+      if (this.searchString.length < 3) {
+        notify({
+          title: "Cantidad mínima de caracteres no alcanzada",
+          text: "Necesita ingresar al menos tres (3) caracteres para iniciar una consulta.",
+          type: "warning"
+        });
+      } else {
+        const that = this;
+        const normalizedSearch = this.normalizeString(this.searchString.toLowerCase());
 
-      this.searchResult = this.wordsDictionary.filter(function (word) {
-        return word.word.toLowerCase().includes(that.searchString.toLowerCase());
-      });
+        this.searchPerformed = true;
+
+        if (this.searchLanguage === "spanish") {
+          let spanishResult = []
+
+          this.wordsDictionary.forEach(function (word) {
+            word.definitions.forEach(function (definition) {
+              const normalizedDefinition = that.normalizeString(definition.toLowerCase());
+
+              if (!that.perfectMatch && normalizedDefinition.includes(normalizedSearch)) {
+                spanishResult.push(word);
+              } else if (that.perfectMatch && normalizedDefinition === normalizedSearch) {
+                spanishResult.push(word);
+              }
+            });
+          });
+
+          this.searchResult = spanishResult;
+
+        } else if (this.searchLanguage === "balanlaedenuges") {
+          this.searchResult = this.wordsDictionary.filter(function (word) {
+            const normalizedWord = that.normalizeString(word.word.toLowerCase());
+            if (!that.perfectMatch) {
+              return normalizedWord.includes(normalizedSearch);
+            } else {
+              return normalizedWord === normalizedSearch;
+            }
+          });
+
+        }
+
+        this.searchResult.sort((a, b) => (a.word > b.word) ? 1 : ((b.word > a.word) ? -1 : 0));
+
+        notify({
+          title: "Solicitud completada",
+          text: `La búsqueda ha devuelto el/los ${that.searchResult.length} resultado(s) coincidente(s) con el criterio.`,
+          type: "success"
+        });
+      }
+    },
+    randomSearch() {
+      const max = this.wordsDictionary.length - 1;
+      const randomIndex = Math.floor(Math.random() * (max - 0 + 1) + 0);
+
+      this.searchLanguage = 'balanlaedenuges';
+      this.searchString = this.wordsDictionary[randomIndex].word;
+      this.perfectMatch = true;
+      this.search();
+    },
+    writeCharacter(event) {
+      this.searchString += event.target.innerHTML;
+    },
+    normalizeString(string) {
+      return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     },
   },
 };
@@ -108,7 +160,11 @@ export default {
   flex-direction: column;
   overflow: hidden;
   padding: 0;
-  min-height: 500px;
+  min-height: 353px;
+}
+
+#searchScreen.vertical-center {
+  justify-content: center;
 }
 
 #searchBox {
@@ -159,6 +215,7 @@ export default {
   margin-right: 15px;
   padding-right: 5px;
 }
+
 #perfectMatchContainer label {
   font-size: 0.7em;
 }
@@ -169,10 +226,15 @@ export default {
   background-color: darkgrey;
 }
 
+#searchResult {
+  min-height: 244px;
+}
+
 .special-character {
   font-size: 1.2em;
   margin: auto 1.5px auto 1.5px;
 }
+
 .special-character:hover {
   background-color: red;
   color: white;
@@ -184,6 +246,7 @@ export default {
   align-items: center;
   cursor: pointer;
 }
+
 .language-option img {
   border-radius: 4px;
 }
@@ -204,5 +267,49 @@ p.no-search {
 .random-search-text {
   color: red;
   cursor: pointer;
+}
+
+.results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: lightgrey;
+  min-height: calc(6vh - 2px);
+  padding-left: 15px;
+  padding-right: 10px;
+  border-top: 2px solid black;
+  border-bottom-left-radius: 6px;
+}
+
+.results-text {
+  font-size: 15px;
+  margin: 0px;
+}
+
+.searched-word,
+.empty-search {
+  padding: 1em;
+  border: 1px dashed grey;
+  border-radius: 6px;
+  margin: 13px;
+}
+
+.empty-search {
+  text-align: center;
+}
+
+#randomWord {
+  width: 20%;
+  max-width: 150px;
+  margin: 5px 0 5px 0;
+  min-height: 35px;
+}
+
+/* Tooltip */
+
+.word-tooltip.searched-word {
+  width: auto;
+  border: 1px dashed grey;
+  margin: 13px;
 }
 </style>

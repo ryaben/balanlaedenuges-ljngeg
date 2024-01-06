@@ -14,17 +14,8 @@ defineProps({
 </script>
 
 <template>
-  <div
-    :id="'favorite-' + wordData.id"
-    class="favorite-entry"
-    :class="{ 'extended-mode': simpleMode === false }"
-  >
-    <img
-      class="favorite-icon"
-      :src="iconSource"
-      alt="Favorite"
-      @click="toggleFavorite"
-    />
+  <div :id="'favorite-' + wordData.id" class="favorite-entry" :class="{ 'extended-mode': simpleMode === false }">
+    <img class="favorite-icon" :src="iconSource" alt="Favorite" @click="toggleFavorite" />
     <label v-if="simpleMode === false" class="favorite-title">{{
       wordData.word
     }}</label>
@@ -45,23 +36,33 @@ export default {
   computed: {},
   methods: {
     toggleFavorite() {
-      let storage = JSON.parse(localStorage.getItem("favoritesStorage"));
+      try {
+        let storage = JSON.parse(localStorage.getItem("favoritesStorage"));
 
-      if (storage.find((el) => el.id === this.wordData.id) === undefined) {
-        storage.push({
+        if (storage.find((el) => el.id === this.wordData.id) === undefined) {
+          storage.push({
+            id: this.wordData.id,
+            word: this.wordData.word,
+          });
+          this.setLocalStorage(storage);
+          this.updateIconSource(favoriteIcon);
+
+        } else {
+          const that = this;
+          let filteredStorage = storage.filter(function (element) {
+            return element.id !== that.wordData.id;
+          });
+          this.setLocalStorage(filteredStorage);
+          this.updateIconSource(nonFavoriteIcon);
+        }
+      } catch {
+        const favorite = [{
           id: this.wordData.id,
-          word: this.wordData.word,
-        });
-        this.setLocalStorage(storage);
-        this.updateIconSource(favoriteIcon);
+          word: this.wordData.word
+        }];
 
-      } else {
-        const that = this;
-        let filteredStorage = storage.filter(function (element) {
-          return element.id !== that.wordData.id;
-        });
-        this.setLocalStorage(filteredStorage);
-        this.updateIconSource(nonFavoriteIcon);
+        this.setLocalStorage(favorite);
+        this.updateIconSource(favoriteIcon);
       }
     },
     setLocalStorage(value) {
@@ -72,12 +73,16 @@ export default {
     }
   },
   mounted() {
-    let storage = JSON.parse(localStorage.getItem("favoritesStorage"));
+    try {
+      let storage = JSON.parse(localStorage.getItem("favoritesStorage"));
 
-    if (storage.find((el) => el.id === this.wordData.id) === undefined) {
+      if (storage.find((el) => el.id === this.wordData.id) === undefined) {
+        this.updateIconSource(nonFavoriteIcon);
+      } else {
+        this.updateIconSource(favoriteIcon);
+      }
+    } catch {
       this.updateIconSource(nonFavoriteIcon);
-    } else {
-      this.updateIconSource(favoriteIcon);
     }
   }
 };
@@ -93,6 +98,7 @@ export default {
 .favorite-title {
   margin: 2px;
 }
+
 .favorite-title:hover {
   background-color: red;
   color: white;

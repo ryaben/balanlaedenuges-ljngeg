@@ -19,9 +19,13 @@ import Statistics from "../views/Statistics.vue";
 import Nouns from "../views/Nouns.vue";
 import Verbs from "../views/Verbs.vue";
 import Adjectives from "../views/Adjectives.vue";
+import Adverbs from "../views/Adverbs.vue";
+import Appositions from "../views/Appositions.vue";
 import Pronouns from "../views/Pronouns.vue";
 import Compounds from "../views/Compounds.vue";
+import Syntax from "../views/Syntax.vue";
 import Phonetics from "../views/Phonetics.vue";
+import Ethymology from "../views/Ethymology.vue";
 import Guides from "../views/Guides.vue";
 
 //Rutas
@@ -112,6 +116,11 @@ const routes = [
     component: Adjectives
   },
   {
+    path: "/adverbios",
+    name: "Adverbs",
+    component: Adverbs
+  },
+  {
     path: "/pronombres",
     name: "Pronouns",
     component: Pronouns
@@ -122,9 +131,24 @@ const routes = [
     component: Compounds
   },
   {
+    path: "/sintaxis",
+    name: "Syntax",
+    component: Syntax
+  },
+  {
+    path: "/adposiciones",
+    name: "Appositions",
+    component: Appositions
+  },
+  {
     path: "/fonetica",
     name: "Phonetics",
     component: Phonetics
+  },
+  {
+    path: "/etimologia",
+    name: "Ethymology",
+    component: Ethymology
   },
   {
     path: "/guias",
