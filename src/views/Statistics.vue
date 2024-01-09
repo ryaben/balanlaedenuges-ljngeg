@@ -24,7 +24,8 @@ import store from '../store';
                 <p class="category-percentage">100.00%</p>
             </div>
 
-            <p v-if="typesList.length === 0" class="section-content" style="text-align: center; margin-top: 10px;">Haga clic en las categorías para desplegar más
+            <p v-if="typesList.length === 0" class="section-content" style="text-align: center; margin-top: 10px;">Haga clic
+                en las categorías para desplegar más
                 información.</p>
 
             <TypeStat v-for="(type, i) in typesList" :key="i" :type-name="type.name" :type-count="type.count"
@@ -110,5 +111,17 @@ export default {
 .listing-screen.vertical-center {
     justify-content: space-between;
     padding-top: 50px;
+}
+
+@media only screen and (max-width: 719px) {
+    #listingStats {
+        overflow-y: scroll;
+    }
+}
+
+@media only screen and (max-width: 659px) {
+    .listing-screen {
+        width: 100%;
+    }
 }
 </style>

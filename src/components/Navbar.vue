@@ -1,4 +1,6 @@
 <script setup>
+import NavLink from '../components/NavLink.vue';
+
 defineProps({
     navbarSections: {
         type: Array,
@@ -44,27 +46,18 @@ defineProps({
             </div>
         </div>
         <ul id='navLinks'>
-            <ul v-for="(section, i) in navbarSections" :key="i" class='nav-section' :label='section.sectionLabel'>
-                <li v-for="(link, j) in section.sectionLinks" class="nav-link"
-                    :class="{ 'nav-highlighted': link.highlighted }" :key="j"
-                    @click="colorLink('section' + i + 'navLink' + j)">
-                    <router-link class="router-link" :to="{ name: link.linkRoute }">{{ link.linkLabel }}</router-link>
-                </li>
-            </ul>
+            <NavLink v-for="(section, i) in navbarSections" :key="i" :section-data="section" />
         </ul>
     </nav>
 </template>
 
 <script>
 export default {
+    components: {
+        NavLink
+    },
     data() {
         return {
-            activeLink: 'section1navLink1'
-        }
-    },
-    methods: {
-        colorLink(navLink) {
-            this.activeLink = navLink;
         }
     }
 }
@@ -133,44 +126,45 @@ export default {
     cursor: pointer;
 }
 
-.nav-section {
-    padding: 0;
-    margin-top: 8px;
-    pointer-events: none;
+@media only screen and (max-width: 659px) {
+    #optionsTab {
+        display: none;
+        border-top-right-radius: 5px;
+    }
+
+    #nav-wrapper {
+        width: auto;
+    }
+
+    nav {
+        z-index: 2;
+        background: white;
+        width: auto;
+        border: 2px solid black;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        margin-top: 0;
+        margin-bottom: 0.5vh;
+        height: auto;
+    }
+
+    #navLinks {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: auto;
+        border-radius: 8px;
+        padding: 10px 0 10px 0;
+        margin: auto 10px auto 10px;
+        overflow: hidden;
+    }
 }
 
-.nav-section:before {
-    display: block;
-    content: attr(label);
-    font-size: 1.5em;
-    font-weight: bold;
-    color: darkred;
-    border-bottom: 1px solid darkred;
-}
-
-.nav-link {
-    list-style: none;
-    font-size: 1.2em;
-    margin: 3px auto 3px auto;
-    border-radius: 4px;
-    cursor: pointer;
-    pointer-events: all;
-}
-
-.nav-link:hover {
-    background-color: indianred;
-    color: white;
-    transition: ease;
-    transition-duration: 100ms;
-}
-
-.nav-link .router-link-active {
-    background-color: red;
-    color: white;
-    border-radius: 4px;
-}
-
-.nav-link.nav-highlighted {
-    font-weight: bold;
+@media only screen and (max-width: 470px) {
+    nav {
+        width: calc(calc(var(--vw-mobile, 1vw) * 99) - 8px);
+    }
 }
 </style>

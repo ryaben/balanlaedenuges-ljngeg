@@ -44,4 +44,29 @@ export default {
 #tabBtns {
   display: flex;
 }
+
+@media only screen and (max-width: 860px) {
+  #listingLowbar {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 719px) {
+  .tab-btn {
+    width: 105px;
+  }
+}
+
+@media only screen and (max-width: 659px) {
+  #tabBtns {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .tab-btn {
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
 </style>

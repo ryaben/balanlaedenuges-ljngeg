@@ -101,11 +101,6 @@ const navbarElements = [
                 linkLabel: "Etimología",
                 linkRoute: "Ethymology",
                 highlighted: false
-            },
-            {
-                linkLabel: "Guías de vocabulario",
-                linkRoute: "Guides",
-                highlighted: false
             }
         ]
     }

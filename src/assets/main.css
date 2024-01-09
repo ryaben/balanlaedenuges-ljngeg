@@ -548,6 +548,62 @@ input.portal-submit,
     margin-bottom: 0;
 }
 
+.portal-directory-entry {
+    display: flex;
+    justify-content: flex-start;
+    background-color: white;
+    color: black;
+    border-bottom: 1px dashed red;
+    border-radius: 0px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: ease-in 0.15s;
+    padding: 2px;
+    margin-bottom: 4px;
+}
+
+.portal-directory-entry:last-of-type {
+    margin-bottom: 0;
+}
+
+.portal-directory-entry:hover {
+    background-color: red;
+    color: white;
+    border-radius: 4px;
+}
+
+.portal-directory-entry label {
+    cursor: pointer;
+    width: 44%;
+}
+
+.portal-directory-entry label:first-of-type {
+    width: fit-content;
+    padding-right: 5px;
+    margin-right: 5px;
+    border-right: 1px solid black;
+}
+
+.portal-directory-label {
+    font-size: 15px;
+}
+
+.results-bar {
+    display: flex;
+    align-items: center;
+    background-color: lightgrey;
+    min-height: calc(6vh - 2px);
+    padding-left: 15px;
+    padding-right: 15px;
+    border-top: 2px solid black;
+    border-bottom-left-radius: 6px;
+}
+
+.results-text {
+    font-size: 15px;
+    margin: 0px;
+}
+
 .recovery-link {
     padding: 4px;
     border-radius: 6px;
@@ -741,4 +797,16 @@ input.portal-submit,
 
 .vue-notification .notification-content {
     font-size: 14px;
+}
+
+/* Animations */
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }

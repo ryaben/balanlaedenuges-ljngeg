@@ -6,8 +6,9 @@ import FavoriteStar from "../components/FavoriteStar.vue";
 <template>
   <section class="listing-screen">
     <div class="info-listing" id="favoritesListing">
-        <h3 v-if="gatherFavorites.length == 0" class="no-favorites">Aún no hay favoritos agregados.</h3>
-        <FavoriteStar v-if="gatherFavorites" v-for="(favorite, i) in gatherFavorites" :key="i" :simple-mode="false" :word-data="favorite" />
+      <h3 v-if="gatherFavorites.length == 0" class="no-favorites">Aún no hay favoritos agregados.</h3>
+      <FavoriteStar v-if="gatherFavorites" v-for="(favorite, i) in gatherFavorites" :key="i" :simple-mode="false"
+        :word-data="favorite" />
     </div>
     <ListingBottombar />
   </section>
@@ -25,7 +26,7 @@ export default {
   computed: {
     gatherFavorites() {
       try {
-        return JSON.parse(localStorage.getItem("favoritesStorage"));        
+        return JSON.parse(localStorage.getItem("favoritesStorage"));
       } catch {
         return [];
       }
@@ -53,5 +54,11 @@ export default {
 .no-favorites {
   font-size: 20px;
   margin: 20px auto 0 auto;
+}
+
+@media only screen and (max-width: 659px) {
+  .listing-screen {
+    width: 100%;
+  }
 }
 </style>

@@ -29,13 +29,15 @@ defineProps({
     <p class="category-percentage">{{ ((typeCount * 100) / wordsDictionary.length).toFixed(2) + "%" }}</p>
   </div>
 
-  <div v-show="displaySubtypes" v-for="(subtype, i) in subtypesData" :key="i" :id="'category-' + subtype.name"
-    class="category-entry category-nonclickable" :class="{ 'last-entry': i === subtypesData.length - 1 }">
-    <div class="colorer" :style="{ 'width': ((subtype.count * 100) / wordsDictionary.length).toFixed(2) + '%' }"></div>
-    <p class="category-title">{{ subtype.name }}</p>
-    <p class="category-value">{{ subtype.count }}</p>
-    <p class="category-percentage">{{ ((subtype.count * 100) / wordsDictionary.length).toFixed(2) + "%" }}</p>
-  </div>
+  <TransitionGroup name="fade">
+    <div v-show="displaySubtypes" v-for="(subtype, i) in subtypesData" :key="i" :id="'category-' + subtype.name"
+      class="category-entry category-nonclickable" :class="{ 'last-entry': i === subtypesData.length - 1 }">
+      <div class="colorer" :style="{ 'width': ((subtype.count * 100) / wordsDictionary.length).toFixed(2) + '%' }"></div>
+      <p class="category-title">{{ subtype.name }}</p>
+      <p class="category-value">{{ subtype.count }}</p>
+      <p class="category-percentage">{{ ((subtype.count * 100) / wordsDictionary.length).toFixed(2) + "%" }}</p>
+    </div>
+  </TransitionGroup>
 </template>
 
 <script>
@@ -59,4 +61,6 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

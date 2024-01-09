@@ -5,7 +5,9 @@ import {
     signOut,
     onAuthStateChanged,
 } from 'firebase/auth';
-import { auth } from '../firebase/init.js';
+import { doc, updateDoc } from "firebase/firestore";
+import { updateProfile } from 'firebase/auth';
+import { auth, db } from '../firebase/init.js';
 import { notify } from '@kyvg/vue3-notification';
 import { ConnectWalletButton } from "vue-connect-wallet";
 import { useMetaMaskWallet } from "vue-connect-wallet";
@@ -65,8 +67,9 @@ import { saveAs } from 'file-saver';
 
             <div v-show="activeTab === 'Identity'" id="portalIdentitySection" class="portal-section main">
                 <div id="portalProfile" class="portal-form wide top">
-                    <input id="portalProfileSubmit" class="portal-submit upper-corner" type="submit"
-                        value="Actualizar datos">
+                    <button id="portalProfileSubmit" class="portal-submit upper-corner"
+                        @click="updateUserProfile">Actualizar
+                        datos</button>
                     <h3 class="section-minor-title less-margin left">Foto personal</h3>
                     <div id="portalProfilePictureContainer">
                         <img id="portalIdentityPicture" class="portal-identity-picture" :src="profilePicture" alt="Foto">
@@ -128,7 +131,7 @@ import { saveAs } from 'file-saver';
                                 <label id="portalIDCardNote" class="id-card-label">Alentaj<br>tjlaej<br>Gërtaj</label>
                             </div>
                             <img id="portalIDCardBarcode" src="/img/barcode.gif" alt="Barras">
-                            <label id="portalIDCardNumber" class="id-card-label"></label>
+                            <label id="portalIDCardNumber" class="id-card-label">{{ processedIDNumber }}</label>
                         </div>
                     </div>
                 </div>
@@ -151,13 +154,13 @@ import { saveAs } from 'file-saver';
                             El Portal configurará automáticamente el uso de la red de pruebas Goerli (donde opera BK$)
                             y le solicitará importar el token de las coronas libraterrenses.
                         </p>
-                        <p v-if="profileWallet" id="portalWalletBalance" class="portal-title red larger">Su balance es: {{ getBalance }}</p>
+                        <!-- <p v-if="profileWallet" id="portalWalletBalance" class="portal-title red larger">Su balance es: {{ getBalance }}</p> -->
                         <ConnectWalletButton id="portalLinkWallet" class="portal-submit" :address="profileWallet"
                             @click="connectWallet">
                             Conectar monedero
                         </ConnectWalletButton>
                     </div>
-                    <div id="walletLinkTrue" class="wallet-container">
+                    <div style="display: none;" id="walletLinkTrue" class="wallet-container">
                         <p id="portalWalletAddress" class="portal-title smaller"></p>
                         <hr class="form-divider special-margin">
                         <h3 class="section-minor-title less-margin left">Hacer un pago</h3>
@@ -220,12 +223,17 @@ import { saveAs } from 'file-saver';
 
             <div v-show="activeTab === 'Directory'" id="portalDirectorySection" class="portal-section main">
                 <div id="portalDirectory" class="portal-form wide top">
-
+                    <div v-for="(user, i) in usersList" :key="i" class="portal-directory-entry">
+                        <label class="portal-directory-label">{{ user.id }}</label>
+                        <label class="portal-directory-label">Registro: {{ new Date(user.registrationDate.seconds *
+                            1000).toDateString() }}</label>
+                        <label class="portal-directory-label"></label>
+                    </div>
                 </div>
             </div>
 
             <div v-show="activeTab === 'Directory'" class="results-bar">
-                <p class="results-text"></p>
+                <p class="results-text">Hay <b>{{ usersList.length }}</b> ciudadanos digitales registrados.</p>
             </div>
         </section>
     </keep-alive>
@@ -241,6 +249,7 @@ export default {
             paymentReceiver: '',
             paymentAmount: 1,
             user: {},
+            profileNumber: 0,
             profileName: '',
             profileEmail: '',
             profilePicture: '',
@@ -251,6 +260,9 @@ export default {
         }
     },
     computed: {
+        usersList() {
+            return store.getters.users;
+        },
         profileExtraData() {
             const that = this;
             return store.getters.users.find(el => el.id === that.profileEmail);
@@ -270,29 +282,10 @@ export default {
         processedBirthdate() {
             return new Date(this.profileBirthdate.seconds * 1000).toDateString();
         },
-        async getBalance() {
-            const web3 = new Web3(window.ethereum);
-            const tokenInst = new web3.eth.Contract([{
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "_owner",
-                        "type": "address"
-                    }
-                ],
-                "name": "balanceOf",
-                "outputs": [
-                    {
-                        "name": "balance",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "type": "function"
-            }], '0xb9049397072707b504b80025AD149b2E5eaD93e9');
-            const balance = await tokenInst.methods.balanceOf(this.profileWallet).call();
-            const cleanBalance = web3.utils.fromWei(balance, "ether");
-            return cleanBalance;
+        processedIDNumber() {
+            const numberLength = this.profileNumber.toString().length;
+            const zerosLength = 6 - numberLength;
+            return `#${"0".repeat(zerosLength)}${this.profileNumber}`;
         }
     },
     methods: {
@@ -307,6 +300,7 @@ export default {
                     this.profileName = user.displayName;
                     this.profileEmail = user.email;
                     this.profilePicture = user.photoURL;
+                    this.profileNumber = this.profileExtraData.number;
                     this.profileGender = this.profileExtraData.gender;
                     this.profileBirthdate = this.profileExtraData.birthdate;
                     this.profileWallet = this.profileExtraData.wallet;
@@ -341,7 +335,7 @@ export default {
                     // this.walletBalance = this.getBalance();
                     notify({
                         title: 'Conexión con Metamask',
-                        text: 'El monedero se ha importado exitosamente.',
+                        text: 'El monedero se ha conectado exitosamente.',
                         type: 'success'
                     });
                 }
@@ -380,6 +374,32 @@ export default {
                         type: 'error'
                     });
                 });
+        },
+        async updateUserProfile() {
+            const that = this;
+
+            updateProfile(auth.currentUser, {
+                displayName: that.profileName,
+                photoURL: that.profilePicture,
+            }).then(() => {
+                const userRef = doc(db, "users", that.profileEmail);
+
+                updateDoc(userRef, {
+                    gender: that.profileGender
+                }).then(() => {
+                    notify({
+                        title: 'Actualización de perfil',
+                        text: 'Los cambios se guardaron exitosamente',
+                        type: 'success'
+                    });
+                });
+            }).catch((error) => {
+                notify({
+                    title: 'Actualización de perfil',
+                    text: 'Ocurrió el siguiente error al ejecutar los cambios: ' + error,
+                    type: 'error'
+                });
+            });
         },
         downloadID() {
             html2canvas(document.querySelector("#portalIDCard"), { useCORS: true }).then(canvas => {
@@ -619,5 +639,51 @@ export default {
     font-size: 16px;
     text-align: center;
     margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 999px) {
+    .portal-navbar-button {
+        width: 45px;
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+
+    .portal-navbar-button.selected,
+    .portal-navbar-button:hover {
+        width: 97px;
+    }
+
+    .portal-navbar-button.selected .portal-navbar-label,
+    .portal-navbar-button:hover .portal-navbar-label {
+        display: block;
+    }
+
+    .portal-navbar-label {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 470px) {
+    #portalNavbarTitle {
+        display: block;
+    }
+
+    .portal-navbar-button.selected,
+    .portal-navbar-button:hover {
+        width: 45px;
+    }
+
+    .portal-navbar-button.selected .portal-navbar-label,
+    .portal-navbar-button:hover .portal-navbar-label {
+        display: none;
+    }
+
+    .portal-navbar-label {
+        display: none;
+    }
+
+    .portal-directory-label {
+        font-size: 12px;
+    }
 }
 </style>

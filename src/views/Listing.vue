@@ -190,4 +190,22 @@ export default {
     border-bottom: 1px solid black;
     font-size: 15px;
 }
+
+@media only screen and (max-width: 1120px) {
+    #wordListing {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 719px) {
+    #wordListing {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 659px) {
+    .listing-screen {
+        width: 100%;
+    }
+}
 </style>

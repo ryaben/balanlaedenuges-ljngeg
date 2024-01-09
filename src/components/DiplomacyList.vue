@@ -21,11 +21,9 @@ defineProps({
   <div class="diplomacy-list-container">
     <div v-for="(entry, i) in diplomaticEntries" :key="i" class="diplomatic-entry">
       <img class="foreign-logo" :src="'/img/' + entry.flag" alt="Flag">
-      <label class="foreign-name"><a :href="entry.partnerLink"
-          target="_blank">{{ entry.partnerName }}</a></label>
+      <label class="foreign-name"><a :href="entry.partnerLink" target="_blank">{{ entry.partnerName }}</a></label>
       <label class="foreign-status">{{ entry.relation }}</label>
-      <label class="foreign-document"><a :href="entry.accessLink"
-          target="_blank">{{ entry.accessText }}</a></label>
+      <label class="foreign-document"><a :href="entry.accessLink" target="_blank">{{ entry.accessText }}</a></label>
     </div>
   </div>
 </template>
@@ -60,6 +58,7 @@ export default {
   grid-row-gap: 10px;
   margin-bottom: 10px;
 }
+
 .diplomatic-entry:last-child {
   margin-bottom: 0;
 }
@@ -80,5 +79,14 @@ export default {
 
 .foreign-document {
   font-weight: bold;
+}
+
+@media only screen and (max-width: 470px) {
+
+  .foreign-name,
+  .foreign-status,
+  .foreign-document {
+    font-size: 12px;
+  }
 }
 </style>

@@ -66,6 +66,7 @@ export default {
   border-radius: 14px;
   cursor: pointer;
 }
+
 .footer-button:hover {
   filter: grayscale(0.3);
 }
@@ -99,5 +100,24 @@ export default {
   font-size: 0.9em;
   max-width: 25vw;
   margin: auto 5px auto 5px;
+}
+
+@media only screen and (max-width: 910px) {
+  #othersContainer {
+    flex-direction: column;
+  }
+
+  #visitorsCounterContainer {
+    margin-bottom: 15px;
+  }
+
+  #visitorsCounterTitle {
+    text-align: center;
+  }
+
+  a:has(#contactButton) {
+    width: 55%;
+    margin-top: 10px;
+  }
 }
 </style>

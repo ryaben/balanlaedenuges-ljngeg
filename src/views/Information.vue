@@ -245,22 +245,35 @@
       <p class="data-main-text">
         En Libraterra, la práctica del deporte y de las actividades físicas y lúdicas está muy generalizada entre los
         habitantes. De acuerdo a algunas estimaciones aproximadas, se cree que cerca de la mitad de las personas mayores
-        de 12 años practica un deporte. El fútbol, al igual que en la mayoría del resto del mundo occidental, es un deporte
-        hegemónico para los libraterrenses y cautiva una enorme cantidad de adeptos. No muy atrás aparecen los elementos más
-        vinculados a las Olimpíadas, como las distintas disciplinas del atletismo, la natación, el ciclismo, y como asimismo
-        la arquería profesional. Al mismo tiempo, entre los deportes de mesa se destacan con euforia el ajedrez, los juegos
+        de 12 años practica un deporte. El fútbol, al igual que en la mayoría del resto del mundo occidental, es un
+        deporte
+        hegemónico para los libraterrenses y cautiva una enorme cantidad de adeptos. No muy atrás aparecen los elementos
+        más
+        vinculados a las Olimpíadas, como las distintas disciplinas del atletismo, la natación, el ciclismo, y como
+        asimismo
+        la arquería profesional. Al mismo tiempo, entre los deportes de mesa se destacan con euforia el ajedrez, los
+        juegos
         de cartas intercambiables como <i>Magic: The Gathering</i> y el póker.
         <br>
-        En un camino paralelo y muy similar, desde 2023 ha comenzado a surgir un marcado interés por los deportes electrónicos,
-        específica y puntualmente por <i>Rocket League</i>, que convoca incluso jugadores profesionales en representación de
+        En un camino paralelo y muy similar, desde 2023 ha comenzado a surgir un marcado interés por los deportes
+        electrónicos,
+        específica y puntualmente por <i>Rocket League</i>, que convoca incluso jugadores profesionales en representación
+        de
         los colores nacionales. Un gran hito terminó por basamentar un sólido vínculo con este juego, y se trata
-        de la <a href="https://micronaciones.com/libraterra-gano-campeonato-del-mundo-de-rocket-league-2023/" target="_blank">
-        obtención de la Primera Copa del Mundo Micronacional de Rocket League</a> a manos de la escuadra libraterrense, la que
-        fuera organizada por la incipiente <a href="https://twitter.com/eMicronations" target="_blank">eMicronations</a>. Este
-        triunfo histórico determinó un acercamiento increyente con este tipo de disciplinas, y fue tal la magnitud de las fervorosas
-        consecuencias en la población joven libraterrense que la Corona decidió fundar la <i>Balanlàedenuges Kefjegur tjl Rocket
-        League</i> a partir de estos acontecimientos. Esta institución deportiva se encarga de administrar y organizar las
-        participaciones oficiales de Libraterra en dicho deporte electrónico, regulando las convocatorias de seleccionado y
+        de la <a href="https://micronaciones.com/libraterra-gano-campeonato-del-mundo-de-rocket-league-2023/"
+          target="_blank">
+          obtención de la Primera Copa del Mundo Micronacional de Rocket League</a> a manos de la escuadra libraterrense,
+        la que
+        fuera organizada por la incipiente <a href="https://twitter.com/eMicronations" target="_blank">eMicronations</a>.
+        Este
+        triunfo histórico determinó un acercamiento increyente con este tipo de disciplinas, y fue tal la magnitud de las
+        fervorosas
+        consecuencias en la población joven libraterrense que la Corona decidió fundar la <i>Balanlàedenuges Kefjegur tjl
+          Rocket
+          League</i> a partir de estos acontecimientos. Esta institución deportiva se encarga de administrar y organizar
+        las
+        participaciones oficiales de Libraterra en dicho deporte electrónico, regulando las convocatorias de seleccionado
+        y
         entablando comunicación con los entes supramicronacionales para conseguir la participación de la nación.
       </p>
       <br>
@@ -316,7 +329,9 @@
           </div>
           <div id="dataCurrency" class="data-table-fact">
             <p id="dataCurrencyTitle" class="fact-title">Moneda</p>
-            <p id="dataCurrencyValue" class="fact-value"><a href="https://goerli.etherscan.io/token/0xb9049397072707b504b80025ad149b2e5ead93e9" target="_blank">Corona libraterrense (BK$)</a></p>
+            <p id="dataCurrencyValue" class="fact-value"><a
+                href="https://goerli.etherscan.io/token/0xb9049397072707b504b80025ad149b2e5ead93e9" target="_blank">Corona
+                libraterrense (BK$)</a></p>
           </div>
           <div id="dataTimezone" class="data-table-fact">
             <p id="dataTimezoneTitle" class="fact-title"><a href="https://es.wikipedia.org/wiki/Huso_horario"
@@ -429,6 +444,7 @@ export default {
   color: black;
   text-decoration: none;
 }
+
 .data-index-link a:hover {
   color: #FF0000;
 }
@@ -629,4 +645,33 @@ p#dataTranslatedName {
 .data-image-container p {
   margin: 4px 0 8px 0;
 }
-</style>
+
+@media only screen and (max-width: 470px) {
+  #datasheetScreen {
+    flex-direction: column-reverse;
+    justify-content: space-between;
+  }
+
+  #dataText {
+    margin-right: 12px;
+  }
+
+  #dataOverview {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  .data-container,
+  #dataText {
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+
+  .data-container {
+    border-bottom: 2px solid black;
+  }
+
+  .data-grey-container:last-of-type {
+    margin-bottom: 0px;
+  }
+}</style>

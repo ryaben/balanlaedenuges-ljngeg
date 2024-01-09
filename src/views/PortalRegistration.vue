@@ -1,4 +1,5 @@
 <script setup>
+import store from '../store';
 import router from '../router/index';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
@@ -96,6 +97,9 @@ export default {
         }
     },
     computed: {
+        usersList() {
+            return store.getters.users;
+        },
         passwordMatch() {
             return this.userPassword === this.passwordCheck;
         }
@@ -115,9 +119,11 @@ export default {
                             setDoc(doc(db, "users", that.userEmail), {
                                 gender: that.userGender,
                                 birthdate: Timestamp.fromDate(that.convertTZ(new Date(that.userBirthdate), 'Etc/UTC')),
+                                registrationDate: Timestamp.fromDate(that.convertTZ(new Date(), 'Etc/UTC')),
                                 dictionaryEditor: false,
                                 activity: [],
-                                contactInfo: []
+                                contactInfo: [],
+                                number: that.usersList.length + 1
                             });
                             sendEmailVerification(auth.currentUser).then(function () {
                                 notify({
