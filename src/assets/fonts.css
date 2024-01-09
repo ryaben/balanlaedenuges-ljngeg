@@ -1,0 +1,27 @@
+@font-face {
+    font-family: Cambria;
+    src: url(./font/Cambria.ttf);
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Cambria;
+    src: url(./font/cambriab.ttf);
+    font-style: normal;
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: Cambria;
+    src: url(./font/CAMBRIAI.TTF);
+    font-style: italic;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Cambria;
+    src: url(./font/CAMBRIAZ.TTF);
+    font-style: italic;
+    font-weight: bold;
+}

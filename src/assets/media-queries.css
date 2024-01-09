@@ -1,0 +1,82 @@
+@media only screen and (max-width: 719px) {
+    header {
+        height: 14vh;
+    }
+
+    nav {
+        height: 73vh;
+    }
+
+    section {
+        height: 79vh;
+    }
+
+    .listing-screen {
+        min-width: 0;
+    }
+}
+
+@media only screen and (max-width: 659px) {
+    body {
+        overflow-y: hidden;
+        margin: 4px;
+    }
+
+    header {
+        border-bottom: none;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        margin-bottom: 0;
+    }
+
+    main {
+        flex-direction: column;
+    }
+
+    section {
+        width: auto;
+        max-width: calc(100% - 4px);
+        min-width: calc(100% - 53px);
+        height: 73.5vh;
+        max-height: calc(calc(var(--vh-mobile, 1vh) * 100) - calc(var(--vh-mobile, 1vh) * 14) - 40px - 4px - 2px - 19px);
+        min-height: calc(calc(var(--vh-mobile, 1vh) * 100) - calc(var(--vh-mobile, 1vh) * 14) - 40px - 4px - 2px - 74px);
+        position: absolute;
+        top: calc(calc(var(--vh-mobile, 1vh) * 14) + 40px + 4px + 6px);
+        z-index: 1;
+        overflow-y: scroll;
+    }
+
+    header,
+    nav,
+    section {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .listing-screen,
+    section {
+        margin-bottom: 8px;
+    }
+
+    footer {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 470px) {
+    header {
+        position: relative;
+        justify-content: center;
+        width: calc(calc(var(--vw-mobile, 1vw) * 99) - 8px);
+    }
+
+    section {
+        width: calc(calc(var(--vw-mobile, 1vw) * 99) - 8px);
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    section {
+        top: calc(calc(var(--vh-mobile, 1vh) * 15) + 40px + 4px + 2px);
+    }
+}

@@ -1,5 +1,0 @@
-DROP TABLE IF EXISTS heroku_bf7cb810553a372.`definition`;
-DROP TABLE IF EXISTS heroku_bf7cb810553a372.example;
-DROP TABLE IF EXISTS heroku_bf7cb810553a372.subtype;
-DROP TABLE IF EXISTS heroku_bf7cb810553a372.`type`;
-DROP TABLE IF EXISTS heroku_bf7cb810553a372.word;
