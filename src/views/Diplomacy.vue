@@ -43,7 +43,7 @@ export default {
                     partnerLink: 'https://sites.google.com/view/triduoria',
                     relation: 'Tratado de Reconocimiento Mutuo y Cooperación',
                     accessText: 'Descargar',
-                    accessLink: 'http://balanlaedenug.net.ar/public/doc/TRI001.pdf'
+                    accessLink: '/doc/TRI001.pdf'
                 },
                 {
                     flag: 'eldorado.png',
@@ -51,7 +51,7 @@ export default {
                     partnerLink: 'https://eldoradogov.wixsite.com/estadodeeldorado',
                     relation: 'Tratado de Paz, Amistad, Alianza y Reconocimiento Mutuo',
                     accessText: 'Descargar',
-                    accessLink: 'http://balanlaedenug.net.ar/public/doc/DOR001.pdf'
+                    accessLink: '/doc/DOR001.pdf'
                 },
                 {
                     flag: 'eskeria.png',
@@ -59,7 +59,7 @@ export default {
                     partnerLink: 'http://gobiernoeskeria.wixsite.com/oficial',
                     relation: 'Tratado de Relaciones Diplomáticas',
                     accessText: 'Descargar',
-                    accessLink: 'http://balanlaedenug.net.ar/public/doc/ESK001.pdf'
+                    accessLink: '/doc/ESK001.pdf'
                 },
                 {
                     flag: 'valumar.jpg',
@@ -67,7 +67,7 @@ export default {
                     partnerLink: 'https://valumar.blogspot.com/',
                     relation: 'Tratado de Amistad, Colaboración y Reconocimiento Mutuo',
                     accessText: 'Descargar',
-                    accessLink: 'http://balanlaedenug.net.ar/public/doc/VAL001.pdf'
+                    accessLink: '/doc/VAL001.pdf'
                 },
                 {
                     flag: 'zaerrion.png',
@@ -75,7 +75,7 @@ export default {
                     partnerLink: 'https://sites.google.com/view/republica-de-zaerrion/inicio',
                     relation: 'Tratado de Total Paz y Reconocimiento',
                     accessText: 'Descargar',
-                    accessLink: 'http://balanlaedenug.net.ar/public/doc/ZAR001.jpg'
+                    accessLink: '/doc/ZAR001.jpg'
                 },
                 {
                     flag: 'angosvria.png',
@@ -83,7 +83,7 @@ export default {
                     partnerLink: 'https://unionangosvria.wixsite.com/angosvria',
                     relation: 'Tratado de Relaciones Diplomáticas',
                     accessText: 'Descargar',
-                    accessLink: 'http://balanlaedenug.net.ar/public/doc/ANG001.pdf'
+                    accessLink: '/doc/ANG001.pdf'
                 },
                 {
                     flag: 'amestris.jpg',
@@ -91,7 +91,15 @@ export default {
                     partnerLink: 'https://reinoiluminadodeamestris.com/',
                     relation: 'Tratado de Amistad, Colaboración y Reconocimiento Mutuo',
                     accessText: 'Descargar',
-                    accessLink: 'http://balanlaedenug.net.ar/public/doc/AME001.pdf'
+                    accessLink: '/doc/AME001.pdf'
+                },
+                {
+                    flag: 'ambrozia.png',
+                    partnerName: 'Reino de Ambrozia',
+                    partnerLink: 'https://sites.google.com/view/gobiernodeambrozia/inicio',
+                    relation: 'Tratado Reconocimiento y Amistad',
+                    accessText: 'Descargar',
+                    accessLink: '/doc/AMB001.png'
                 }
             ]
         }

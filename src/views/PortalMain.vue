@@ -5,7 +5,7 @@ import {
     signOut,
     onAuthStateChanged,
 } from 'firebase/auth';
-import { doc, updateDoc } from "firebase/firestore";
+import { collection, doc, addDoc, updateDoc } from "firebase/firestore";
 import { updateProfile } from 'firebase/auth';
 import { auth, db } from '../firebase/init.js';
 import { notify } from '@kyvg/vue3-notification';
@@ -40,6 +40,9 @@ import { saveAs } from 'file-saver';
                     <button class="portal-navbar-button" @click="changeActiveTab('Directory')"><img
                             class="portal-navbar-icon" src="/img/directory.png" alt="Directorio"><label
                             class="portal-navbar-label">Directorio</label></button>
+                    <button class="portal-navbar-button" @click="changeActiveTab('Dictionary')"><img
+                            class="portal-navbar-icon" src="/img/dictionary.png" alt="Diccionario"><label
+                            class="portal-navbar-label">Diccionario</label></button>
                     <button id="portalLogoutButton" class="portal-navbar-button" type="submit" @click="signOutCall"><img
                             class="portal-navbar-icon" src="/img/logout.png" alt="Salir"><label id="portalLogoutLabel"
                             class="portal-navbar-label">Salir</label></button>
@@ -235,6 +238,91 @@ import { saveAs } from 'file-saver';
             <div v-show="activeTab === 'Directory'" class="results-bar">
                 <p class="results-text">Hay <b>{{ usersList.length }}</b> ciudadanos digitales registrados.</p>
             </div>
+
+            <div v-show="activeTab === 'Dictionary'" id="portalDictionarySection" class="portal-section main">
+                <p v-if="!profileDictionaryEditor" class="section-content">No dispone de privilegios para agregar entradas
+                    al diccionario. Puede solicitarlos contactándose a través de <a
+                        href="mailto:balanlaedenug@gmail.com">nuestro correo electrónico oficial</a>.</p>
+
+                <div v-if="profileDictionaryEditor">
+                    <p class="section-content less-margin">Formulario de nueva entrada en el diccionario:</p>
+
+                    <div class="portal-form wide top">
+                        <label class="portal-label">Palabra</label>
+                        <input type="text" v-model="wordFormWord">
+
+                        <label class="portal-label">Raíz</label>
+                        <input type="text" v-model="wordFormRoot">
+
+                        <label class="portal-label">Descripción</label>
+                        <input type="text" v-model="wordFormDescription">
+
+                        <div class="form-vertical-parent">
+                            <div class="form-vertical-section">
+                                <label class="portal-label">Tipo</label>
+                                <select name="wordFormType" v-model="currentType">
+                                    <option value="Sustantivo">Sustantivo</option>
+                                    <option value="Verbo">Verbo</option>
+                                    <option value="Adjetivo">Adjetivo</option>
+                                    <option value="Adverbio">Adverbio</option>
+                                    <option value="Pronombre">Pronombre</option>
+                                    <option value="Adposición">Adposición</option>
+                                    <option value="Contracción">Contracción</option>
+                                    <option value="Conjunción">Conjunción</option>
+                                    <option value="Interjección">Interjección</option>
+                                    <option value="Artículo">Artículo</option>
+                                </select>
+
+                                <label class="portal-label">Subtipo(s) (uno por línea)</label>
+                                <textarea class="non-resizable" name="wordFormSubtypes" cols="20" rows="3"
+                                    v-model="currentSubtypes"></textarea>
+
+                                <button id="newWordAddType" class="portal-submit no-margin long"
+                                    @click="addType">Agregar</button>
+
+                                <p v-if="wordFormSubtypes.length > 0" style="margin: 12px 0 0 0;">Haga clic en una
+                                    entrada para borrarla:</p>
+                                <ol class='word-meanings'>
+                                    <div v-for="i in wordFormTypes.length" :key="i" @mouseenter="markForDeletion"
+                                        @mouseleave="unmarkForDeletion" @click="deleteType(i - 1)">
+                                        <li class="word-meaning">{{ wordFormTypes[i - 1] }} ({{ wordFormSubtypes[i - 1] }})
+                                        </li>
+                                    </div>
+                                </ol>
+                            </div>
+
+                            <div class="form-vertical-section">
+                                <label class="portal-label">Definición</label>
+                                <textarea class="non-resizable" name="wordFormDefinition" v-model="currentDefinition"
+                                    cols="20" rows="2"></textarea>
+
+                                <label class="portal-label">Ejemplo</label>
+                                <textarea class="non-resizable" name="wordFormExample" v-model="currentExample" cols="20"
+                                    rows="2"></textarea>
+
+                                <button id="newWordAddDefinition" class="portal-submit no-margin long"
+                                    @click="addDefinition">Agregar</button>
+
+                                <p v-if="wordFormDefinitions.length > 0" style="margin: 12px 0 0 0;">Haga clic en una
+                                    entrada para borrarla:</p>
+                                <ol class='word-meanings'>
+                                    <div v-for="i in wordFormDefinitions.length" :key="i" @mouseenter="markForDeletion"
+                                        @mouseleave="unmarkForDeletion" @click="deleteDefinition(i - 1)">
+                                        <li class="word-meaning">{{ wordFormDefinitions[i - 1] }}</li>
+                                        <ul style="padding: 0;">
+                                            <li class="word-example"><i>{{ wordFormExamples[i - 1] }}</i></li>
+                                        </ul>
+                                    </div>
+                                </ol>
+                            </div>
+                        </div>
+                        <hr class="form-divider special-margin">
+                        <button class="portal-submit no-margin long" @click="publishWord"
+                            :disabled="!wordFormWord || !wordFormRoot || !wordFormDescription || !wordFormDefinitions.length || !wordFormTypes.length">Publicar
+                            en diccionario</button>
+                    </div>
+                </div>
+            </div>
         </section>
     </keep-alive>
 </template>
@@ -249,6 +337,7 @@ export default {
             paymentReceiver: '',
             paymentAmount: 1,
             user: {},
+
             profileNumber: 0,
             profileName: '',
             profileEmail: '',
@@ -256,7 +345,21 @@ export default {
             profileGender: '',
             profileBirthdate: '',
             profileWallet: '',
-            profileContact: []
+            profileContact: [],
+            profileDictionaryEditor: false,
+
+            wordFormWord: '',
+            wordFormRoot: '',
+            wordFormDescription: '',
+            wordFormDefinitions: [],
+            wordFormExamples: [],
+            wordFormTypes: [],
+            wordFormSubtypes: [],
+
+            currentDefinition: '',
+            currentExample: '',
+            currentType: 'Sustantivo',
+            currentSubtypes: ''
         }
     },
     computed: {
@@ -305,6 +408,7 @@ export default {
                     this.profileBirthdate = this.profileExtraData.birthdate;
                     this.profileWallet = this.profileExtraData.wallet;
                     this.profileContact = this.profileExtraData.contactInfo;
+                    this.profileDictionaryEditor = this.profileExtraData.dictionaryEditor;
                 }
             })
         },
@@ -401,12 +505,71 @@ export default {
                 });
             });
         },
+        async publishWord() {
+            addDoc(collection(db, "dictionary"), {
+                word: this.wordFormWord,
+                root: this.wordFormRoot,
+                description: this.wordFormDescription,
+                types: this.wordFormTypes,
+                subtypes: this.wordFormSubtypes,
+                definitions: this.wordFormDefinitions,
+                examples: this.wordFormExamples
+            }).then(() => {
+                notify({
+                    title: 'Publicación en diccionario',
+                    text: 'La palabra fue publicada exitosamente.',
+                    type: 'success'
+                });
+            }).catch((error) => {
+                notify({
+                    title: 'Publicación en diccionario',
+                    text: 'Ocurrió el siguiente error al publicar: ' + error,
+                    type: 'error'
+                });
+            });
+        },
         downloadID() {
             html2canvas(document.querySelector("#portalIDCard"), { useCORS: true }).then(canvas => {
                 canvas.toBlob(function (blob) {
                     saveAs(blob, `Kefjeg-ID.png`);
                 });
             });
+        },
+        addDefinition() {
+            this.wordFormDefinitions.push(this.currentDefinition);
+            this.wordFormExamples.push(this.currentExample);
+            this.currentDefinition = '';
+            this.currentExample = '';
+        },
+        addType() {
+            let subtypesList = '';
+            const subtypesArray = this.currentSubtypes.split("\n");
+            for (let i = 0; i < subtypesArray.length; i++) {
+                const element = subtypesArray[i];
+                subtypesList += element;
+                if (i < subtypesArray.length - 1) {
+                    subtypesList += ', ';
+                }
+            }
+
+            this.wordFormTypes.push(this.currentType);
+            this.wordFormSubtypes.push(subtypesList);
+            this.currentType = 'Sustantivo';
+            this.currentSubtypes = '';
+        },
+        deleteDefinition(index) {
+            this.wordFormDefinitions.splice(index, 1);
+            this.wordFormExamples.splice(index, 1);
+        },
+        deleteType(index) {
+            this.wordFormTypes.splice(index, 1);
+            this.wordFormSubtypes.splice(index, 1);
+        },
+        markForDeletion(event) {
+            event.target.classList.add('deletable');
+        },
+        unmarkForDeletion(event) {
+            event.target.classList.remove('deletable');
         },
         changeActiveTab(value) {
             this.activeTab = value;
@@ -634,11 +797,51 @@ export default {
     height: auto;
 }
 
+.portal-submit.long {
+    margin: 0;
+    width: auto;
+    max-width: none;
+}
+
+.non-resizable {
+    resize: none;
+}
+
 .contract-link {
     font-weight: bold;
     font-size: 16px;
     text-align: center;
     margin-bottom: 10px;
+}
+
+.section-content.less-margin {
+    margin-bottom: 15px;
+}
+
+.form-vertical-parent {
+    display: flex;
+    width: 100%;
+}
+
+.form-vertical-section {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-right: 15px;
+}
+
+.form-vertical-section:last-child {
+    margin-right: 0;
+}
+
+.word-meanings {
+    margin-top: 0;
+}
+
+div.deletable {
+    background: indianred;
+    opacity: 0.7;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 999px) {
