@@ -103,8 +103,8 @@ hr {
     margin-block-start: 20px;
     margin-block-end: 20px;
     background-color: black;
-    /* border: 1px solid black; */
-    height: 1px;
+    border: 1px solid black;
+    height: 0px;
 }
 
 .tab-btn {

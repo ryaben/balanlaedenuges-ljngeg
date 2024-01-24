@@ -96,8 +96,10 @@
             <u>emplearlos y encadenarlos de
                 cualquier manera, no obstante, la única imposibilidad consta de no poder repetir ninguno</u> de ellos en
             la misma palabra. Cabe mencionar que los sustantivos modificados no deben recibir nuevamente el
-            sufijo de género, ya que este está embebido entre la raíz significante y los modificadores. En la
-            siguiente tabla se aprecia la utilidad e incidencia de estos sufijos:
+            sufijo de género, ya que este está embebido entre la raíz significante y los modificadores. No se considera
+            al sufijo de número como un modificador del sustantivo ya que no está cambiando el significado o el sentido
+            del vocablo, no obstante se han añadido casos en plural en el diccionario cuya aplicación es equivalente al
+            de ciertas palabras en español. En la siguiente tabla se aprecia la utilidad e incidencia de estos sufijos:
         </p>
         <table class='section-table'>
             <tr>

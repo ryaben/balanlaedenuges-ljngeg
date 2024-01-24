@@ -6,6 +6,7 @@
   <div id='listingLowbar'>
     <div id='statsBar'>
       <div id='tabBtns'>
+        <router-link class='tab-btn router-link' :to="{ name: 'Dictionary' }">Buscador</router-link>
         <router-link class='tab-btn router-link' :to="{ name: 'Listing' }">Listado</router-link>
         <router-link class='tab-btn router-link' :to="{ name: 'Favorites' }">Favoritos</router-link>
         <router-link class='tab-btn router-link' :to="{ name: 'Statistics' }">Estadísticas</router-link>

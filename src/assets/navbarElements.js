@@ -40,10 +40,10 @@ const navbarElements = [
         ]
     },
     {
-        sectionLabel: "Libraterrense",
+        sectionLabel: "Diccionario libraterrense",
         sectionLinks: [
             {
-                linkLabel: "Búsqueda de palabra",
+                linkLabel: "Buscador de palabras",
                 linkRoute: "Dictionary",
                 highlighted: false
             },
@@ -52,6 +52,21 @@ const navbarElements = [
                 linkRoute: "Listing",
                 highlighted: false
             },
+            {
+                linkLabel: "Palabras favoritas",
+                linkRoute: "Favorites",
+                highlighted: false
+            },
+            {
+                linkLabel: "Estadísticas del diccionario",
+                linkRoute: "Statistics",
+                highlighted: false
+            }
+        ]
+    },
+    {
+        sectionLabel: "Manual libraterrense",
+        sectionLinks: [
             {
                 linkLabel: "Sustantivos",
                 linkRoute: "Nouns",
