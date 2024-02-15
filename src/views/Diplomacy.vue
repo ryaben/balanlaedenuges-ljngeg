@@ -97,9 +97,17 @@ export default {
                     flag: 'ambrozia.png',
                     partnerName: 'Reino de Ambrozia',
                     partnerLink: 'https://sites.google.com/view/gobiernodeambrozia/inicio',
-                    relation: 'Tratado Reconocimiento y Amistad',
+                    relation: 'Tratado de Reconocimiento y Amistad',
                     accessText: 'Descargar',
                     accessLink: '/doc/AMB001.png'
+                },
+                {
+                    flag: 'diasland.png',
+                    partnerName: 'Ducado de Diasland',
+                    partnerLink: 'https://ducado-de-diasland4.webnode.com.uy/',
+                    relation: 'Tratado de Amistad y Reconocimiento Mutuo',
+                    accessText: 'Descargar',
+                    accessLink: '/doc/DIA001.png'
                 }
             ]
         }
