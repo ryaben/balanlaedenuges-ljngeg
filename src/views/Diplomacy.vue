@@ -108,6 +108,22 @@ export default {
                     relation: 'Tratado de Amistad y Reconocimiento Mutuo',
                     accessText: 'Descargar',
                     accessLink: '/doc/DIA001.png'
+                },
+                {
+                    flag: 'Lomoria.png',
+                    partnerName: 'Respubliko de Lomoria',
+                    partnerLink: 'https://lomoria.wordpress.com/',
+                    relation: 'Tratado de Relaciones Diplomáticas',
+                    accessText: 'Descargar',
+                    accessLink: '/doc/LOM001.pdf'
+                },
+                {
+                    flag: 'Fámira.png',
+                    partnerName: 'Reino de Fámira',
+                    partnerLink: 'https://reinodefamira.blogspot.com/',
+                    relation: 'Tratado de Relaciones Diplomáticas',
+                    accessText: 'Descargar',
+                    accessLink: '/doc/FAM001.pdf'
                 }
             ]
         }
